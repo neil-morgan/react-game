@@ -5,11 +5,16 @@ import ChatLog from "./ChatLog";
 import GameView from "./GameView";
 import Rules from "./Rules";
 
-import "./CLS.scss";
-
 const allOptions = ["chat & log", "game view", "rules"];
 
-const ChatLogSettings = ({ G, ctx, playerID, moves, revealDeck, setRevealDeck }) => {
+const ChatLogSettings = ({
+  G,
+  ctx,
+  playerID,
+  moves,
+  revealDeck,
+  setRevealDeck,
+}) => {
   const [optionIndex, setIndex] = useState(0);
   const [rulesPage, setRPage] = useState(1);
 
@@ -35,7 +40,14 @@ const ChatLogSettings = ({ G, ctx, playerID, moves, revealDeck, setRevealDeck })
     if (selection === "chat & log") {
       return <ChatLog G={G} playerID={playerID} moves={moves} />;
     } else if (selection === "game view") {
-      return <GameView G={G} playerID={playerID} revealDeck={revealDeck} setRevealDeck={setRevealDeck} />;
+      return (
+        <GameView
+          G={G}
+          playerID={playerID}
+          revealDeck={revealDeck}
+          setRevealDeck={setRevealDeck}
+        />
+      );
     } else if (selection === "rules") {
       return <Rules page={rulesPage} setPage={setRPage} />;
     }

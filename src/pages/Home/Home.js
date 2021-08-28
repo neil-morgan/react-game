@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Lobby from "../Lobby/Lobby";
 import { api } from "../../LobbyAPI";
-import "./Home.scss";
 
 const Home = (props) => {
   const { history } = props;
@@ -36,7 +35,10 @@ const Home = (props) => {
   const handleKeyDown = (e, text) => {
     if (e.key === " ") {
       if (text) {
-        if (text.length === 0 || text.substring(text.length - 1, text.length) === " ") {
+        if (
+          text.length === 0 ||
+          text.substring(text.length - 1, text.length) === " "
+        ) {
           e.preventDefault();
         }
       } else {
@@ -159,7 +161,11 @@ const Home = (props) => {
           className="input-field"
         />
       </div>
-      <button className="lobby-btn" disabled={cName.length === 0} onClick={createRoom}>
+      <button
+        className="lobby-btn"
+        disabled={cName.length === 0}
+        onClick={createRoom}
+      >
         create
       </button>
     </Lobby>

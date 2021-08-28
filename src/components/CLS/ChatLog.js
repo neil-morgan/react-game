@@ -3,8 +3,6 @@ import uniqid from "uniqid";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 
-import "./ChatLog.scss";
-
 const handleKeyUp = (e) => {
   e.preventDefault();
   if (e.keyCode === 13) {
@@ -38,7 +36,13 @@ const ChatLog = ({ G, playerID, moves }) => {
             className += "bot-msg ";
             return (
               <div id="playerMsg" className={className} key={uniqid()}>
-                <span className={msg.successful ? "successful-color" : "unsuccessful-color"}>{msgParts[0]}</span>
+                <span
+                  className={
+                    msg.successful ? "successful-color" : "unsuccessful-color"
+                  }
+                >
+                  {msgParts[0]}
+                </span>
                 <div className="addendums">
                   {msgParts.slice(1, msgParts.length).map((msgPart) => (
                     <div key={uniqid()}>{msgPart}</div>
@@ -49,7 +53,9 @@ const ChatLog = ({ G, playerID, moves }) => {
           } else {
             return (
               <div id="playerMsg" className={className} key={uniqid()}>
-                <span className="msg-sender">{G.players[msg.id].name + ": "}</span>
+                <span className="msg-sender">
+                  {G.players[msg.id].name + ": "}
+                </span>
                 {msg.content}
               </div>
             );
@@ -66,7 +72,12 @@ const ChatLog = ({ G, playerID, moves }) => {
           onKeyUp={(e) => handleKeyUp(e)}
           autoComplete="off"
         />
-        <button id="send-button" className="send-btn" onClick={() => message(msg)} disabled={msg.length === 0}>
+        <button
+          id="send-button"
+          className="send-btn"
+          onClick={() => message(msg)}
+          disabled={msg.length === 0}
+        >
           <FontAwesomeIcon icon={faPaperPlane} />
         </button>
       </div>

@@ -1,10 +1,10 @@
 // from boardgame.io guide for Deployment to Heroku of Frontend and Backend
 import { Server, FlatFile } from "boardgame.io/server";
-import { Coup } from "./src/Game/Game";
-import { nanoid, customAlphabet } from "nanoid";
+import { Coup } from "./environment/Game";
+import { customAlphabet } from "nanoid";
 import path from "path";
 import serve from "koa-static";
-import { DEFAULT_PORT } from "./src/config";
+import { DEFAULT_PORT } from "./config";
 
 const server = Server({
   games: [Coup],
@@ -27,7 +27,11 @@ server.run({
   port: PORT,
   callback: () => {
     server.app.use(
-      async (ctx, next) => await serve(frontEndAppBuildPath)(Object.assign(ctx, { path: "index.html" }), next)
+      async (ctx, next) =>
+        await serve(frontEndAppBuildPath)(
+          Object.assign(ctx, { path: "index.html" }),
+          next
+        )
     );
   },
   lobbyConfig: {

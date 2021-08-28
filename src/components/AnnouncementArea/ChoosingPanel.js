@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 import uniqid from "uniqid";
 import classNames from "classnames";
-import { cards } from "../../logic/cards";
-import "./ChoosingPanel.scss";
-import { api } from "../../../LobbyAPI";
+import { cards } from "../../environment/logic/cards";
+import { api } from "../../LobbyAPI";
 
 const ChoosingPanel = ({ G, ctx, playerID, moves, gameID }) => {
   const [choices, setChoices] = useState([]);
@@ -59,11 +58,17 @@ const ChoosingPanel = ({ G, ctx, playerID, moves, gameID }) => {
 
     const leaveRoom = () => {
       moves.leave(playerID);
-      api.leaveRoom(gameID, localStorage.getItem("id"), localStorage.getItem("credentials")).then(() => {
-        // leaving clears your localStorage to "reset" your identity and then takes you to homepage
-        localStorage.clear();
-        window.location.href = "/";
-      });
+      api
+        .leaveRoom(
+          gameID,
+          localStorage.getItem("id"),
+          localStorage.getItem("credentials")
+        )
+        .then(() => {
+          // leaving clears your localStorage to "reset" your identity and then takes you to homepage
+          localStorage.clear();
+          window.location.href = "/";
+        });
     };
 
     const playAgain = () => {
@@ -77,7 +82,8 @@ const ChoosingPanel = ({ G, ctx, playerID, moves, gameID }) => {
     if (G.winner.id !== "-1") {
       document.getElementById("choosing_panel").style.flexDirection = "column";
       document.getElementById("choosing_panel").style.alignItems = "center";
-      document.getElementById("choosing_panel").style.justifyContent = "flex-start";
+      document.getElementById("choosing_panel").style.justifyContent =
+        "flex-start";
       let secondClassName = "";
       if (G.gameOver.left.length !== 0) {
         secondClassName = "play-again-disabled";
@@ -89,9 +95,16 @@ const ChoosingPanel = ({ G, ctx, playerID, moves, gameID }) => {
           key={uniqid()}
           className={`play-again-btn ${secondClassName}`}
           onClick={playAgain}
-          disabled={G.gameOver.left.length !== 0 || G.gameOver.playAgain.includes(playerID)}
+          disabled={
+            G.gameOver.left.length !== 0 ||
+            G.gameOver.playAgain.includes(playerID)
+          }
         >
-          play again [{G.gameOver.left.length !== 0 ? "N/A" : `${G.gameOver.playAgain.length}/${ctx.numPlayers}`}]
+          play again [
+          {G.gameOver.left.length !== 0
+            ? "N/A"
+            : `${G.gameOver.playAgain.length}/${ctx.numPlayers}`}
+          ]
         </button>
       );
       temp.push(
@@ -149,7 +162,8 @@ const ChoosingPanel = ({ G, ctx, playerID, moves, gameID }) => {
       // image loading optimization with hidden
       G.turnLog.exchange.drawnCards.forEach((card) => {
         const cardSelected =
-          G.turnLog.exchange.hasOwnProperty("newHand") && G.turnLog.exchange.newHand.includes(card.id);
+          G.turnLog.exchange.hasOwnProperty("newHand") &&
+          G.turnLog.exchange.newHand.includes(card.id);
         temp.push(
           <img
             key={"choice" + card.character}
@@ -161,13 +175,18 @@ const ChoosingPanel = ({ G, ctx, playerID, moves, gameID }) => {
             }}
             src={card.front}
             alt={card.character}
-            hidden={!G.turnLog.successful || ctx.activePlayers[playerID] !== "action"}
+            hidden={
+              !G.turnLog.successful || ctx.activePlayers[playerID] !== "action"
+            }
           />
         );
       });
     }
     // show possible player responses
-    else if (!G.players[playerID].isOut && G.turnLog.responses[playerID] === "") {
+    else if (
+      !G.players[playerID].isOut &&
+      G.turnLog.responses[playerID] === ""
+    ) {
       if (ctx.activePlayers[playerID] === "block") {
         temp.push(
           <button key={uniqid()} className="choice-btn" onClick={allow}>

@@ -1,7 +1,6 @@
 import React from "react";
 import classNames from "classnames";
 import Player from "./Player";
-import "./Players.scss";
 
 // row of players
 const Players = (props) => {
@@ -11,7 +10,10 @@ const Players = (props) => {
     const i = parseInt(ctx.playOrder[index]);
     if (i !== parseInt(playerID)) {
       players.push(
-        <div key={props.G.players[i].id + props.G.players[i].name} className="player-container">
+        <div
+          key={props.G.players[i].id + props.G.players[i].name}
+          className="player-container"
+        >
           <Player {...props} i={i} />
         </div>
       );

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import classNames from "classnames";
 import ChoosingPanel from "./ChoosingPanel";
-import "./AnnouncementArea.scss";
 
 const AnnouncementArea = (props) => {
   const { G, ctx, playerID, moves } = props;
@@ -11,7 +10,7 @@ const AnnouncementArea = (props) => {
   const [msg, setMsg] = useState("");
   const [msgLoading, setMsgLoading] = useState(true);
 
-  // display at beginning of turn 
+  // display at beginning of turn
   useEffect(() => {
     setMsg(isYourTurn ? `${name}r turn` : `${name}'s turn`);
     setMsgLoading(true);
@@ -109,7 +108,8 @@ const AnnouncementArea = (props) => {
             } challenge succeeds.`
           );
           setMsgLoading(false);
-          timer = setTimeout(() => {    // timer to allow players time to read announcements, but also advance the game "automatically" when necessary
+          timer = setTimeout(() => {
+            // timer to allow players time to read announcements, but also advance the game "automatically" when necessary
             if (G.turnLog.challenge.challenged.id === playerID) {
               if (G.turnLog.action === "steal") {
                 if (Object.keys(G.turnLog.blockedBy).length !== 0) {
@@ -149,7 +149,8 @@ const AnnouncementArea = (props) => {
           if (
             ctx.activePlayers.hasOwnProperty(G.turnLog.challenge.challenged.id)
           ) {
-            timer = setTimeout(() => {    // timer to allow players time to read announcements, but also advance the game "automatically" when necessary
+            timer = setTimeout(() => {
+              // timer to allow players time to read announcements, but also advance the game "automatically" when necessary
               if (G.turnLog.challenge.challenged.id === playerID) {
                 if (
                   G.turnLog.action !== "exchange" &&

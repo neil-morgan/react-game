@@ -1,6 +1,5 @@
 import React from "react";
 import classNames from "classnames";
-import "./Actions.scss";
 
 const Actions = ({ G, ctx, playerID, moves }) => {
   const yourPlayer = G.players[playerID];
@@ -10,7 +9,8 @@ const Actions = ({ G, ctx, playerID, moves }) => {
   const canCoup = yourPlayer.coins >= 7;
   const mustCoup = yourPlayer.coins >= 10;
   const canAssassinate = yourPlayer.coins >= 3;
-  const done = ctx.currentPlayer === G.turnLog.player.id || G.winner.id !== "-1"; // cannot select actions
+  const done =
+    ctx.currentPlayer === G.turnLog.player.id || G.winner.id !== "-1"; // cannot select actions
 
   const income = () => {
     moves.income();
@@ -29,9 +29,17 @@ const Actions = ({ G, ctx, playerID, moves }) => {
         isYourTurn
       }
     >
-      <div className={classNames("general-actions", { "actions-active-enter": isYourTurn })}>
+      <div
+        className={classNames("general-actions", {
+          "actions-active-enter": isYourTurn,
+        })}
+      >
         <div className="btn-wrapper">
-          <button className="action-btn" onClick={income} disabled={!isYourTurn || mustCoup || done}>
+          <button
+            className="action-btn"
+            onClick={income}
+            disabled={!isYourTurn || mustCoup || done}
+          >
             income
           </button>
         </div>
@@ -45,14 +53,26 @@ const Actions = ({ G, ctx, playerID, moves }) => {
           </button>
         </div>
         <div className="btn-wrapper">
-          <button className="action-btn" onClick={() => prepAction("coup")} disabled={!isYourTurn || !canCoup || done}>
+          <button
+            className="action-btn"
+            onClick={() => prepAction("coup")}
+            disabled={!isYourTurn || !canCoup || done}
+          >
             coup
           </button>
         </div>
       </div>
-      <div className={classNames("character-actions", { "actions-active-enter": isYourTurn })}>
+      <div
+        className={classNames("character-actions", {
+          "actions-active-enter": isYourTurn,
+        })}
+      >
         <div className="btn-wrapper">
-          <button className="action-btn" onClick={() => prepAction("tax")} disabled={!isYourTurn || mustCoup || done}>
+          <button
+            className="action-btn"
+            onClick={() => prepAction("tax")}
+            disabled={!isYourTurn || mustCoup || done}
+          >
             tax
           </button>
         </div>
@@ -66,7 +86,11 @@ const Actions = ({ G, ctx, playerID, moves }) => {
           </button>
         </div>
         <div className="btn-wrapper">
-          <button className="action-btn" onClick={() => prepAction("steal")} disabled={!isYourTurn || mustCoup || done}>
+          <button
+            className="action-btn"
+            onClick={() => prepAction("steal")}
+            disabled={!isYourTurn || mustCoup || done}
+          >
             steal
           </button>
         </div>

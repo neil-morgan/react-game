@@ -1,8 +1,6 @@
 import React from "react";
 import uniqid from "uniqid";
 
-import "./GameView.scss";
-
 const statsHdrs = [
   "Action",
   <span className="successful-color">✔</span>,
@@ -20,7 +18,10 @@ const GameView = ({ G, playerID, revealDeck, setRevealDeck }) => {
 
   const deckView = (
     <>
-      <button className={revealDeck ? "btn-selected" : "btn-unselected"} onClick={() => updateReveal()}>
+      <button
+        className={revealDeck ? "btn-selected" : "btn-unselected"}
+        onClick={() => updateReveal()}
+      >
         {revealDeck ? "hide" : "reveal"} deck
       </button>
       <div>click on a player to reveal/hide their hand</div>

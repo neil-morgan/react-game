@@ -10,7 +10,6 @@ import {
   faDoorClosed,
   faDoorOpen,
 } from "@fortawesome/free-solid-svg-icons";
-import "./YourPlayer.scss";
 
 const YourPlayer = ({ G, ctx, playerID, moves }) => {
   const player = G.players[playerID];
@@ -18,8 +17,10 @@ const YourPlayer = ({ G, ctx, playerID, moves }) => {
   const gameOver = G.winner.id !== "-1";
 
   let cardSelectable =
-    (G.turnLog.exchange.hasOwnProperty("newHand") && ctx.activePlayers[playerID] === "action") ||
-    (ctx.activePlayers[playerID] && ctx.activePlayers[playerID].includes("lose"));
+    (G.turnLog.exchange.hasOwnProperty("newHand") &&
+      ctx.activePlayers[playerID] === "action") ||
+    (ctx.activePlayers[playerID] &&
+      ctx.activePlayers[playerID].includes("lose"));
   let cardSelected = false;
   // for exchange
   if (ctx.activePlayers[playerID] === "revealCard") {
@@ -44,7 +45,9 @@ const YourPlayer = ({ G, ctx, playerID, moves }) => {
     let cardClass = "";
     if (
       (cardSelected && G.turnLog.challenge.revealedCard.id === card.id) ||
-      (isYourTurn && G.turnLog.exchange.hasOwnProperty("newHand") && G.turnLog.exchange.newHand.includes(card.id))
+      (isYourTurn &&
+        G.turnLog.exchange.hasOwnProperty("newHand") &&
+        G.turnLog.exchange.newHand.includes(card.id))
     ) {
       cardClass = "card-selected";
     } else if (cardSelectable) {
@@ -53,7 +56,10 @@ const YourPlayer = ({ G, ctx, playerID, moves }) => {
 
     hand.push(
       card.discarded ? (
-        <div key={uniqid()} className="character-card character-card-discarded"></div>
+        <div
+          key={uniqid()}
+          className="character-card character-card-discarded"
+        ></div>
       ) : (
         <img
           onDragStart={(e) => {
@@ -65,9 +71,16 @@ const YourPlayer = ({ G, ctx, playerID, moves }) => {
           src={card.front}
           onClick={() => {
             // handle card selection logic
-            if (ctx.activePlayers[playerID] && ctx.activePlayers[playerID].includes("lose") && !card.discarded) {
+            if (
+              ctx.activePlayers[playerID] &&
+              ctx.activePlayers[playerID].includes("lose") &&
+              !card.discarded
+            ) {
               loseCard(playerID, card.id);
-            } else if (G.turnLog.exchange.hasOwnProperty("newHand") && isYourTurn) {
+            } else if (
+              G.turnLog.exchange.hasOwnProperty("newHand") &&
+              isYourTurn
+            ) {
               setHand(card.id);
             } else if (cardSelectable && !card.discarded) {
               revealCard(playerID, card.id);
@@ -114,7 +127,10 @@ const YourPlayer = ({ G, ctx, playerID, moves }) => {
     } else if (G.gameOver.left.includes(playerID)) {
       return getBottomRow("left", <FontAwesomeIcon icon={faDoorClosed} />);
     } else if (player.isOut) {
-      return getBottomRow("exiled", <FontAwesomeIcon icon={faSkullCrossbones} />);
+      return getBottomRow(
+        "exiled",
+        <FontAwesomeIcon icon={faSkullCrossbones} />
+      );
     } else {
       return getBottomRow("winner", <FontAwesomeIcon icon={faCrown} />);
     }
@@ -135,7 +151,10 @@ const YourPlayer = ({ G, ctx, playerID, moves }) => {
           <div className="exiled-text">{bottomRow()}</div>
         ) : (
           <div className="coin-row no-gutters">
-            <div className="w-50 h-100 d-flex align-items-center justify-content-end" style={{ paddingRight: "1%" }}>
+            <div
+              className="w-50 h-100 d-flex align-items-center justify-content-end"
+              style={{ paddingRight: "1%" }}
+            >
               <img
                 onDragStart={(e) => {
                   e.preventDefault();
@@ -152,7 +171,10 @@ const YourPlayer = ({ G, ctx, playerID, moves }) => {
               style={{ paddingLeft: "1.2%", fontSize: "2.8vw" }}
             >
               {player.coins}
-              <div className="response-icon" style={{ paddingRight: "1vw", color: `${iconColor}` }}>
+              <div
+                className="response-icon"
+                style={{ paddingRight: "1vw", color: `${iconColor}` }}
+              >
                 {G.turnLog.responses[playerID] !== "" ? (
                   G.turnLog.responses[playerID] === "allow" ? (
                     <FontAwesomeIcon icon={faThumbsUp} />

@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { Players, YourPlayer, BottomBar, AnnouncementArea, ChatLogSettings } from "./components";
-import "./Board.css";
+import {
+  Players,
+  YourPlayer,
+  BottomBar,
+  AnnouncementArea,
+  ChatLogSettings,
+} from "./";
 
 const Board = (props) => {
   const [revealDeck, setRevealDeck] = useState(false);
@@ -25,7 +30,11 @@ const Board = (props) => {
           <BottomBar {...props} revealDeck={revealDeck} />
         </div>
         <div className="cls-col">
-          <ChatLogSettings {...props} revealDeck={revealDeck} setRevealDeck={setRevealDeck} />
+          <ChatLogSettings
+            {...props}
+            revealDeck={revealDeck}
+            setRevealDeck={setRevealDeck}
+          />
         </div>
       </div>
     </div>

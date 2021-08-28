@@ -1,11 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter as Router, Route, Switch, Redirect, useHistory } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect,
+  useHistory,
+} from "react-router-dom";
 import { Home, Room } from "./pages";
-
-import "bootstrap/dist/css/bootstrap.min.css";
-import "./index.css";
-import "./index.scss";
 
 const App = () => {
   const history = useHistory(); // remember the history of user navigation

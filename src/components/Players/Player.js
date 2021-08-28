@@ -10,7 +10,6 @@ import {
   faDoorClosed,
   faDoorOpen,
 } from "@fortawesome/free-solid-svg-icons";
-import "./Player.scss";
 
 const Player = ({ G, ctx, playerID, moves, i }) => {
   const [revealHand, setRevealHand] = useState(false);
@@ -22,11 +21,16 @@ const Player = ({ G, ctx, playerID, moves, i }) => {
   player.hand.forEach((card, cardIndex) => {
     let revealCard = false;
     if (ctx.activePlayers[i] === "revealCard") {
-      revealCard = G.turnLog.challenge.revealedCard.length !== 0 && card.id === G.turnLog.challenge.revealedCard.id;
+      revealCard =
+        G.turnLog.challenge.revealedCard.length !== 0 &&
+        card.id === G.turnLog.challenge.revealedCard.id;
     }
     hand.push(
       card.discarded ? (
-        <div key={uniqid()} className="character-card character-card-discarded"></div>
+        <div
+          key={uniqid()}
+          className="character-card character-card-discarded"
+        ></div>
       ) : (
         <img
           onDragStart={(e) => {
@@ -37,7 +41,11 @@ const Player = ({ G, ctx, playerID, moves, i }) => {
           className={classNames("character-card", {
             "character-card-reveal": revealCard,
           })}
-          src={gameOver || revealCard || revealHand ? card.front : "/images/back.PNG"} // on game over, reveal the winner's cards to everyone
+          src={
+            gameOver || revealCard || revealHand
+              ? card.front
+              : "/images/back.PNG"
+          } // on game over, reveal the winner's cards to everyone
           alt={gameOver || revealCard || revealHand ? card.character : "card"}
         />
       )
@@ -110,7 +118,10 @@ const Player = ({ G, ctx, playerID, moves, i }) => {
     } else if (G.gameOver.left.includes(i.toString())) {
       return getBottomRow("left", <FontAwesomeIcon icon={faDoorClosed} />);
     } else if (player.isOut) {
-      return getBottomRow("exiled", <FontAwesomeIcon icon={faSkullCrossbones} />);
+      return getBottomRow(
+        "exiled",
+        <FontAwesomeIcon icon={faSkullCrossbones} />
+      );
     } else {
       return getBottomRow("winner", <FontAwesomeIcon icon={faCrown} />);
     }
@@ -132,7 +143,10 @@ const Player = ({ G, ctx, playerID, moves, i }) => {
           <div className="exiled-text">{bottomRow()}</div>
         ) : (
           <div className="coin-row no-gutters">
-            <div className="w-50 h-100 d-flex justify-content-end" style={{ paddingRight: "1%" }}>
+            <div
+              className="w-50 h-100 d-flex justify-content-end"
+              style={{ paddingRight: "1%" }}
+            >
               <img
                 onDragStart={(e) => {
                   e.preventDefault();
@@ -143,7 +157,10 @@ const Player = ({ G, ctx, playerID, moves, i }) => {
                 alt="coins"
               />
             </div>
-            <div className="w-50 d-flex align-items-center" style={{ paddingLeft: "1%" }}>
+            <div
+              className="w-50 d-flex align-items-center"
+              style={{ paddingLeft: "1%" }}
+            >
               {player.coins}
               <div className="response-icon" style={{ color: `${iconColor}` }}>
                 {G.turnLog.responses[i] !== "" ? (

@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import uniqid from "uniqid";
 
-import "./Deck.scss";
-
 const numPages = 2;
 
 const Deck = ({ deck }) => {
@@ -32,7 +30,9 @@ const Deck = ({ deck }) => {
             <button
               key={uniqid()}
               onClick={() => select(pageNum)}
-              className={`page-btn ${page === pageNum ? "btn-selected" : "btn-unselected"}`}
+              className={`page-btn ${
+                page === pageNum ? "btn-selected" : "btn-unselected"
+              }`}
             >
               {pageNum}
             </button>
