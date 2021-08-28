@@ -1,5 +1,4 @@
 import React from "react";
-import classNames from "classnames";
 
 const Actions = ({ G, ctx, playerID, moves }) => {
   const yourPlayer = G.players[playerID];
@@ -29,11 +28,7 @@ const Actions = ({ G, ctx, playerID, moves }) => {
         isYourTurn
       }
     >
-      <div
-        className={classNames("general-actions", {
-          "actions-active-enter": isYourTurn,
-        })}
-      >
+      <div>
         <div className="btn-wrapper">
           <button
             className="action-btn"
@@ -62,11 +57,7 @@ const Actions = ({ G, ctx, playerID, moves }) => {
           </button>
         </div>
       </div>
-      <div
-        className={classNames("character-actions", {
-          "actions-active-enter": isYourTurn,
-        })}
-      >
+      <div>
         <div className="btn-wrapper">
           <button
             className="action-btn"

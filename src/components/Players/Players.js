@@ -1,5 +1,4 @@
 import React from "react";
-import classNames from "classnames";
 import Player from "./Player";
 
 // row of players
@@ -24,11 +23,7 @@ const Players = (props) => {
       // dashed line to indicate where you are in the turn order (i.e. between these two players). only applicable if you're not the first or last player
       players.push(
         <div key="position marker" className="d-flex align-items-center h-100">
-          <div
-            className={classNames("position-marker", {
-              "position-marker-active": playerID === ctx.currentPlayer,
-            })}
-          ></div>
+          <div></div>
         </div>
       );
     }

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Client } from "boardgame.io/react";
 import { SocketIO } from "boardgame.io/multiplayer";
-import classNames from "classnames";
 import { DEFAULT_PORT, APP_PRODUCTION } from "../../config";
 import { Coup, Board } from "../../environment";
 import Lobby from "../Lobby/Lobby";
@@ -118,11 +117,7 @@ const Room = (props) => {
           <div className="roomID-area">
             room id:
             <textarea id="roomID" value={id} readOnly />
-            <button
-              className={classNames("copy-btn", { "copied-btn": copied })}
-              onClick={copyToClipboard}
-              disabled={copied}
-            >
+            <button onClick={copyToClipboard} disabled={copied}>
               {copied ? "copied" : "copy"}
             </button>
           </div>

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCaretRight, faCaretLeft } from "@fortawesome/free-solid-svg-icons";
+
 import ChatLog from "./ChatLog";
 import GameView from "./GameView";
 import Rules from "./Rules";
@@ -58,11 +57,11 @@ const ChatLogSettings = ({
     <div className="cls-container">
       <div className="cls-header">
         <span className="left-option" onClick={() => left()}>
-          <FontAwesomeIcon icon={faCaretLeft} />
+          left icon
         </span>
         <span className="cls-title">{selection}</span>
         <span className="right-option" onClick={() => right()}>
-          <FontAwesomeIcon icon={faCaretRight} />
+          right icon
         </span>
       </div>
       {option()}

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import uniqid from "uniqid";
-import classNames from "classnames";
+
 import { cards } from "../../environment/logic/cards";
 import { api } from "../../LobbyAPI";
 
@@ -167,9 +167,6 @@ const ChoosingPanel = ({ G, ctx, playerID, moves, gameID }) => {
         temp.push(
           <img
             key={"choice" + card.character}
-            className={classNames("big-character-choice", {
-              "card-selected": cardSelected,
-            })}
             onClick={() => {
               setHand(card.id);
             }}

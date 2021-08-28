@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import uniqid from "uniqid";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 
 const handleKeyUp = (e) => {
   e.preventDefault();
@@ -78,7 +76,7 @@ const ChatLog = ({ G, playerID, moves }) => {
           onClick={() => message(msg)}
           disabled={msg.length === 0}
         >
-          <FontAwesomeIcon icon={faPaperPlane} />
+          send icon
         </button>
       </div>
     </>

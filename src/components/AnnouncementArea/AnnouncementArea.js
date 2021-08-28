@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import classNames from "classnames";
+
 import ChoosingPanel from "./ChoosingPanel";
 
 const AnnouncementArea = (props) => {
@@ -288,15 +288,8 @@ const AnnouncementArea = (props) => {
   }, [G.winner, name, playerID]);
 
   return (
-    <div
-      className={classNames("announcement-area", {
-        "announcement-area-offset": msgLoading,
-      })}
-    >
-      <div
-        key={msg}
-        className={classNames("turn-message", { "msg-loading": msgLoading })}
-      >
+    <div>
+      <div key={msg}>
         {msg}
         <span style={{ marginLeft: "0.01vw" }}></span>
       </div>

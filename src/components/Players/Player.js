@@ -1,15 +1,5 @@
 import React, { useState } from "react";
 import uniqid from "uniqid";
-import classNames from "classnames";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faSkullCrossbones,
-  faCrown,
-  faThumbsUp,
-  faThumbsDown,
-  faDoorClosed,
-  faDoorOpen,
-} from "@fortawesome/free-solid-svg-icons";
 
 const Player = ({ G, ctx, playerID, moves, i }) => {
   const [revealHand, setRevealHand] = useState(false);
@@ -38,9 +28,6 @@ const Player = ({ G, ctx, playerID, moves, i }) => {
           }}
           draggable={false}
           key={player.name + cardIndex}
-          className={classNames("character-card", {
-            "character-card-reveal": revealCard,
-          })}
           src={
             gameOver || revealCard || revealHand
               ? card.front
@@ -114,16 +101,13 @@ const Player = ({ G, ctx, playerID, moves, i }) => {
 
   const bottomRow = () => {
     if (G.gameOver.playAgain.includes(i.toString())) {
-      return getBottomRow("ready", <FontAwesomeIcon icon={faDoorOpen} />);
+      return getBottomRow("ready", "door open icon");
     } else if (G.gameOver.left.includes(i.toString())) {
-      return getBottomRow("left", <FontAwesomeIcon icon={faDoorClosed} />);
+      return getBottomRow("left", "door close icon");
     } else if (player.isOut) {
-      return getBottomRow(
-        "exiled",
-        <FontAwesomeIcon icon={faSkullCrossbones} />
-      );
+      return getBottomRow("exiled", "death icon");
     } else {
-      return getBottomRow("winner", <FontAwesomeIcon icon={faCrown} />);
+      return getBottomRow("winner", "winner icon");
     }
   };
 
@@ -163,15 +147,11 @@ const Player = ({ G, ctx, playerID, moves, i }) => {
             >
               {player.coins}
               <div className="response-icon" style={{ color: `${iconColor}` }}>
-                {G.turnLog.responses[i] !== "" ? (
-                  G.turnLog.responses[i] === "allow" ? (
-                    <FontAwesomeIcon icon={faThumbsUp} />
-                  ) : (
-                    <FontAwesomeIcon icon={faThumbsDown} />
-                  )
-                ) : (
-                  ""
-                )}
+                {G.turnLog.responses[i] !== ""
+                  ? G.turnLog.responses[i] === "allow"
+                    ? "thumb up icon"
+                    : "thumb down icon"
+                  : ""}
               </div>
             </div>
           </div>

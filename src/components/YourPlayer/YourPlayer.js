@@ -1,15 +1,5 @@
 import React from "react";
 import uniqid from "uniqid";
-import classNames from "classnames";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faSkullCrossbones,
-  faCrown,
-  faThumbsUp,
-  faThumbsDown,
-  faDoorClosed,
-  faDoorOpen,
-} from "@fortawesome/free-solid-svg-icons";
 
 const YourPlayer = ({ G, ctx, playerID, moves }) => {
   const player = G.players[playerID];
@@ -123,25 +113,18 @@ const YourPlayer = ({ G, ctx, playerID, moves }) => {
 
   const bottomRow = () => {
     if (G.gameOver.playAgain.includes(playerID)) {
-      return getBottomRow("ready", <FontAwesomeIcon icon={faDoorOpen} />);
+      return getBottomRow("ready", "open icon");
     } else if (G.gameOver.left.includes(playerID)) {
-      return getBottomRow("left", <FontAwesomeIcon icon={faDoorClosed} />);
+      return getBottomRow("left", "close icon");
     } else if (player.isOut) {
-      return getBottomRow(
-        "exiled",
-        <FontAwesomeIcon icon={faSkullCrossbones} />
-      );
+      return getBottomRow("exiled", "death icon");
     } else {
-      return getBottomRow("winner", <FontAwesomeIcon icon={faCrown} />);
+      return getBottomRow("winner", "winner icon");
     }
   };
 
   return (
-    <div
-      className={classNames(`your-player ${animate}`, {
-        "your-player-selected": cardSelectable && !player.isOut,
-      })}
-    >
+    <div>
       <div className="player-body">
         <div className="player-name">{player.name} (You)</div>
         <div className="no-gutters d-flex" style={{ height: "60%" }}>
@@ -175,15 +158,11 @@ const YourPlayer = ({ G, ctx, playerID, moves }) => {
                 className="response-icon"
                 style={{ paddingRight: "1vw", color: `${iconColor}` }}
               >
-                {G.turnLog.responses[playerID] !== "" ? (
-                  G.turnLog.responses[playerID] === "allow" ? (
-                    <FontAwesomeIcon icon={faThumbsUp} />
-                  ) : (
-                    <FontAwesomeIcon icon={faThumbsDown} />
-                  )
-                ) : (
-                  ""
-                )}
+                {G.turnLog.responses[playerID] !== ""
+                  ? G.turnLog.responses[playerID] === "allow"
+                    ? "thumb up icon"
+                    : "thumb down icon"
+                  : ""}
               </div>
             </div>
           </div>
