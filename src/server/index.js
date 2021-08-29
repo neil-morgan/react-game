@@ -1,10 +1,10 @@
 // from boardgame.io guide for Deployment to Heroku of Frontend and Backend
 import { Server, FlatFile } from "boardgame.io/server";
-import game from "./environment";
+import game from "../environment";
 import { customAlphabet } from "nanoid";
 import path from "path";
 import serve from "koa-static";
-import { DEFAULT_PORT } from "./config";
+import { DEFAULT_PORT } from "../environment/config";
 
 const server = Server({
   games: [game],
@@ -38,3 +38,5 @@ server.run({
     uuid: customAlphabet("ABCDEFGHJKMNOPQRSTUVWXYZ0123456789", 6),
   },
 });
+
+export default server;

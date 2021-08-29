@@ -4,9 +4,14 @@
   "author": "Neil Morgan",
   "private": true,
   "dependencies": {
+    "@chakra-ui/react": "^1.6.7",
+    "@emotion/react": "^11.4.1",
+    "@emotion/styled": "^11.3.0",
     "axios": "^0.21.1",
     "boardgame.io": "^0.39.16",
     "esm": "^3.2.25",
+    "focus-visible": "^5.2.0",
+    "framer-motion": "^4.1.17",
     "koa-static": "^5.0.0",
     "ky": "^0.28.5",
     "nanoid": "^3.1.20",
@@ -18,9 +23,15 @@
     "react-transition-group": "^4.4.1",
     "uniqid": "^5.2.0"
   },
+  "devDependencies": {
+    "eslint": "^7.32.0",
+    "eslint-plugin-react": "^7.25.0",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "prettier": "^2.3.2"
+  },
   "scripts": {
     "client": "react-scripts start",
-    "server": "node -r esm src/server.js",
+    "server": "node -r esm src/server",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -40,11 +51,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "eslint": "^7.32.0",
-    "eslint-plugin-react": "^7.25.0",
-    "eslint-plugin-react-hooks": "^4.2.0",
-    "prettier": "^2.3.2"
   }
 }

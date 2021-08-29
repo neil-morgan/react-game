@@ -30,7 +30,7 @@ import {
 } from "./actions/misc";
 import { initializeGame, getPlayOrder } from "./initializer";
 import { getTurnMsg } from "./messageBuilder";
-import { GAME_NAME } from "../config";
+import { GAME_NAME } from "./config";
 
 /* ---- Setup ---- */
 const setup = ({ numPlayers }) => {

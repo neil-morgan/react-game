@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { api } from "../LobbyAPI";
+import { api } from "../server/api";
 
 const Home = (props) => {
   const { history } = props;

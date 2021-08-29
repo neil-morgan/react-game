@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Client } from "boardgame.io/react";
 import { SocketIO } from "boardgame.io/multiplayer";
-import { DEFAULT_PORT, APP_PRODUCTION } from "../config";
+import { DEFAULT_PORT, APP_PRODUCTION } from "../environment/config";
 import game from "../environment";
 import { Board } from "../components";
-import { api } from "../LobbyAPI";
+import { api } from "../server/api";
 
 const { origin, protocol, hostname } = window.location;
 const SERVER_URL = APP_PRODUCTION
@@ -65,7 +65,7 @@ const Room = (props) => {
     return () => clearTimeout(timeout);
   }, [copied, id]);
 
-  const copyToClipboard = (e) => {
+  const copy = (e) => {
     const textArea = document.getElementById("roomID");
     textArea.select();
     document.execCommand("copy");
@@ -117,7 +117,7 @@ const Room = (props) => {
           <div className="roomID-area">
             room id:
             <textarea id="roomID" value={id} readOnly />
-            <button onClick={copyToClipboard} disabled={copied}>
+            <button onClick={copy} disabled={copied}>
               {copied ? "copied" : "copy"}
             </button>
           </div>

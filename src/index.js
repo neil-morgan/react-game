@@ -1,4 +1,6 @@
 import React from "react";
+import { Flex, ChakraProvider } from "@chakra-ui/react";
+import { theme } from "./theme";
 import ReactDOM from "react-dom";
 import {
   BrowserRouter as Router,
@@ -10,21 +12,30 @@ import {
 import { Home, Room } from "./pages";
 
 const App = () => {
-  const history = useHistory(); // remember the history of user navigation
+  const history = useHistory();
 
-  // defining the routing: (so far) homepage, lobby/room page. else redirect to home page for simplicity
   return (
-    <Switch>
-      <Route exact path="/">
-        <Home history={history} />
-      </Route>
-      <Route exact path="/rooms/:id">
-        <Room history={history} />
-      </Route>
-      <Redirect to="/" />
-    </Switch>
+    <ChakraProvider theme={theme}>
+      <Wrapper>
+        <Switch>
+          <Route exact path="/">
+            <Home history={history} />
+          </Route>
+          <Route exact path="/rooms/:id">
+            <Room history={history} />
+          </Route>
+          <Redirect to="/" />
+        </Switch>
+      </Wrapper>
+    </ChakraProvider>
   );
 };
+
+const Wrapper = ({ children }) => (
+  <Flex as="main" h="100vh">
+    {children}
+  </Flex>
+);
 
 ReactDOM.render(
   <React.StrictMode>
