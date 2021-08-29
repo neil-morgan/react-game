@@ -10,6 +10,8 @@ import {
   useHistory,
 } from "react-router-dom";
 import { Home, Room } from "./pages";
+import "@fontsource/inter";
+import "@fontsource/roboto-mono";
 
 const App = () => {
   const history = useHistory();
