@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Lobby from "../Lobby/Lobby";
-import { api } from "../../LobbyAPI";
+import { api } from "../LobbyAPI";
 
 const Home = (props) => {
   const { history } = props;
@@ -92,7 +91,7 @@ const Home = (props) => {
   };
 
   return (
-    <Lobby>
+    <>
       <span className="title join-title">join game</span>
       <div className="input-info-area">
         <p style={{ margin: "0" }}>room id</p>
@@ -168,7 +167,7 @@ const Home = (props) => {
       >
         create
       </button>
-    </Lobby>
+    </>
   );
 };
 

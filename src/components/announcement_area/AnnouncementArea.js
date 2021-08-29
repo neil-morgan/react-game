@@ -147,7 +147,10 @@ const AnnouncementArea = (props) => {
           }
           setMsgLoading(false);
           if (
-            ctx.activePlayers.hasOwnProperty(G.turnLog.challenge.challenged.id)
+            Object.prototype.hasOwnProperty.call(
+              ctx.activePlayers,
+              G.turnLog.challenge.challenged.id
+            )
           ) {
             timer = setTimeout(() => {
               // timer to allow players time to read announcements, but also advance the game "automatically" when necessary
@@ -170,8 +173,10 @@ const AnnouncementArea = (props) => {
     // on block
     else if (Object.keys(G.turnLog.blockedBy).length !== 0) {
       const blocksWith =
-        G.turnLog.blockedBy.hasOwnProperty("character") &&
-        G.turnLog.blockedBy.character !== "";
+        Object.prototype.hasOwnProperty.call(
+          G.turnLog.blockedBy,
+          "character"
+        ) && G.turnLog.blockedBy.character !== "";
       if (
         G.turnLog.action === "steal" &&
         G.turnLog.blockedBy.character === ""

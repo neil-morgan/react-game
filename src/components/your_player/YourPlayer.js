@@ -7,7 +7,7 @@ const YourPlayer = ({ G, ctx, playerID, moves }) => {
   const gameOver = G.winner.id !== "-1";
 
   let cardSelectable =
-    (G.turnLog.exchange.hasOwnProperty("newHand") &&
+    (Object.prototype.hasOwnProperty.call(G.turnLog.exchange, "newHand") &&
       ctx.activePlayers[playerID] === "action") ||
     (ctx.activePlayers[playerID] &&
       ctx.activePlayers[playerID].includes("lose"));
@@ -36,7 +36,7 @@ const YourPlayer = ({ G, ctx, playerID, moves }) => {
     if (
       (cardSelected && G.turnLog.challenge.revealedCard.id === card.id) ||
       (isYourTurn &&
-        G.turnLog.exchange.hasOwnProperty("newHand") &&
+        Object.prototype.hasOwnProperty.call(G.turnLog.exchange, "newHand") &&
         G.turnLog.exchange.newHand.includes(card.id))
     ) {
       cardClass = "card-selected";
@@ -68,7 +68,10 @@ const YourPlayer = ({ G, ctx, playerID, moves }) => {
             ) {
               loseCard(playerID, card.id);
             } else if (
-              G.turnLog.exchange.hasOwnProperty("newHand") &&
+              Object.prototype.hasOwnProperty.call(
+                G.turnLog.exchange,
+                "newHand"
+              ) &&
               isYourTurn
             ) {
               setHand(card.id);

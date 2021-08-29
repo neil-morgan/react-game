@@ -162,7 +162,7 @@ const ChoosingPanel = ({ G, ctx, playerID, moves, gameID }) => {
       // image loading optimization with hidden
       G.turnLog.exchange.drawnCards.forEach((card) => {
         const cardSelected =
-          G.turnLog.exchange.hasOwnProperty("newHand") &&
+          Object.prototype.hasOwnProperty.call(G.turnLog.exchange, "newHand") &&
           G.turnLog.exchange.newHand.includes(card.id);
         temp.push(
           <img

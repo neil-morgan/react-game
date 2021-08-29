@@ -60,7 +60,8 @@ const executeAction = (G, ctx) => {
   } else if (G.turnLog.action === "steal") {
     if (G.players[G.turnLog.target.id].coins < 2) {
       // allows player to steal 0 or 1 coin, and minimum # coins a player can have is 0
-      G.players[ctx.currentPlayer].coins += G.players[G.turnLog.target.id].coins;
+      G.players[ctx.currentPlayer].coins +=
+        G.players[G.turnLog.target.id].coins;
       G.players[G.turnLog.target.id].coins = 0;
     } else {
       G.players[ctx.currentPlayer].coins += 2;
@@ -113,7 +114,9 @@ const block = (G, ctx, playerID, character) => {
   }
 
   if (G.turnLog.action === "steal") {
-    if (!G.turnLog.blockedBy.hasOwnProperty("character")) {
+    if (
+      Object.prototype.hasOwnProperty.call(!G.turnLog.blockedBy, "character")
+    ) {
       G.turnLog.blockedBy.character = "";
     } else {
       G.turnLog.blockedBy.character = character;

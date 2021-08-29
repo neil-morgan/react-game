@@ -2,11 +2,10 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Client } from "boardgame.io/react";
 import { SocketIO } from "boardgame.io/multiplayer";
-import { DEFAULT_PORT, APP_PRODUCTION } from "../../config";
-import { Coup } from "../../environment";
-import Board from "../../environment/Board";
-import Lobby from "../Lobby/Lobby";
-import { api } from "../../LobbyAPI";
+import { DEFAULT_PORT, APP_PRODUCTION } from "../config";
+import { Coup } from "../environment";
+import Board from "../environment/Board";
+import { api } from "../LobbyAPI";
 
 const { origin, protocol, hostname } = window.location;
 const SERVER_URL = APP_PRODUCTION
@@ -98,7 +97,7 @@ const Room = (props) => {
     );
   } else {
     return (
-      <Lobby>
+      <>
         <span className="title room-title">Room</span>
         <div className="players-list">
           {players.map((player) => {
@@ -131,7 +130,7 @@ const Room = (props) => {
             leave
           </button>
         </div>
-      </Lobby>
+      </>
     );
   }
 };

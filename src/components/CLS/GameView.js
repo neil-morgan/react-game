@@ -3,10 +3,18 @@ import uniqid from "uniqid";
 
 const statsHdrs = [
   "Action",
-  <span className="successful-color">✔</span>,
-  <span className="unsuccessful-color">✘</span>,
-  <span className="counteraction-color">⚒</span>,
-  <span className="counteraction-color">⚔</span>,
+  <span key={uniqid()} className="successful-color">
+    ✔
+  </span>,
+  <span key={uniqid()} className="unsuccessful-color">
+    ✘
+  </span>,
+  <span key={uniqid()} className="counteraction-color">
+    ⚒
+  </span>,
+  <span key={uniqid()} className="counteraction-color">
+    ⚔
+  </span>,
 ];
 
 const GameView = ({ G, playerID, revealDeck, setRevealDeck }) => {
