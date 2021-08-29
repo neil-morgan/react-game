@@ -1,7 +1,7 @@
-import BottomBar from "./BottomBar/BottomBar";
+import AnnouncementArea from "./announcement_area/AnnouncementArea";
+import BottomBar from "./bottom_bar/BottomBar";
 import ChatLogSettings from "./CLS/CLS";
-import AnnouncementArea from "./AnnouncementArea/AnnouncementArea";
-import Players from "./Players/Players";
-import YourPlayer from "./YourPlayer/YourPlayer";
+import Players from "./players/Players";
+import YourPlayer from "./your_player/YourPlayer";
 
-export { BottomBar, ChatLogSettings, AnnouncementArea, Players, YourPlayer };
+export { AnnouncementArea, ChatLogSettings, BottomBar, Players, YourPlayer };

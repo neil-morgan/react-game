@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import {
+  AnnouncementArea,
+  BottomBar,
+  ChatLogSettings,
   Players,
   YourPlayer,
-  BottomBar,
-  AnnouncementArea,
-  ChatLogSettings,
-} from "./";
+} from "../components";
 
 const Board = (props) => {
   const [revealDeck, setRevealDeck] = useState(false);
