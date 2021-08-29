@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { api } from "../server/api";
+import { Flex, Heading } from "@chakra-ui/react";
 
 const Home = (props) => {
   const { history } = props;
@@ -90,83 +91,103 @@ const Home = (props) => {
     });
   };
 
+  const JoinGame = () => {
+    return (
+      <Flex direction="column">
+        <Heading color="white" size="2xl">
+          Join Game
+        </Heading>
+        <div className="input-info-area">
+          <p style={{ margin: "0" }}>room id</p>
+        </div>
+        <input
+          id="roomIdentification"
+          type="text"
+          maxLength={`${roomIDLength}`}
+          spellCheck="false"
+          autoComplete="off"
+          onKeyDown={(e) => handleKeyDown(e)}
+          onChange={(e) => setRoom(e.target.value)}
+          className="input-field"
+        />
+        <div className="input-info-area">
+          <p style={{ margin: "0" }}>your name</p>
+          <p style={{ margin: "0 0 0 auto" }}>{jNameCount}</p>
+        </div>
+        <div className="user-input">
+          <input
+            id="joinName"
+            type="text"
+            maxLength={`${maxNameLength}`}
+            spellCheck="false"
+            autoComplete="off"
+            onKeyDown={(e) => handleKeyDown(e, jName)}
+            onChange={(e) => setJName(e.target.value)}
+            onPaste={(e) => e.preventDefault()}
+            className="input-field"
+          />
+        </div>
+        <button
+          className="lobby-btn"
+          disabled={room.length !== roomIDLength || jName.length === 0}
+          onClick={() => joinRoom(room, jName)}
+        >
+          join
+        </button>
+      </Flex>
+    );
+  };
+
+  const CreateGame = () => {
+    return (
+      <Flex direction="column">
+        <Heading color="white" size="2xl">
+          Create Game
+        </Heading>
+        <div className="input-info-area">
+          <p style={{ margin: "0" }}># players: {num}</p>
+        </div>
+        <input
+          type="range"
+          min="2"
+          max="8"
+          value={num}
+          autoComplete="off"
+          onChange={(e) => setNum(e.target.value)}
+          className="input-slider"
+        />
+        <div className="input-info-area">
+          <p style={{ margin: "0" }}>your name</p>
+          <p style={{ margin: "0 0 0 auto" }}>{cNameCount}</p>
+        </div>
+        <div className="user-input">
+          <input
+            type="text"
+            maxLength={`${maxNameLength}`}
+            spellCheck="false"
+            autoComplete="off"
+            onKeyDown={(e) => handleKeyDown(e, cName)}
+            onChange={(e) => setCName(e.target.value)}
+            onPaste={(e) => e.preventDefault()}
+            className="input-field"
+          />
+        </div>
+        <button
+          className="lobby-btn"
+          disabled={cName.length === 0}
+          onClick={createRoom}
+        >
+          create
+        </button>
+      </Flex>
+    );
+  };
+
   return (
     <>
-      <span className="title join-title">join game</span>
-      <div className="input-info-area">
-        <p style={{ margin: "0" }}>room id</p>
-      </div>
-      <input
-        id="roomIdentification"
-        type="text"
-        maxLength={`${roomIDLength}`}
-        spellCheck="false"
-        autoComplete="off"
-        onKeyDown={(e) => handleKeyDown(e)}
-        onChange={(e) => setRoom(e.target.value)}
-        className="input-field"
-      />
-      <div className="input-info-area">
-        <p style={{ margin: "0" }}>your name</p>
-        <p style={{ margin: "0 0 0 auto" }}>{jNameCount}</p>
-      </div>
-      <div className="user-input">
-        <input
-          id="joinName"
-          type="text"
-          maxLength={`${maxNameLength}`}
-          spellCheck="false"
-          autoComplete="off"
-          onKeyDown={(e) => handleKeyDown(e, jName)}
-          onChange={(e) => setJName(e.target.value)}
-          onPaste={(e) => e.preventDefault()}
-          className="input-field"
-        />
-      </div>
-      <button
-        className="lobby-btn"
-        disabled={room.length !== roomIDLength || jName.length === 0}
-        onClick={() => joinRoom(room, jName)}
-      >
-        join
-      </button>
+      <JoinGame />
+      <CreateGame />
       <div className="error-msg">{errMsg}</div>
-      <span className="title create-title">create lobby</span>
-      <div className="input-info-area">
-        <p style={{ margin: "0" }}># players: {num}</p>
-      </div>
-      <input
-        type="range"
-        min="2"
-        max="8"
-        value={num}
-        autoComplete="off"
-        onChange={(e) => setNum(e.target.value)}
-        className="input-slider"
-      />
-      <div className="input-info-area">
-        <p style={{ margin: "0" }}>your name</p>
-        <p style={{ margin: "0 0 0 auto" }}>{cNameCount}</p>
-      </div>
-      <div className="user-input">
-        <input
-          type="text"
-          maxLength={`${maxNameLength}`}
-          spellCheck="false"
-          autoComplete="off"
-          onKeyDown={(e) => handleKeyDown(e, cName)}
-          onChange={(e) => setCName(e.target.value)}
-          onPaste={(e) => e.preventDefault()}
-          className="input-field"
-        />
-      </div>
-      <button
-        className="lobby-btn"
-        disabled={cName.length === 0}
-        onClick={createRoom}
-      >
-        create
-      </button>
     </>
   );
 };
