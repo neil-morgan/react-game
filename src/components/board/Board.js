@@ -6,7 +6,7 @@ import {
   ChatLogSettings,
   Players,
   YourPlayer,
-} from "../components";
+} from "..";
 
 const Board = (props) => {
   const [revealDeck, setRevealDeck] = useState(false);

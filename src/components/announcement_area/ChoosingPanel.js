@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import uniqid from "uniqid";
 
-import { cards } from "../../environment/logic/cards";
+import { cards } from "../../environment/cards";
 import { api } from "../../LobbyAPI";
 
 const ChoosingPanel = ({ G, ctx, playerID, moves, gameID }) => {
