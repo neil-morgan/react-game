@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Flex, Heading } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
 import { Client } from "boardgame.io/react";
 import { SocketIO } from "boardgame.io/multiplayer";
@@ -98,7 +99,7 @@ const Room = (props) => {
   } else {
     return (
       <>
-        <span className="title room-title">Room</span>
+        <span className="title room-title">Welcome</span>
         <div className="players-list">
           {players.map((player) => {
             if (player.name) {

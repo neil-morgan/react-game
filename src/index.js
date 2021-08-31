@@ -9,7 +9,7 @@ import {
   Redirect,
   useHistory,
 } from "react-router-dom";
-import { Drawer, IconDefs, Wrapper } from "./components";
+import { Drawer, IconDefs, Logo, Wrapper } from "./components";
 import { Home, Room } from "./pages";
 import "@fontsource/inter";
 import "@fontsource/roboto-mono";
@@ -21,6 +21,7 @@ const App = () => {
     <ChakraProvider theme={theme}>
       <IconDefs />
       <Drawer />
+      <Logo />
       <Wrapper>
         <Switch>
           <Route exact path="/">

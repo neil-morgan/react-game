@@ -27,7 +27,7 @@ const Drawer = () => {
         top={4}
         right={6}
       >
-        <Icon name="menu" boxSize={6} />
+        <Icon name="menu" boxSize={7} />
       </IconButton>
 
       <ChakraDrawer
@@ -37,11 +37,14 @@ const Drawer = () => {
         finalFocusRef={btnRef}
       >
         <DrawerOverlay />
-        <DrawerContent bg="base.d100">
+        <DrawerContent bg="base.900">
           <DrawerHeader
+            position="relative"
             display="flex"
             justifyContent="space-between"
             alignItems="center"
+            borderBottomWidth={1}
+            borderColor="inherit"
           >
             <Heading color="white" size="lg">
               Rules
