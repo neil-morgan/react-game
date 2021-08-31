@@ -1,5 +1,5 @@
 import React from "react";
-import { Flex, ChakraProvider } from "@chakra-ui/react";
+import { ChakraProvider } from "@chakra-ui/react";
 import { theme } from "./theme";
 import ReactDOM from "react-dom";
 import {
@@ -9,6 +9,7 @@ import {
   Redirect,
   useHistory,
 } from "react-router-dom";
+import { Drawer, IconDefs, Wrapper } from "./components";
 import { Home, Room } from "./pages";
 import "@fontsource/inter";
 import "@fontsource/roboto-mono";
@@ -18,6 +19,8 @@ const App = () => {
 
   return (
     <ChakraProvider theme={theme}>
+      <IconDefs />
+      <Drawer />
       <Wrapper>
         <Switch>
           <Route exact path="/">
@@ -32,12 +35,6 @@ const App = () => {
     </ChakraProvider>
   );
 };
-
-const Wrapper = ({ children }) => (
-  <Flex as="main" h="100vh">
-    {children}
-  </Flex>
-);
 
 ReactDOM.render(
   <React.StrictMode>
