@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { api } from "../../../server/api";
-import { Flex, Button } from "@chakra-ui/react";
 import { AnimatePresence, useCycle } from "framer-motion";
+import { MotionFlex } from "../../";
+import { pageTransition } from "../../../animations";
 
 import CreateGame from "./CreateGame";
 import JoinGame from "./JoinGame";
@@ -10,7 +11,7 @@ import OptionButton from "./OptionButton";
 
 const Lobby = (props) => {
   const { history } = props;
-  const maxNameLength = 12;
+  const maxNameLength = 8;
   const roomIDLength = 6;
 
   const [option, onCycle] = useCycle(true, false);
@@ -122,7 +123,15 @@ const Lobby = (props) => {
   };
 
   return (
-    <Flex position="relative" m="auto" h="430px" w="320px" direction="column">
+    <MotionFlex
+      position="relative"
+      m="auto"
+      h="430px"
+      w="full"
+      maxW="320px"
+      direction="column"
+      {...pageTransition}
+    >
       <AnimatePresence>
         {option ? (
           <Option key="join-1">
@@ -146,7 +155,7 @@ const Lobby = (props) => {
           </OptionButton>
         )}
       </AnimatePresence>
-    </Flex>
+    </MotionFlex>
   );
 };
 

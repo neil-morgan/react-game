@@ -4,6 +4,7 @@ import BottomBar from "./bottom_bar/BottomBar";
 import ChatLogSettings from "./CLS/CLS";
 import Lobby from "./lobby";
 import Players from "./players/Players";
+import WaitingRoom from "./waiting_room/WaitingRoom";
 import YourPlayer from "./your_player/YourPlayer";
 
 export {
@@ -13,5 +14,6 @@ export {
   ChatLogSettings,
   Lobby,
   Players,
+  WaitingRoom,
   YourPlayer,
 };

@@ -1,23 +1,7 @@
 import React from "react";
 import { Button } from "@chakra-ui/react";
 import { MotionFlex } from "../../";
-
-const animationProps = {
-  initial: {
-    y: 10,
-    opacity: 0,
-  },
-  animate: {
-    y: 0,
-    opacity: 1,
-    transition: { delay: 1, duration: 0.25, ease: "easeOut" },
-  },
-  exit: {
-    y: 10,
-    opacity: 0,
-    transition: { duration: 0.25, ease: "easeIn" },
-  },
-};
+import { lobbyButtonTransition } from "../../../animations";
 
 const OptionButton = ({ children, onClick }) => {
   return (
@@ -27,7 +11,7 @@ const OptionButton = ({ children, onClick }) => {
       left={0}
       w="full"
       justify="center"
-      {...animationProps}
+      {...lobbyButtonTransition}
     >
       <Button
         _active={{ color: "primary.200" }}

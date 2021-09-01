@@ -11,6 +11,7 @@
     "@fontsource/roboto-mono": "^4.5.0",
     "axios": "^0.21.1",
     "boardgame.io": "^0.39.16",
+    "copy-to-clipboard-ultralight": "^1.0.12",
     "esm": "^3.2.25",
     "focus-visible": "^5.2.0",
     "framer-motion": "^4.1.17",

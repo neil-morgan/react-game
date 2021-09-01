@@ -8,30 +8,34 @@ import {
   Switch,
   Redirect,
   useHistory,
+  useLocation,
 } from "react-router-dom";
-import { Drawer, IconDefs, Logo, Wrapper } from "./components";
+import { Drawer, IconDefs, Wrapper } from "./components";
 import { Home, Room } from "./pages";
+import { AnimatePresence } from "framer-motion";
 import "@fontsource/inter";
 import "@fontsource/roboto-mono";
 
 const App = () => {
   const history = useHistory();
+  const location = useLocation();
 
   return (
     <ChakraProvider theme={theme}>
       <IconDefs />
       <Drawer />
-      <Logo />
       <Wrapper>
-        <Switch>
-          <Route exact path="/">
-            <Home history={history} />
-          </Route>
-          <Route exact path="/rooms/:id">
-            <Room history={history} />
-          </Route>
-          <Redirect to="/" />
-        </Switch>
+        <AnimatePresence exitBeforeEnter initial={false}>
+          <Switch location={location} key={location.pathname}>
+            <Route exact path="/">
+              <Home history={history} />
+            </Route>
+            <Route exact path="/rooms/:id">
+              <Room history={history} />
+            </Route>
+            <Redirect to="/" />
+          </Switch>
+        </AnimatePresence>
       </Wrapper>
     </ChakraProvider>
   );
