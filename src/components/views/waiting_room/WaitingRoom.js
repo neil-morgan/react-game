@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   Flex,
   Heading,
@@ -10,13 +10,29 @@ import {
 } from "@chakra-ui/react";
 import { MotionFlex } from "../../";
 import { pageTransition } from "../../../animations";
-import ultralightCopy from "copy-to-clipboard-ultralight";
+import copyToClipboard from "copy-to-clipboard-ultralight";
+import { useRipple } from "../../../hooks";
 
-const handleCopyClick = (id) => {
-  ultralightCopy(id);
-};
+const WaitingRoom = ({ activePlayers, players, id, leaveRoom }) => {
+  const [copied, setCopied] = useState(false);
+  const playersRequired = players.length - activePlayers;
 
-const WaitingRoom = ({ players, id, leaveRoom }) => {
+  const handleCopyClick = (id) => {
+    copyToClipboard(id);
+    setCopied(true);
+  };
+
+  useEffect(() => {
+    let timeout;
+    if (copied) {
+      timeout = setTimeout(() => setCopied(false), 1500);
+    }
+    return () => clearTimeout(timeout);
+  }, [copied, id]);
+
+  const copyRef = useRef();
+  useRipple(copyRef);
+
   return (
     <MotionFlex direction="column" m="auto" w="320px" {...pageTransition}>
       <Flex
@@ -29,17 +45,18 @@ const WaitingRoom = ({ players, id, leaveRoom }) => {
         <Heading color="white">Welcome!</Heading>
         <Text>Invite your friends</Text>
         <Button
+          ref={copyRef}
           id="roomID"
           colorScheme="primary"
           onClick={() => handleCopyClick(id)}
           my={8}
         >
-          {id}
+          {copied ? "Copied" : id}
         </Button>
         <Text color="primary.300" size="3xl" fontWeight="bold">
-          {players.length === 0 ? "" : `${players.length - 1}`}
+          {playersRequired}
         </Text>{" "}
-        <Text>more players required</Text>
+        <Text>{`more player${playersRequired > 1 ? "s" : ""} required`}</Text>
         <Wrap mt={6} spacing={2} justify="center">
           {players.map((player, index) =>
             player.name ? (

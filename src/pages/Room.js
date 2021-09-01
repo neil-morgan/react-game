@@ -24,6 +24,7 @@ const Room = (props) => {
   const { id } = useParams();
 
   const [players, setPlayers] = useState([]);
+  const [activePlayers, setActivePlayers] = useState(0);
   const [show, setShow] = useState(false);
 
   // check for newly joined players by comparing against the two players array (front-end and the api, and api is always slightly ahead)
@@ -33,6 +34,7 @@ const Room = (props) => {
         (players) => {
           setPlayers(players);
           const currPlayers = players.filter((player) => player.name); // only current players have a name field
+          setActivePlayers(currPlayers);
           if (currPlayers.length === players.length) {
             setShow(true); // everyone has joined, show them the board
           }
@@ -65,6 +67,7 @@ const Room = (props) => {
   };
 
   const waitingProps = {
+    activePlayers: activePlayers.length,
     players,
     id,
     leaveRoom,
