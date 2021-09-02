@@ -50,7 +50,7 @@ const Drawer = ({ children, heading, icon = "menu" }) => {
             justifyContent="space-between"
             alignItems="center"
             borderBottomWidth={1}
-            borderColor="inherit"
+            borderColor="base.700"
           >
             <Heading color="white" size="lg">
               {heading}
@@ -68,7 +68,7 @@ const Drawer = ({ children, heading, icon = "menu" }) => {
             </IconButton>
           </DrawerHeader>
 
-          <DrawerBody>{children}</DrawerBody>
+          <DrawerBody p={6}>{children}</DrawerBody>
         </DrawerContent>
       </ChakraDrawer>
     </>

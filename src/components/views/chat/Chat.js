@@ -1,6 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Flex } from "@chakra-ui/react";
+import {
+  Flex,
+  InputGroup,
+  Input,
+  InputRightElement,
+  IconButton,
+} from "@chakra-ui/react";
 import uniqid from "uniqid";
+import { Icon } from "../../";
 
 const handleKeyUp = (e) => {
   e.preventDefault();
@@ -26,7 +33,7 @@ const ChatLog = ({ G, playerID, moves }) => {
   }, [G.chat]);
 
   return (
-    <>
+    <Flex direction="column" position="absolute" bottom={10} right={10}>
       <div id="scrollBottom" className="msgs">
         {G.chat.map((msg) => {
           let className = "msg ";
@@ -61,8 +68,9 @@ const ChatLog = ({ G, playerID, moves }) => {
           }
         })}
       </div>
+
       <div className="chat-form">
-        <input
+        <Input
           id="player-msg"
           type="text"
           maxLength="70"
@@ -71,16 +79,12 @@ const ChatLog = ({ G, playerID, moves }) => {
           onKeyUp={(e) => handleKeyUp(e)}
           autoComplete="off"
         />
-        <button
-          id="send-button"
-          className="send-btn"
+        <IconButton
           onClick={() => message(msg)}
           disabled={msg.length === 0}
-        >
-          send icon
-        </button>
+        ></IconButton>
       </div>
-    </>
+    </Flex>
   );
 };
 

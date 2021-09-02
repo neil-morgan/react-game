@@ -19,7 +19,7 @@ export const styles = {
       bg: "base.d200",
     },
   },
-}
+};
 
 export const textStyles = {
   heading: {
@@ -38,7 +38,7 @@ export const textStyles = {
       color: "primary.200",
     },
   },
-}
+};
 
 export const layerStyles = {
   layerHover: {
@@ -59,4 +59,4 @@ export const layerStyles = {
       transition: "200ms ease",
     },
   },
-}
+};

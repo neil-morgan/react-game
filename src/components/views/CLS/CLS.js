@@ -1,14 +1,12 @@
 import React, { useState } from "react";
 import { Flex } from "@chakra-ui/react";
-import ChatLog from "./ChatLog";
+import ChatLog from "../chat/Chat";
 import GameView from "./GameView";
-import Rules from "./Rules";
 
 const allOptions = ["chat & log", "game view", "rules"];
 
 const ChatLogSettings = ({ G, playerID, moves, revealDeck, setRevealDeck }) => {
   const [optionIndex, setIndex] = useState(0);
-  const [rulesPage, setRPage] = useState(1);
 
   const left = () => {
     if (optionIndex - 1 < 0) {
@@ -41,7 +39,7 @@ const ChatLogSettings = ({ G, playerID, moves, revealDeck, setRevealDeck }) => {
         />
       );
     } else if (selection === "rules") {
-      return <Rules page={rulesPage} setPage={setRPage} />;
+      return "";
     }
   };
 
