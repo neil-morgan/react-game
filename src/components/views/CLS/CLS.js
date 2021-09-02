@@ -1,19 +1,12 @@
 import React, { useState } from "react";
-
+import { Flex } from "@chakra-ui/react";
 import ChatLog from "./ChatLog";
 import GameView from "./GameView";
 import Rules from "./Rules";
 
 const allOptions = ["chat & log", "game view", "rules"];
 
-const ChatLogSettings = ({
-  G,
-  ctx,
-  playerID,
-  moves,
-  revealDeck,
-  setRevealDeck,
-}) => {
+const ChatLogSettings = ({ G, playerID, moves, revealDeck, setRevealDeck }) => {
   const [optionIndex, setIndex] = useState(0);
   const [rulesPage, setRPage] = useState(1);
 
@@ -54,7 +47,7 @@ const ChatLogSettings = ({
 
   // bot message is just output of turn log's message
   return (
-    <div className="cls-container">
+    <Flex position="absolute" bottom={0} right={0}>
       <div className="cls-header">
         <span className="left-option" onClick={() => left()}>
           left icon
@@ -65,7 +58,7 @@ const ChatLogSettings = ({
         </span>
       </div>
       {option()}
-    </div>
+    </Flex>
   );
 };
 

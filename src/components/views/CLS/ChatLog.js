@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Flex } from "@chakra-ui/react";
 import uniqid from "uniqid";
 
 const handleKeyUp = (e) => {

@@ -1,7 +1,7 @@
-import { extendTheme } from "@chakra-ui/react"
-import "focus-visible/dist/focus-visible"
+import { extendTheme } from "@chakra-ui/react";
+import "focus-visible/dist/focus-visible";
 
-import { styles, layerStyles, textStyles } from "./styles"
+import { styles, layerStyles, textStyles } from "./styles";
 
 import {
   Container,
@@ -12,7 +12,8 @@ import {
   Divider,
   Section,
   List,
-} from "./components"
+  Tooltip,
+} from "./components";
 
 import {
   breakpoints,
@@ -21,7 +22,7 @@ import {
   fontRanges,
   fontSizes,
   fonts,
-} from "./foundations"
+} from "./foundations";
 
 const overrides = {
   config: { initialColorMode: "dark", useSystemColorMode: false },
@@ -35,6 +36,7 @@ const overrides = {
     Link,
     List,
     Text,
+    Tooltip,
   },
 
   layerStyles,
@@ -47,6 +49,6 @@ const overrides = {
   fontRanges,
   fontSizes,
   fonts,
-}
+};
 
-export const theme = extendTheme(overrides)
+export const theme = extendTheme(overrides);

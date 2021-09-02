@@ -1,4 +1,5 @@
 import React from "react";
+import { Flex } from "@chakra-ui/react";
 import Player from "./Player";
 
 // row of players
@@ -28,7 +29,7 @@ const Players = (props) => {
       );
     }
   }
-  return <div className="players">{players}</div>;
+  return <Flex>{players}</Flex>;
 };
 
 export default Players;
