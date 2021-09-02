@@ -1,6 +1,6 @@
 const pageTransition = {
   initial: {
-    x: 60,
+    x: 30,
     scale: 1.2,
     opacity: 0,
   },

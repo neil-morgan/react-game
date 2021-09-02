@@ -1,19 +1,27 @@
 import { useEffect } from "react";
 
-const ANIMATION_LENGTH = 700;
-const RIPPLE_SIZE = 100;
-const RIPPLE_COLOR = "rgba(0, 0, 0, 0.3)";
+const DEFAULT_DURATION = 700;
+const DEFAULT_SIZE = 100;
+const DEFAULT_COLOR = "rgba(0, 0, 0, 0.3)";
+const DEFAULT_EVENT = {
+  clientX: 0,
+  clientY: 0,
+  target: null,
+};
 
 if (typeof document !== "undefined") {
   const style = document.createElement("style");
 
   const keyframes = `
     @keyframes use-ripple-animation {
-      from {
+      0% {
         opacity: 1;
         transform: scale(0);
       }
-      to {
+      90% {
+        opacity: 0;
+      }
+      100% {
         opacity: 0;
         transform: scale(10);
       }
@@ -24,13 +32,7 @@ if (typeof document !== "undefined") {
   document.querySelector("head").appendChild(style);
 }
 
-const defaultEvent = {
-  clientX: 0,
-  clientY: 0,
-  target: null,
-};
-
-const createRipple = (element, options) => (e) => {
+const emitRipple = (element, options) => (e) => {
   const isExcluded = (options?.excludedRefs || []).some(
     (ref) =>
       (!!ref.current && ref.current.contains(e?.target)) ||
@@ -41,8 +43,8 @@ const createRipple = (element, options) => (e) => {
     return;
   }
 
-  const clientX = e?.clientX || defaultEvent.clientX;
-  const clientY = e?.clientY || defaultEvent.clientY;
+  const clientX = e?.clientX || DEFAULT_EVENT.clientX;
+  const clientY = e?.clientY || DEFAULT_EVENT.clientY;
 
   const { height, width, top, left } = element.getBoundingClientRect();
   const x = clientX - left;
@@ -51,12 +53,13 @@ const createRipple = (element, options) => (e) => {
   const rippleSize = Math.min(
     height,
     width,
-    options?.rippleSize || RIPPLE_SIZE
+    options?.rippleSize || DEFAULT_SIZE
   );
 
   const positionTop = clientX
     ? y - rippleSize / 2
     : rippleSize / 2 - height / 2;
+
   const positionLeft = clientY
     ? x - rippleSize / 2
     : width / 2 - rippleSize / 2;
@@ -68,12 +71,12 @@ const createRipple = (element, options) => (e) => {
     left: ${positionLeft}px;
     position: absolute;
     border-radius: 50%;
-    background-color: ${options?.rippleColor || RIPPLE_COLOR};
+    background-color: ${options?.rippleColor || DEFAULT_COLOR};
     pointer-events: none;
     width: ${rippleSize}px;
     height: ${rippleSize}px;
     animation: use-ripple-animation ${
-      options?.animationLength || ANIMATION_LENGTH
+      options?.animationLength || DEFAULT_DURATION
     }ms ease-in;
   `;
 
@@ -91,26 +94,21 @@ const useRipple = (ref, options) => {
     }
 
     const element = ref.current;
-    const elementPosition =
-      getComputedStyle(element).getPropertyValue("position");
+
+    const position = getComputedStyle(element).getPropertyValue("position");
     element.style.position =
-      elementPosition === "static" || !elementPosition
-        ? "relative"
-        : elementPosition;
+      position === "static" || !position ? "relative" : position;
     element.style.overflow = "hidden";
 
-    const ripple = createRipple(element, options);
-    const keyboardRipple = (e) => {
-      if (e.key === "Enter" || e.key === " ") {
-        ripple();
-      }
-    };
+    const handleEvent = emitRipple(element, options);
+    const handleKeyEvent = (event) =>
+      event.key === "Enter" || (event.key === " " && handleEvent());
 
-    element.addEventListener("mousedown", ripple);
-    element.addEventListener("keydown", keyboardRipple);
+    element.addEventListener("mousedown", handleEvent);
+    element.addEventListener("keydown", handleKeyEvent);
     return () => {
-      element.removeEventListener("mousedown", ripple);
-      element.removeEventListener("keydown", keyboardRipple);
+      element.removeEventListener("mousedown", handleEvent);
+      element.removeEventListener("keydown", handleKeyEvent);
     };
   });
 };

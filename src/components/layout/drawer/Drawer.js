@@ -14,12 +14,12 @@ import { Icon } from "../../";
 
 const Drawer = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const btnRef = useRef();
+  const openRef = useRef();
 
   return (
     <>
       <IconButton
-        ref={btnRef}
+        ref={openRef}
         colorScheme="primary"
         variant="ghost"
         onClick={onOpen}
@@ -34,7 +34,7 @@ const Drawer = () => {
         isOpen={isOpen}
         placement="right"
         onClose={onClose}
-        finalFocusRef={btnRef}
+        finalFocusRef={openRef}
       >
         <DrawerOverlay />
         <DrawerContent bg="base.900">

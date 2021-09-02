@@ -44,12 +44,16 @@ const WaitingRoom = ({ activePlayers, players, id, leaveRoom }) => {
       >
         <Heading color="white">Welcome!</Heading>
         <Text>Invite your friends</Text>
+        <Text size="xs" mt={6}>
+          Click to copy
+        </Text>
         <Button
           ref={copyRef}
           id="roomID"
           colorScheme="primary"
           onClick={() => handleCopyClick(id)}
-          my={8}
+          mt={2}
+          mb={8}
         >
           {copied ? "Copied" : id}
         </Button>
