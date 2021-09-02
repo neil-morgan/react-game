@@ -1,4 +1,5 @@
+import drawerDockReveal from "./drawerDockReveal";
 import lobbyButtonTransition from "./lobbyButtonTransition";
 import pageTransition from "./pageTransition";
 
-export { lobbyButtonTransition, pageTransition };
+export { drawerDockReveal, lobbyButtonTransition, pageTransition };

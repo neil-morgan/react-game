@@ -10,7 +10,7 @@ import {
   useHistory,
   useLocation,
 } from "react-router-dom";
-import { Drawer, IconDefs, Wrapper } from "./components";
+import { DrawerDock, IconDefs, Wrapper } from "./components";
 import { Home, Room } from "./pages";
 import { AnimatePresence } from "framer-motion";
 import "@fontsource/inter";
@@ -23,7 +23,7 @@ const App = () => {
   return (
     <ChakraProvider theme={theme}>
       <IconDefs />
-      <Drawer />
+      <DrawerDock />
       <Wrapper>
         <AnimatePresence exitBeforeEnter initial={false}>
           <Switch location={location} key={location.pathname}>

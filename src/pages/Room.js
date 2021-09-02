@@ -28,34 +28,27 @@ const Room = (props) => {
   const [show, setShow] = useState(false);
 
   // check for newly joined players by comparing against the two players array (front-end and the api, and api is always slightly ahead)
-  const checkPlayers = useCallback(() => {
-    api.getPlayers(id).then(
-      (players) => {
-        setPlayers(players);
-        setActivePlayers(players.filter((player) => player.name)); // only active players have a name field
-        if (activePlayers.length === players.length) {
-          setShow(true); // everyone has joined, show them the board
-        }
-      },
-      () => {
-        history.push("", { invalidRoom: true }); // failed to join because room doesn't exist -> return user to homepage
-      }
-    );
-  }, [activePlayers.length, history, id]);
+  const checkPlayers = useCallback(
+    () =>
+      api.getPlayers(id).then(
+        (players) => {
+          setPlayers(players);
+          setActivePlayers(players.filter((player) => player.name)); // only active players have a name field
+          activePlayers.length === players.length && setShow(true); // everyone has joined, show them the board
+        },
+        () => history.push("", { invalidRoom: true }) // failed to join because room doesn't exist -> return user to homepage
+      ),
+    [activePlayers.length, history, id]
+  );
 
   useEffect(() => {
     checkPlayers();
     const interval = setInterval(() => checkPlayers(), 500);
-
-    if (show) {
-      clearInterval(interval);
-    }
-    return () => {
-      clearInterval(interval);
-    };
+    show && clearInterval(interval);
+    return () => clearInterval(interval);
   }, [show, checkPlayers, players.length, activePlayers.length, id, history]);
 
-  const leaveRoom = () => {
+  const leaveRoom = () =>
     api
       .leaveRoom(
         id,
@@ -65,10 +58,9 @@ const Room = (props) => {
       .then(() => {
         history.push("/");
       });
-  };
 
   const clientProps = {
-    gameId: id,
+    gameID: id,
     numPlayers: players.length,
     playerID: localStorage.getItem("id"),
     credentials: localStorage.getItem("credentials"),

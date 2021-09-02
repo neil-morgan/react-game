@@ -1,4 +1,4 @@
-import Drawer from "./drawer/Drawer";
+import DrawerDock from "./drawer_dock/DrawerDock";
 import Wrapper from "./wrapper/Wrapper";
 
-export { Drawer, Wrapper };
+export { DrawerDock, Wrapper };

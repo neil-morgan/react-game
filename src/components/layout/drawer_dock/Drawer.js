@@ -5,14 +5,13 @@ import {
   useDisclosure,
   Drawer as ChakraDrawer,
   DrawerBody,
-  DrawerFooter,
   DrawerHeader,
   DrawerOverlay,
   DrawerContent,
 } from "@chakra-ui/react";
-import { Icon } from "../../";
+import { Icon } from "../..";
 
-const Drawer = () => {
+const Drawer = ({ children, heading, icon = "menu" }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const openRef = useRef();
 
@@ -23,11 +22,9 @@ const Drawer = () => {
         colorScheme="primary"
         variant="ghost"
         onClick={onOpen}
-        position="absolute"
-        top={4}
-        right={6}
+        size="lg"
       >
-        <Icon name="menu" boxSize={7} />
+        <Icon name={icon} boxSize={10} />
       </IconButton>
 
       <ChakraDrawer
@@ -47,7 +44,7 @@ const Drawer = () => {
             borderColor="inherit"
           >
             <Heading color="white" size="lg">
-              Rules
+              {heading}
             </Heading>
             <IconButton
               position="relative"
@@ -62,8 +59,7 @@ const Drawer = () => {
             </IconButton>
           </DrawerHeader>
 
-          <DrawerBody></DrawerBody>
-          <DrawerFooter></DrawerFooter>
+          <DrawerBody>{children}</DrawerBody>
         </DrawerContent>
       </ChakraDrawer>
     </>
