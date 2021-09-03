@@ -59,4 +59,9 @@ export const layerStyles = {
       transition: "200ms ease",
     },
   },
+
+  outline: {
+    borderWidth: 1,
+    borderColor: "red.500",
+  },
 };

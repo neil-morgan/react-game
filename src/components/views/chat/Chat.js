@@ -1,89 +1,94 @@
-import React, { useState, useEffect } from "react";
-import {
-  Flex,
-  InputGroup,
-  Input,
-  InputRightElement,
-  IconButton,
-} from "@chakra-ui/react";
+import React, { useState, useRef, useEffect } from "react";
+import { chakra, Flex, Input, IconButton, Text } from "@chakra-ui/react";
 import uniqid from "uniqid";
 import { Icon } from "../../";
-
-const handleKeyUp = (e) => {
-  e.preventDefault();
-  if (e.keyCode === 13) {
-    // enter key: another way to send a message
-    document.getElementById("send-button").click();
-  }
-};
+import { useRipple } from "../../../hooks";
 
 const ChatLog = ({ G, playerID, moves }) => {
   const [msg, setMsg] = useState("");
 
-  const message = (content) => {
+  const chatRef = useRef();
+  const msgRef = useRef();
+  const sendRef = useRef();
+
+  useRipple(sendRef);
+
+  const sendMessage = (content) => {
     moves.message(playerID, content);
-    document.getElementById("player-msg").value = "";
+    msgRef.current.value = "";
     setMsg("");
   };
 
+  const handleKeyUp = (evt) => {
+    evt.preventDefault();
+    evt.key === "Enter" && sendRef.current.click();
+  };
+
   useEffect(() => {
-    // when a new message appear, automatically scroll chat box (when applicable) to bottom to show it
-    let objDiv = document.getElementById("scrollBottom");
-    objDiv.scrollTop = objDiv.scrollHeight;
+    if (!chatRef.current) return;
+    const node = chatRef.current;
+    node.scrollTop = node.scrollHeight;
   }, [G.chat]);
 
   return (
-    <Flex direction="column" position="absolute" bottom={10} right={10}>
-      <div id="scrollBottom" className="msgs">
+    <Flex direction="column" position="absolute" bottom={6} left={4} w="360px">
+      <Flex
+        direction="column"
+        maxH="150px"
+        overflowY="scroll"
+        ref={chatRef}
+        pr={4}
+        sx={{
+          "::-webkit-scrollbar": {
+            width: "3px",
+          },
+          "::-webkit-scrollbar-thumb": {
+            backgroundColor: "primary.200",
+            borderRadius: "2px",
+            border: "0px solid transparent",
+            backgroundClip: "content-box",
+          },
+        }}
+      >
         {G.chat.map((msg) => {
-          let className = "msg ";
-          if (msg.id === "-1") {
-            let msgParts = msg.content.split("\n");
-            className += "bot-msg ";
+          if (msg.id !== "-1") {
             return (
-              <div id="playerMsg" className={className} key={uniqid()}>
-                <span
-                  className={
-                    msg.successful ? "successful-color" : "unsuccessful-color"
-                  }
+              <Text size="xs" key={uniqid()}>
+                <chakra.span
+                  fontSize="xs"
+                  fontFamily="Roboto Mono"
+                  color="primary.200"
                 >
-                  {msgParts[0]}
-                </span>
-                <div className="addendums">
-                  {msgParts.slice(1, msgParts.length).map((msgPart) => (
-                    <div key={uniqid()}>{msgPart}</div>
-                  ))}
-                </div>
-              </div>
-            );
-          } else {
-            return (
-              <div id="playerMsg" className={className} key={uniqid()}>
-                <span className="msg-sender">
                   {G.players[msg.id].name + ": "}
-                </span>
+                </chakra.span>
                 {msg.content}
-              </div>
+              </Text>
             );
           }
         })}
-      </div>
+      </Flex>
 
-      <div className="chat-form">
+      <Flex mt={4}>
         <Input
-          id="player-msg"
+          ref={msgRef}
           type="text"
-          maxLength="70"
+          maxLength={140}
           placeholder="Enter Message"
           onChange={(e) => setMsg(e.target.value)}
           onKeyUp={(e) => handleKeyUp(e)}
           autoComplete="off"
         />
         <IconButton
-          onClick={() => message(msg)}
+          ref={sendRef}
+          onClick={() => sendMessage(msg)}
           disabled={msg.length === 0}
-        ></IconButton>
-      </div>
+          colorScheme="primary"
+          variant="ghost"
+          ml={2}
+        >
+          <Icon name="email" boxSize={8} />
+        </IconButton>
+      </Flex>
     </Flex>
   );
 };

@@ -2,13 +2,8 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Flex } from "@chakra-ui/react";
 import ChatLog from "../chat/Chat";
-import {
-  AnnouncementArea,
-  BottomBar,
-  ChatLogSettings,
-  Players,
-  YourPlayer,
-} from "..";
+
+import { AnnouncementArea, BottomBar, EventLog, Players, YourPlayer } from "..";
 
 const Board = (props) => {
   console.log(props);
@@ -34,6 +29,7 @@ const Board = (props) => {
       <YourPlayer {...props} />
       <AnnouncementArea {...props} />
       <BottomBar {...props} revealDeck={revealDeck} />
+      <EventLog {...chatProps} />
       <ChatLog {...chatProps} />
     </Flex>
   );
