@@ -1,4 +1,5 @@
 import React from "react";
+import { Image } from "@chakra-ui/react";
 import uniqid from "uniqid";
 
 const YourPlayer = ({ G, ctx, playerID, moves }) => {
@@ -51,7 +52,8 @@ const YourPlayer = ({ G, ctx, playerID, moves }) => {
           className="character-card character-card-discarded"
         ></div>
       ) : (
-        <img
+        <Image
+          maxW="100px"
           onDragStart={(e) => {
             e.preventDefault();
           }}

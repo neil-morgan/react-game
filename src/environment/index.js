@@ -89,7 +89,7 @@ const game = {
       );
       ctx.events.setActivePlayers({ currentPlayer: "action", others: "idle" });
     },
-    onEnd: (G, ctx) => {
+    onEnd: (G) => {
       logStats(G.turnLog, G.statistics);
       G.chat.push({
         id: "-1",
@@ -99,7 +99,7 @@ const game = {
       checkForWinner(G);
     },
     order: {
-      first: (G, ctx) => 0,
+      first: () => 0,
       // find the next player who has cards (skip over players who are out)
       next: ({ players }, { numPlayers, playOrder, playOrderPos }) => {
         for (let i = 1; i <= numPlayers; i++) {
@@ -110,7 +110,7 @@ const game = {
           }
         }
       },
-      playOrder: (G, { numPlayers }) => getPlayOrder(numPlayers),
+      playOrder: (_, { numPlayers }) => getPlayOrder(numPlayers),
     },
 
     stages: {

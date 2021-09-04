@@ -1,102 +1,123 @@
 import React from "react";
 import uniqid from "uniqid";
+import {
+  Flex,
+  Heading,
+  Text,
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td,
+} from "@chakra-ui/react";
 
-const genDescs = [
-  ["Income", "take 1 coin"],
-  ["Foreign Aid", "take 2 coins"],
+const GENERAL_ACTIONS = [
+  ["Income", "Take 1 coin"],
+  ["Foreign Aid", "Take 2 coins"],
   [
     "Coup",
-    "pay 7 coins",
-    "choose player to lose guessed character upon correct guess",
+    "Pay 7 coins",
+    "Choose a player and guess a character in their hand correctly to destroy it",
   ],
 ];
 
-const charActDescs = [
-  ["Tax", "Duke", "take 3 coins"],
+const ACTION_RULES = [
+  ["Tax", "Duke", "Take 3 coins"],
   [
     "Assassinate",
     "Assassin",
-    "pay 3 coins",
-    "choose player to lose a character",
+    "Pay 3 coins",
+    "Choose player to lose a character",
   ],
-  ["Steal", "Captain", "take at most 2 coins from another player"],
-  ["Exchange", "Ambassador", "exchange hand with top 2 cards of deck"],
+  ["Steal", "Captain", "Take at most 2 coins from another player"],
+  ["Exchange", "Ambassador", "Exchange hand with top 2 cards of deck"],
 ];
 
-const counterActDesc = [
-  ["Duke", "blocks foreign aid"],
-  ["Ambassador", "blocks stealing"],
-  ["Captain", "blocks stealing"],
-  ["Contessa", "blocks assassination"],
+const COUNTER_RULES = [
+  ["Duke", "Blocks foreign aid"],
+  ["Ambassador", "Blocks stealing"],
+  ["Captain", "Blocks stealing"],
+  ["Contessa", "Blocks assassination"],
 ];
 
-const numPages = 3;
+const Page1 = () => (
+  <Flex direction="column">
+    <Heading size="md" color="white">
+      Basics
+    </Heading>
+    <Text size="sm" my={2}>
+      You must always take one action
+    </Text>
+    <Text size="sm">
+      If above 10 ISK or above you must choose to launch a coup
+    </Text>
 
-const pagesArr = Array(numPages)
-  .fill()
-  .map((_, i) => i + 1);
+    <Heading size="md" color="white" mt={8} mb={2}>
+      General Actions
+    </Heading>
+    <Table variant="unstyled" size="md">
+      <Thead>
+        <Tr>
+          <Th pl={0} py={3} pr={6}>
+            Action
+          </Th>
+          <Th px={0} py={3}>
+            Effect
+          </Th>
+        </Tr>
+      </Thead>
+      <Tbody>
+        {GENERAL_ACTIONS.map((rule) => {
+          return (
+            <Tr key={uniqid()}>
+              <Td pl={0} py={3} pr={6} verticalAlign="top" whiteSpace="nowrap">
+                {rule[0]}
+              </Td>
+              <Td px={0} py={3} verticalAlign="top">
+                <Text size="sm">{rule[1]}</Text>
+                {rule.slice(2).map((description) => (
+                  <Text size="xs" mt={1} key={uniqid()}>
+                    {description}
+                  </Text>
+                ))}
+              </Td>
+            </Tr>
+          );
+        })}
+      </Tbody>
+    </Table>
 
-const Page1 = (
-  <>
-    <div className="rules-intro-container">
-      <span className="rules-intro">take one action</span>
-      <span className="rules-intro-footer">
-        (If 10+ coins must choose to launch Coup)
-      </span>
-    </div>
-    <div className="rules-desc-container">
-      <span className="rules-title">General Actions</span>
-      <table className="rules-table">
-        <thead>
-          <tr>
-            <th>Action</th>
-            <th>Effect</th>
-          </tr>
-        </thead>
-        <tbody>
-          {genDescs.map((desc) => {
-            return (
-              <tr key={uniqid()}>
-                <td>{desc[0]}</td>
-                <td>
-                  <div className="action-description">
-                    {desc[1]}
-                    {desc.slice(2).map((extraDesc) => (
-                      <span className="extra-desc" key={uniqid()}>
-                        {extraDesc}
-                      </span>
-                    ))}
-                  </div>
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-    </div>
-  </>
+    <Heading size="xs" mt={8} color="white">
+      Note
+    </Heading>
+    <Text size="sm" mt={2}>
+      Some rules have been slightly modified and will differ from the original
+      board game.
+    </Text>
+  </Flex>
 );
 
-const Page2 = (
+const Page2 = () => (
   <>
     <div className="rules-desc-container">
       <div className="rules-title">Character Actions</div>
       <table className="rules-table">
-        <thead>
+        <Thead>
           <tr>
-            <th>Action</th>
-            <th>Effect</th>
+            <Th px={0}>Action</Th>
+            <Th px={0}>Effect</Th>
           </tr>
-        </thead>
+        </Thead>
         <tbody>
-          {charActDescs.map((desc) => {
+          {ACTION_RULES.map((desc) => {
             return (
               <tr className="character-action-entry" key={uniqid()}>
-                <td>
+                <Td px={0}>
                   {desc[0]}
                   <div className="character-footer">({desc[1]})</div>
-                </td>
-                <td>
+                </Td>
+                <Td px={0}>
                   <div className="action-description">
                     {desc[2]}
                     {desc.slice(3).map((extraDesc) => (
@@ -105,7 +126,7 @@ const Page2 = (
                       </span>
                     ))}
                   </div>
-                </td>
+                </Td>
               </tr>
             );
           })}
@@ -115,23 +136,23 @@ const Page2 = (
   </>
 );
 
-const Page3 = (
+const Page3 = () => (
   <>
     <div className="rules-desc-container">
       <div className="rules-title">Counteractions</div>
       <table className="rules-table">
-        <thead>
+        <Thead>
           <tr>
-            <th>Character</th>
-            <th>Counteraction</th>
+            <Th px={0}>Character</Th>
+            <Th px={0}>Counteraction</Th>
           </tr>
-        </thead>
+        </Thead>
         <tbody>
-          {counterActDesc.map((desc) => {
+          {COUNTER_RULES.map((desc) => {
             return (
               <tr key={uniqid()}>
-                <td>{desc[0]}</td>
-                <td>
+                <Td px={0}>{desc[0]}</Td>
+                <Td px={0}>
                   <div className="action-description">
                     {desc[1]}
                     {desc.slice(2).map((extraDesc) => (
@@ -140,7 +161,7 @@ const Page3 = (
                       </span>
                     ))}
                   </div>
-                </td>
+                </Td>
               </tr>
             );
           })}
@@ -150,31 +171,12 @@ const Page3 = (
   </>
 );
 
-const Pages = [Page1, Page2, Page3];
-
-const Rules = ({ page, setPage }) => {
-  const select = (pageNum) => {
-    setPage(pageNum);
-  };
-
-  return (
-    <>
-      {Pages[page - 1]}
-      <div className="rules-pagebar">
-        {pagesArr.map((pageNum) => (
-          <button
-            key={uniqid()}
-            onClick={() => select(pageNum)}
-            className={`page-btn ${
-              page === pageNum ? "btn-selected" : "btn-unselected"
-            }`}
-          >
-            {pageNum}
-          </button>
-        ))}
-      </div>
-    </>
-  );
-};
+const Rules = () => (
+  <>
+    <Page1 />
+    {/* <Page2 />
+    <Page3 /> */}
+  </>
+);
 
 export default Rules;
