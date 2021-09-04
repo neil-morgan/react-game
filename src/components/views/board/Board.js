@@ -6,8 +6,7 @@ import ChatLog from "../chat/Chat";
 import { AnnouncementArea, BottomBar, EventLog, Players, YourPlayer } from "..";
 
 const Board = (props) => {
-  console.log(props);
-
+  console.log(props.G.turnLog.action);
   const [revealDeck, setRevealDeck] = useState(false);
 
   // player 0 has to set the player's actual screen names due to the way boardgame.io works
