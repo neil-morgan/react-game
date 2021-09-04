@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Flex } from "@chakra-ui/react";
-import ChatLog from "../chat/Chat";
-
-import { AnnouncementArea, BottomBar, EventLog, Players, YourPlayer } from "..";
+import { Interface } from "../../";
+// import { AnnouncementArea, Actions, Events, Players, YourPlayer } from "..";
 
 const Board = (props) => {
-  console.log(props.G.turnLog.action);
+  console.log(props);
   const [revealDeck, setRevealDeck] = useState(false);
 
   // player 0 has to set the player's actual screen names due to the way boardgame.io works
@@ -22,14 +21,23 @@ const Board = (props) => {
     moves: props.moves,
   };
 
+  const interfaceProps = {
+    G: props.G,
+    ctx: props.ctx,
+    playerID: props.playerID,
+    moves: props.moves,
+    revealDeck,
+  };
+
   return (
     <Flex w="full" h="full">
-      <Players {...props} />
-      <YourPlayer {...props} />
-      <AnnouncementArea {...props} />
-      <BottomBar {...props} revealDeck={revealDeck} />
-      <EventLog {...chatProps} />
-      <ChatLog {...chatProps} />
+      <Interface {...interfaceProps} />
+      {/* <Players {...props} /> */}
+      {/* <YourPlayer {...props} /> */}
+      {/* <AnnouncementArea {...props} /> */}
+      {/* <Actions {...props} revealDeck={revealDeck} />
+      <Events {...chatProps} />
+      <ChatLog {...chatProps} /> */}
     </Flex>
   );
 };

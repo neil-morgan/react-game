@@ -1,10 +1,10 @@
 import React, { useState, useRef, useEffect } from "react";
 import { chakra, Flex, Input, IconButton, Text } from "@chakra-ui/react";
 import uniqid from "uniqid";
-import { Icon } from "../../";
-import { useRipple } from "../../../hooks";
+import { Icon } from "../../../common";
+import { useRipple } from "../../../../hooks";
 
-const ChatLog = ({ G, playerID, moves }) => {
+const Chat = ({ G, playerID, moves }) => {
   const [msg, setMsg] = useState("");
 
   const chatRef = useRef();
@@ -31,7 +31,7 @@ const ChatLog = ({ G, playerID, moves }) => {
   }, [G.chat]);
 
   return (
-    <Flex direction="column" position="absolute" bottom={6} left={4} w="360px">
+    <Flex direction="column" w="300px">
       <Flex
         direction="column"
         maxH="150px"
@@ -93,4 +93,4 @@ const ChatLog = ({ G, playerID, moves }) => {
   );
 };
 
-export default ChatLog;
+export default Chat;

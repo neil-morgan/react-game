@@ -1,17 +1,7 @@
 import React from "react";
 import Drawer from "./Drawer";
 import uniqid from "uniqid";
-import {
-  Flex,
-  Heading,
-  Text,
-  Table,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-  Td,
-} from "@chakra-ui/react";
+import { Flex, Heading, Text, Table, Tbody, Tr, Td } from "@chakra-ui/react";
 
 const GENERAL_ACTIONS = [
   ["Income", "Take 1 coin"],
@@ -40,16 +30,6 @@ const RulesDrawer = () => (
         General Actions
       </Heading>
       <Table variant="unstyled" size="md">
-        <Thead>
-          <Tr>
-            <Th pl={0} py={3} pr={6}>
-              Action
-            </Th>
-            <Th px={0} py={3}>
-              Effect
-            </Th>
-          </Tr>
-        </Thead>
         <Tbody>
           {GENERAL_ACTIONS.map((rule) => {
             return (

@@ -2,23 +2,19 @@ import React, { Fragment, useRef, useEffect } from "react";
 import { chakra, Flex } from "@chakra-ui/react";
 import uniqid from "uniqid";
 
-const EventLog = ({ G }) => {
+const Events = ({ chat }) => {
   const logRef = useRef();
 
   useEffect(() => {
     if (!logRef.current) return;
     const node = logRef.current;
     node.scrollTop = node.scrollHeight;
-  }, [G.chat]);
+  }, [chat]);
 
   return (
     <Flex
       direction="column"
-      position="absolute"
-      bottom={6}
-      right={4}
-      pr={4}
-      maxW="360px"
+      w="300px"
       maxH="200px"
       overflowY="scroll"
       fontFamily="Roboto Mono"
@@ -36,7 +32,7 @@ const EventLog = ({ G }) => {
         },
       }}
     >
-      {G.chat.map((msg) => {
+      {chat.map((msg) => {
         if (msg.id === "-1") {
           let msgParts = msg.content.split("\n");
 
@@ -57,4 +53,4 @@ const EventLog = ({ G }) => {
   );
 };
 
-export default EventLog;
+export default Events;
