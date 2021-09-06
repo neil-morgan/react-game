@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-
+import { Flex } from "@chakra-ui/react";
+import { capitalize } from "../../../../utils";
 import ChoosingPanel from "./ChoosingPanel";
 
-const AnnouncementArea = (props) => {
-  const { G, ctx, playerID, moves } = props;
+const Announcer = ({ ctx, G, moves, playerID }) => {
   const isYourTurn = playerID === ctx.currentPlayer;
   const name = isYourTurn ? "you" : `${G.players[ctx.currentPlayer].name}`;
 
@@ -293,14 +293,19 @@ const AnnouncementArea = (props) => {
   }, [G.winner, name, playerID]);
 
   return (
-    <div>
+    <Flex
+      position="absolute"
+      bottom={100}
+      left="50%"
+      transform="translateX(-50%)"
+    >
       <div key={msg}>
         {msg}
         <span style={{ marginLeft: "0.01vw" }}></span>
       </div>
-      <ChoosingPanel {...props} />
-    </div>
+      {/* <ChoosingPanel {...props} /> */}
+    </Flex>
   );
 };
 
-export default AnnouncementArea;
+export default Announcer;

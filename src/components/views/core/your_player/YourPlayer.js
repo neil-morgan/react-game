@@ -1,5 +1,5 @@
 import React from "react";
-import { Image } from "@chakra-ui/react";
+import { Image, Flex, Heading, Text } from "@chakra-ui/react";
 import uniqid from "uniqid";
 
 const YourPlayer = ({ G, ctx, playerID, moves }) => {
@@ -19,17 +19,12 @@ const YourPlayer = ({ G, ctx, playerID, moves }) => {
     cardSelected = !cardSelectable;
   }
 
-  const revealCard = (playerID, cardID) => {
-    moves.revealCard(playerID, cardID);
-  };
+  const revealCard = (playerID, cardID) => moves.revealCard(playerID, cardID);
 
-  const loseCard = (playerID, cardID) => {
+  const loseCard = (playerID, cardID) =>
     moves.loseCardAndShuffle(playerID, cardID);
-  };
 
-  const setHand = (cardID) => {
-    moves.setHand(cardID);
-  };
+  const setHand = (cardID) => moves.setHand(cardID);
 
   const hand = [];
   player.hand.forEach((card, index) => {
@@ -47,6 +42,7 @@ const YourPlayer = ({ G, ctx, playerID, moves }) => {
 
     hand.push(
       card.discarded ? (
+        // SHOW A BLANK BOX HERE
         <div
           key={uniqid()}
           className="character-card character-card-discarded"
@@ -54,15 +50,12 @@ const YourPlayer = ({ G, ctx, playerID, moves }) => {
       ) : (
         <Image
           maxW="100px"
-          onDragStart={(e) => {
-            e.preventDefault();
-          }}
+          onDragStart={(e) => e.preventDefault()}
           draggable={false}
           key={player.id + card.character + index}
-          className={`character-card ${cardClass}`}
           src={card.front}
+          _first={{ mr: 3 }}
           onClick={() => {
-            // handle card selection logic
             if (
               ctx.activePlayers[playerID] &&
               ctx.activePlayers[playerID].includes("lose") &&
@@ -129,51 +122,47 @@ const YourPlayer = ({ G, ctx, playerID, moves }) => {
   };
 
   return (
-    <div>
-      <div className="player-body">
-        <div className="player-name">{player.name} (You)</div>
-        <div className="no-gutters d-flex" style={{ height: "60%" }}>
-          {hand}
-        </div>
-        {player.isOut || gameOver ? (
-          <div className="exiled-text">{bottomRow()}</div>
-        ) : (
-          <div className="coin-row no-gutters">
+    <Flex position="absolute" top={0} left={0} p={4} direction="column">
+      <Flex pb={4} align="center" justify="space-between">
+        <Heading size="lg" color="white">
+          {player.name}
+        </Heading>
+        <Flex align="center">
+          <Text size="xs" color="primary.200" fontFamily="Roboto Mono">
+            isk
+          </Text>
+          <Text as="span" size="lg" color="white" pl={2}>
+            {player.coins}
+          </Text>
+        </Flex>
+      </Flex>
+      <Flex>{hand}</Flex>
+      {player.isOut || gameOver ? (
+        <div className="exiled-text">{bottomRow()}</div>
+      ) : (
+        <div className="coin-row no-gutters">
+          <div
+            className="w-50 h-100 d-flex align-items-center justify-content-end"
+            style={{ paddingRight: "1%" }}
+          ></div>
+          <div
+            className="w-50 d-flex align-items-center justify-content-start"
+            style={{ paddingLeft: "1.2%", fontSize: "2.8vw" }}
+          >
             <div
-              className="w-50 h-100 d-flex align-items-center justify-content-end"
-              style={{ paddingRight: "1%" }}
+              className="response-icon"
+              style={{ paddingRight: "1vw", color: `${iconColor}` }}
             >
-              <img
-                onDragStart={(e) => {
-                  e.preventDefault();
-                }}
-                draggable={false}
-                className="img-fluid"
-                src="/images/coin.png"
-                alt="coins"
-                style={{ height: "90%" }}
-              />
-            </div>
-            <div
-              className="w-50 d-flex align-items-center justify-content-start"
-              style={{ paddingLeft: "1.2%", fontSize: "2.8vw" }}
-            >
-              {player.coins}
-              <div
-                className="response-icon"
-                style={{ paddingRight: "1vw", color: `${iconColor}` }}
-              >
-                {G.turnLog.responses[playerID] !== ""
-                  ? G.turnLog.responses[playerID] === "allow"
-                    ? "thumb up icon"
-                    : "thumb down icon"
-                  : ""}
-              </div>
+              {G.turnLog.responses[playerID] !== ""
+                ? G.turnLog.responses[playerID] === "allow"
+                  ? "thumb up icon"
+                  : "thumb down icon"
+                : ""}
             </div>
           </div>
-        )}
-      </div>
-    </div>
+        </div>
+      )}
+    </Flex>
   );
 };
 
