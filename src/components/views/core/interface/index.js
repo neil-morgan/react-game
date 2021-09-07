@@ -1,9 +1,8 @@
 import React from "react";
 import { Flex } from "@chakra-ui/react";
 import Chat from "./chat/Chat";
+import Console from "./console";
 import Events from "./events/Events";
-import Buttons from "./buttons/Buttons";
-import Deck from "./deck/Deck";
 
 const Interface = ({ G, ctx, playerID, moves, revealDeck }) => {
   const chatProps = {
@@ -12,41 +11,32 @@ const Interface = ({ G, ctx, playerID, moves, revealDeck }) => {
     playerID,
   };
 
+  const consoleProps = {
+    ctx,
+    G,
+    moves,
+    playerID,
+    revealDeck,
+  };
+
   const eventsProps = {
     chat: G.chat,
   };
 
-  const deckProps = {
-    deck: G.deck,
-  };
-
-  const buttonsProps = {
-    G,
-    ctx,
-    moves,
-    playerID,
-  };
-
   return (
     <Flex
-      position="absolute"
-      bottom={0}
-      left={0}
-      p={4}
+      as="section"
+      mt="auto"
+      px={4}
+      pb={4}
+      pt={4}
+      h="25%"
       justify="space-between"
       align="flex-end"
       w="full"
     >
       <Chat {...chatProps} />
-      {G.winner.id !== "-1" || G.players[playerID].isOut ? (
-        revealDeck ? (
-          <Deck {...deckProps} />
-        ) : (
-          ""
-        )
-      ) : (
-        <Buttons {...buttonsProps} />
-      )}
+      <Console {...consoleProps} />
       <Events {...eventsProps} />
     </Flex>
   );

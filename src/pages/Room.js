@@ -4,7 +4,7 @@ import { Client } from "boardgame.io/react";
 import { SocketIO } from "boardgame.io/multiplayer";
 import { DEFAULT_PORT, APP_PRODUCTION } from "../environment/config";
 import logic from "../environment";
-import { Core, WaitingRoom } from "../components";
+import { Wrapper, Core, WaitingRoom } from "../components";
 import { api } from "../server/api";
 
 const { origin, protocol, hostname } = window.location;

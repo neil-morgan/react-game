@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
+import { Flex } from "@chakra-ui/react";
+import { Wrapper } from "../../";
 import PropTypes from "prop-types";
 import Interface from "./interface";
-import Announcer from "./announcer/Announcer";
-import YourPlayer from "./your_player/YourPlayer";
+import HUD from "./HUD";
+import Players from "./players/Players";
 
-const Board = ({ G, playerID, ctx, moves, gameMetadata }) => {
+const Board = ({ G, playerID, ctx, moves, gameMetadata, gameId }) => {
   const [revealDeck, setRevealDeck] = useState(false);
 
   // player 0 has to set the player's actual screen names due to the way boardgame.io works
@@ -20,22 +22,19 @@ const Board = ({ G, playerID, ctx, moves, gameMetadata }) => {
     playerID,
     moves,
     revealDeck,
+    gameId,
   };
 
-  const announcerProps = { ctx, G, moves, playerID };
+  const playersProps = { G, ctx, playerID, moves };
 
-  const playerProps = { G, ctx, playerID, moves };
+  const hudProps = { G, ctx, playerID, moves };
 
   return (
-    <>
+    <Wrapper direction="column" position="absolute" inset={0}>
+      <HUD {...hudProps} />
+      <Players {...playersProps} />
       <Interface {...interfaceProps} />
-      {/* <Players {...props} /> */}
-      <YourPlayer {...playerProps} />
-      <Announcer {...announcerProps} />
-      {/* <Actions {...props} revealDeck={revealDeck} />
-      <Events {...chatProps} />
-      <ChatLog {...chatProps} /> */}
-    </>
+    </Wrapper>
   );
 };
 

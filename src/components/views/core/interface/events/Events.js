@@ -1,6 +1,7 @@
 import React, { Fragment, useRef, useEffect } from "react";
 import { chakra, Flex } from "@chakra-ui/react";
 import uniqid from "uniqid";
+import { capitalize } from "../../../../../utils";
 
 const Events = ({ chat }) => {
   const logRef = useRef();
@@ -15,7 +16,8 @@ const Events = ({ chat }) => {
     <Flex
       direction="column"
       w="300px"
-      maxH="200px"
+      h="full"
+      justify="flex-end"
       overflowY="scroll"
       fontFamily="Roboto Mono"
       fontSize="xs"
@@ -43,7 +45,7 @@ const Events = ({ chat }) => {
               ))}
 
               <chakra.span color={msg.successful ? "green.300" : "red.400"}>
-                &gt; {msgParts[0]}
+                &gt; {capitalize(msgParts[0])}
               </chakra.span>
             </Fragment>
           );

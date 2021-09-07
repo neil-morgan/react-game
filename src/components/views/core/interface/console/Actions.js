@@ -1,7 +1,7 @@
 import React from "react";
 import { Wrap, Button } from "@chakra-ui/react";
 
-const Buttons = ({ G, ctx, playerID, moves }) => {
+const Actions = ({ G, ctx, playerID, moves }) => {
   const income = () => moves.income();
   const prepAction = (action) => moves.prepAction(action);
 
@@ -57,6 +57,8 @@ const Buttons = ({ G, ctx, playerID, moves }) => {
   return (
     <Wrap
       spacing={3}
+      justify="center"
+      maxW="360px"
       hidden={
         G.turnLog.action === "exchange" &&
         G.turnLog.successful &&
@@ -82,4 +84,4 @@ const Buttons = ({ G, ctx, playerID, moves }) => {
   );
 };
 
-export default Buttons;
+export default Actions;

@@ -1,7 +1,7 @@
 import { Flex } from "@chakra-ui/react";
 
-const Wrapper = ({ children }) => (
-  <Flex as="main" h="100vh" px={2}>
+const Wrapper = ({ children, ...rest }) => (
+  <Flex as="main" h="100vh" {...rest}>
     {children}
   </Flex>
 );

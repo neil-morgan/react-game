@@ -10,12 +10,11 @@ const Players = (props) => {
     const i = parseInt(ctx.playOrder[index]);
     if (i !== parseInt(playerID)) {
       players.push(
-        <div
+        <Player
           key={props.G.players[i].id + props.G.players[i].name}
-          className="player-container"
-        >
-          <Player {...props} i={i} />
-        </div>
+          {...props}
+          i={i}
+        />
       );
     } else if (
       ctx.playOrder[index] !== ctx.playOrder[0] &&
@@ -29,7 +28,20 @@ const Players = (props) => {
       );
     }
   }
-  return <Flex>{players}</Flex>;
+  return (
+    <Flex
+      as="section"
+      h="50%"
+      px={4}
+      align="center"
+      justify="center"
+      borderColor="primary.d200"
+      borderTopWidth={1}
+      borderBottomWidth={1}
+    >
+      {players}
+    </Flex>
+  );
 };
 
 export default Players;

@@ -1,7 +1,7 @@
 export const Button = {
   baseStyle: {
     fontFamily: "Roboto Mono",
-    lineHeight: 2.2,
+    lineHeight: 2,
   },
 
   variants: {

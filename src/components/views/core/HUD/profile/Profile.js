@@ -1,8 +1,9 @@
 import React from "react";
 import { Image, Flex, Heading, Text } from "@chakra-ui/react";
 import uniqid from "uniqid";
+import { capitalize } from "../../../../../utils";
 
-const YourPlayer = ({ G, ctx, playerID, moves }) => {
+const Profile = ({ G, ctx, playerID, moves }) => {
   const player = G.players[playerID];
   const isYourTurn = playerID === ctx.currentPlayer;
   const gameOver = G.winner.id !== "-1";
@@ -49,6 +50,7 @@ const YourPlayer = ({ G, ctx, playerID, moves }) => {
         ></div>
       ) : (
         <Image
+          width="100%"
           maxW="100px"
           onDragStart={(e) => e.preventDefault()}
           draggable={false}
@@ -122,16 +124,22 @@ const YourPlayer = ({ G, ctx, playerID, moves }) => {
   };
 
   return (
-    <Flex position="absolute" top={0} left={0} p={4} direction="column">
+    <Flex direction="column">
       <Flex pb={4} align="center" justify="space-between">
-        <Heading size="lg" color="white">
-          {player.name}
+        <Heading size="xl" color="white">
+          {capitalize(player.name)}
         </Heading>
         <Flex align="center">
           <Text size="xs" color="primary.200" fontFamily="Roboto Mono">
             isk
           </Text>
-          <Text as="span" size="lg" color="white" pl={2}>
+          <Text
+            as="span"
+            size="xl"
+            fontWeight={player.coins >= 10 ? "black" : "bold"}
+            color={player.coins >= 10 ? "red.400" : "white"}
+            pl={2}
+          >
             {player.coins}
           </Text>
         </Flex>
@@ -166,4 +174,4 @@ const YourPlayer = ({ G, ctx, playerID, moves }) => {
   );
 };
 
-export default YourPlayer;
+export default Profile;

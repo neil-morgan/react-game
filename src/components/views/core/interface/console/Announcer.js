@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Flex } from "@chakra-ui/react";
-import { capitalize } from "../../../../utils";
+import { HStack, Flex, Box, Heading } from "@chakra-ui/react";
+import { AnimatePresence } from "framer-motion";
+import { capitalize } from "../../../../../utils";
+import { MotionBox } from "../../../../";
+import { announcerTransition } from "../../../../../animations";
 import ChoosingPanel from "./ChoosingPanel";
 
-const Announcer = ({ ctx, G, moves, playerID }) => {
+const Announcer = ({ ctx, G, moves, playerID, gameID }) => {
   const isYourTurn = playerID === ctx.currentPlayer;
   const name = isYourTurn ? "you" : `${G.players[ctx.currentPlayer].name}`;
 
@@ -12,7 +15,9 @@ const Announcer = ({ ctx, G, moves, playerID }) => {
 
   // display at beginning of turn
   useEffect(() => {
-    setMsg(isYourTurn ? `${name}r turn` : `${name}'s turn`);
+    setMsg(
+      isYourTurn ? `${capitalize(name)}r turn` : `${capitalize(name)}'s turn`
+    );
     setMsgLoading(true);
   }, [ctx.currentPlayer, isYourTurn, name]);
 
@@ -30,7 +35,7 @@ const Announcer = ({ ctx, G, moves, playerID }) => {
         setMsgLoading(false);
       } else {
         setMsg(
-          `waiting for ${G.turnLog.target.name} to give up an influence (assassinated)`
+          `Waiting for ${G.turnLog.target.name} to give up an influence (assassinated)`
         );
         setMsgLoading(true);
       }
@@ -260,7 +265,7 @@ const Announcer = ({ ctx, G, moves, playerID }) => {
         setMsg(`${name} attempts to ${G.turnLog.action}.`);
         setMsgLoading(false);
       } else {
-        setMsg(`waiting for others to respond`);
+        setMsg(`Waiting for others to respond`);
       }
     }
 
@@ -292,18 +297,31 @@ const Announcer = ({ ctx, G, moves, playerID }) => {
     }
   }, [G.winner, name, playerID]);
 
+  const choosingProps = { G, ctx, playerID, moves, gameID };
+
   return (
-    <Flex
-      position="absolute"
-      bottom={100}
-      left="50%"
-      transform="translateX(-50%)"
-    >
-      <div key={msg}>
-        {msg}
-        <span style={{ marginLeft: "0.01vw" }}></span>
-      </div>
-      {/* <ChoosingPanel {...props} /> */}
+    <Flex h="full" w="full" direction="column">
+      <HStack h="50%" justify="center" align="flex-end" spacing={3}>
+        <ChoosingPanel {...choosingProps} />
+      </HStack>
+      <Flex h="50%" w="full" textAlign="center" position="relative">
+        <AnimatePresence>
+          <MotionBox
+            position="absolute"
+            top="50%"
+            left="50%"
+            w="full"
+            as={Heading}
+            key={msg}
+            color="white"
+            size="lg"
+            letterSpacing="wider"
+            {...announcerTransition}
+          >
+            {msg}
+          </MotionBox>
+        </AnimatePresence>
+      </Flex>
     </Flex>
   );
 };
