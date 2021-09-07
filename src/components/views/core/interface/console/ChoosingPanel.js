@@ -231,7 +231,7 @@ const ChoosingPanel = ({ G, ctx, playerID, moves, gameID }) => {
     gameID,
   ]);
 
-  return choices;
+  return choices.length > 0 && <div id="test" />;
 };
 
 export default ChoosingPanel;

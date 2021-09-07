@@ -1,5 +1,6 @@
 import { GAME_NAME, DEFAULT_PORT, APP_PRODUCTION } from "../environment/config";
 import ky from "ky"; // HTTP client I'm using (saw other people use it, looks like it works fine, and it's pretty simple to use)
+import { capitalize } from "../utils";
 
 const { origin, protocol, hostname } = window.location;
 const SERVER_URL = APP_PRODUCTION
@@ -31,7 +32,9 @@ export class LobbyAPI {
   async joinRoom(roomID, id, name) {
     try {
       const res = await this.api
-        .post(roomID + "/join", { json: { playerID: id, playerName: name } })
+        .post(roomID + "/join", {
+          json: { playerID: id, playerName: capitalize(name) },
+        })
         .json();
       const { playerCredentials } = res;
       return playerCredentials;

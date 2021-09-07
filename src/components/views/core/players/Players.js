@@ -29,16 +29,7 @@ const Players = (props) => {
     }
   }
   return (
-    <Flex
-      as="section"
-      h="50%"
-      px={4}
-      align="center"
-      justify="center"
-      borderColor="primary.d200"
-      borderTopWidth={1}
-      borderBottomWidth={1}
-    >
+    <Flex as="section" py={4} flex={1} align="center" justify="center">
       {players}
     </Flex>
   );

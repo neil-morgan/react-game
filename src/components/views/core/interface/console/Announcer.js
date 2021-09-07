@@ -3,7 +3,7 @@ import { HStack, Flex, Box, Heading } from "@chakra-ui/react";
 import { AnimatePresence } from "framer-motion";
 import { capitalize } from "../../../../../utils";
 import { MotionBox } from "../../../../";
-import { announcerTransition } from "../../../../../animations";
+import { textUpdate } from "../../../../../animations";
 import ChoosingPanel from "./ChoosingPanel";
 
 const Announcer = ({ ctx, G, moves, playerID, gameID }) => {
@@ -300,11 +300,9 @@ const Announcer = ({ ctx, G, moves, playerID, gameID }) => {
   const choosingProps = { G, ctx, playerID, moves, gameID };
 
   return (
-    <Flex h="full" w="full" direction="column">
-      <HStack h="50%" justify="center" align="flex-end" spacing={3}>
-        <ChoosingPanel {...choosingProps} />
-      </HStack>
-      <Flex h="50%" w="full" textAlign="center" position="relative">
+    <>
+      <ChoosingPanel {...choosingProps} />
+      <Flex w="full" textAlign="center" position="relative" h="full">
         <AnimatePresence>
           <MotionBox
             position="absolute"
@@ -316,13 +314,13 @@ const Announcer = ({ ctx, G, moves, playerID, gameID }) => {
             color="white"
             size="lg"
             letterSpacing="wider"
-            {...announcerTransition}
+            {...textUpdate}
           >
             {msg}
           </MotionBox>
         </AnimatePresence>
       </Flex>
-    </Flex>
+    </>
   );
 };
 

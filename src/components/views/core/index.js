@@ -16,6 +16,10 @@ const Board = ({ G, playerID, ctx, moves, gameMetadata, gameId }) => {
     }
   }, [playerID, moves, gameMetadata]);
 
+  const playersProps = { G, ctx, playerID, moves };
+
+  const hudProps = { G, ctx, playerID, moves };
+
   const interfaceProps = {
     G,
     ctx,
@@ -24,10 +28,6 @@ const Board = ({ G, playerID, ctx, moves, gameMetadata, gameId }) => {
     revealDeck,
     gameId,
   };
-
-  const playersProps = { G, ctx, playerID, moves };
-
-  const hudProps = { G, ctx, playerID, moves };
 
   return (
     <Wrapper direction="column" position="absolute" inset={0}>

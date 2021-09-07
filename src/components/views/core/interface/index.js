@@ -27,12 +27,10 @@ const Interface = ({ G, ctx, playerID, moves, revealDeck }) => {
     <Flex
       as="section"
       mt="auto"
-      px={4}
-      pb={4}
-      pt={4}
-      h="25%"
       justify="space-between"
       align="flex-end"
+      h="full"
+      maxH="175px"
       w="full"
     >
       <Chat {...chatProps} />

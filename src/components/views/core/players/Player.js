@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Image, Flex, Heading, Text } from "@chakra-ui/react";
 import uniqid from "uniqid";
 import { capitalize } from "../../../../utils";
+import { IskCounter } from "../../../";
 
 const Player = ({ G, ctx, playerID, moves, i }) => {
   const [revealHand, setRevealHand] = useState(false);
@@ -27,7 +28,7 @@ const Player = ({ G, ctx, playerID, moves, i }) => {
         <Image
           maxW="100px"
           onDragStart={(e) => e.preventDefault()}
-          _first={{ mr: 3 }}
+          _first={{ mr: 1 }}
           draggable={false}
           key={player.name + cardIndex}
           src={
@@ -116,26 +117,14 @@ const Player = ({ G, ctx, playerID, moves, i }) => {
   return (
     <Flex
       direction="column"
+      maxW="320px"
       onClick={() => (canRevealHand ? updateReveal() : setTarget())}
     >
       <Flex pb={4} align="center" justify="space-between">
-        <Heading size="xl" color="white">
+        <Heading size="md" color="white">
           {capitalize(player.name)}
         </Heading>
-        <Flex align="center">
-          <Text size="xs" color="primary.200" fontFamily="Roboto Mono">
-            isk
-          </Text>
-          <Text
-            as="span"
-            size="xl"
-            fontWeight={player.coins >= 10 ? "black" : "bold"}
-            color={player.coins >= 10 ? "red.400" : "white"}
-            pl={2}
-          >
-            {player.coins}
-          </Text>
-        </Flex>
+        <IskCounter isk={G.players[playerID].coins} />
       </Flex>
       <Flex>{hand}</Flex>
       {player.isOut ||

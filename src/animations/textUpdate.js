@@ -1,4 +1,4 @@
-const announcerTransition = {
+const textUpdate = {
   initial: {
     y: "calc(-50% + 10px)",
     opacity: 0,
@@ -22,4 +22,4 @@ const announcerTransition = {
   },
 };
 
-export default announcerTransition;
+export default textUpdate;
