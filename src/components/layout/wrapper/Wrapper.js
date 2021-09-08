@@ -7,7 +7,7 @@ const Wrapper = ({ children, ...rest }) => (
     flex={1}
     w="full"
     h="full"
-    direction={{ base: "column-reverse", md: "row" }}
+    direction={{ base: "column", md: "row" }}
     {...rest}
   >
     {children}

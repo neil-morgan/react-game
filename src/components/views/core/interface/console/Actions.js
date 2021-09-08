@@ -5,7 +5,6 @@ import { AnimatePresence } from "framer-motion";
 import { actionsTransition } from "../../../../../animations";
 
 const Actions = ({ G, ctx, playerID, moves }) => {
-  const [buttonSet, setButtonSet] = useState("default");
   const [shouldAnimate, setShouldAnimate] = useState("default");
 
   const yourPlayer = G.players[playerID];

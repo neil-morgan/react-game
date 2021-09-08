@@ -22,8 +22,8 @@ const Player = ({ G, ctx, playerID, moves, i }) => {
       ) : (
         <Image
           maxW="100px"
-          onDragStart={(e) => e.preventDefault()}
-          _first={{ mr: 3 }}
+          onDragStart={(evt) => evt.preventDefault()}
+          sx={{ ":first-child": { mr: 3 } }}
           draggable={false}
           key={player.name + cardIndex}
           src={

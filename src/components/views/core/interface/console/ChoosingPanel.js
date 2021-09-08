@@ -1,20 +1,216 @@
 import React, { useState, useEffect } from "react";
 import uniqid from "uniqid";
 import {
+  Box,
   Button,
-  useDisclosure,
+  Wrap,
+  Image,
   Modal,
-  ModalOverlay,
   ModalContent,
   ModalHeader,
-  ModalFooter,
   ModalBody,
-  ModalCloseButton,
 } from "@chakra-ui/react";
+import { MotionBox } from "../../../..";
+import { isObjectEmpty } from "../../../../../utils";
 import { cards } from "../../../../../environment/cards";
 import { api } from "../../../../../server/api";
 
-const ChoosingPanel = ({ G, ctx, playerID, moves, gameID }) => {
+// const ChoosingPanel = ({ G, ctx, playerID, moves, gameID, msg }) => {
+//   const [isOpen, setIsOpen] = useState(false);
+//   const [choices, setChoices] = useState([]);
+
+//   const handleClose = () => setIsOpen(false);
+
+//   useEffect(() => {
+//     if (G.gameOver.newRoomID !== "") {
+//       const myID = localStorage.getItem("id");
+//       const myCredentials = localStorage.getItem("credentials");
+//       const myName = localStorage.getItem("name");
+//       api.leaveRoom(gameID, myID, myCredentials).then(() => {
+//         api.joinRoom(G.gameOver.newRoomID, myID, myName).then((credentials) => {
+//           localStorage.setItem("credentials", credentials);
+//           window.location.href = "/rooms/" + G.gameOver.newRoomID;
+//         });
+//       });
+//     }
+//   }, [G.gameOver.newRoomID, gameID]);
+
+//   useEffect(() => {
+//     if (G.gameOver.playAgain.length === ctx.numPlayers) {
+//       if (G.gameOver.newRoomID === "" && playerID === G.gameOver.playAgain[0]) {
+//         api.createRoom(ctx.numPlayers).then((roomID) => {
+//           moves.setNewRoom(roomID);
+//         });
+//       }
+//     }
+
+//     const isYourTurn = playerID === ctx.currentPlayer;
+
+//     const coup = (character) => moves.coup(character);
+//     const setHand = (cardID) => moves.setHand(cardID);
+//     const setBlock = (character) => moves.block(playerID, character);
+//     const playAgain = () => moves.playAgain(playerID);
+
+//     const leaveRoom = () => {
+//       moves.leave(playerID);
+//       api
+//         .leaveRoom(
+//           gameID,
+//           localStorage.getItem("id"),
+//           localStorage.getItem("credentials")
+//         )
+//         .then(() => {
+//           // leaving clears your localStorage to "reset" your identity and then takes you to homepage
+//           localStorage.clear();
+//           window.location.href = "/";
+//         });
+//     };
+
+//     let temp = [];
+
+//     // TODO: let players leave anytime (AKA they are "out" to the other players to skip over leaving player's turn)
+//     // game has ended: let players leave.
+//     if (G.winner.id !== "-1") {
+//       document.getElementById("choosing_panel").style.flexDirection = "column";
+//       document.getElementById("choosing_panel").style.alignItems = "center";
+//       document.getElementById("choosing_panel").style.justifyContent =
+//         "flex-start";
+//       let secondClassName = "";
+//       if (G.gameOver.left.length !== 0) {
+//         secondClassName = "play-again-disabled";
+//       } else if (G.gameOver.playAgain.includes(playerID)) {
+//         secondClassName = "play-again-selected";
+//       }
+//       temp.push(
+//         <Button
+//           key={uniqid()}
+//           className={`play-again-btn ${secondClassName}`}
+//           onClick={playAgain}
+//           disabled={
+//             G.gameOver.left.length !== 0 ||
+//             G.gameOver.playAgain.includes(playerID)
+//           }
+//         >
+//           play again [
+//           {G.gameOver.left.length !== 0
+//             ? "N/A"
+//             : `${G.gameOver.playAgain.length}/${ctx.numPlayers}`}
+//           ]
+//         </Button>
+//       );
+//       temp.push(
+//         <Button key={uniqid()} className="leave-btn" onClick={leaveRoom}>
+//           leave
+//         </Button>
+//       );
+//     }
+//     // for blocking steal: show character choices that can block steal (ambassador, captain)
+//     else if (
+//       G.turnLog.action === "steal" &&
+//       Object.keys(G.turnLog.blockedBy).length !== 0 &&
+//       G.turnLog.blockedBy.character === "" &&
+//       ctx.activePlayers[playerID] === "blockOrChallenge"
+//     ) {
+//       temp.push(
+//         <img
+//           key={uniqid()}
+//           className="character-choice"
+//           onClick={() => setBlock("Ambassador")}
+//           src={"/images/ambassador.PNG"}
+//           alt={"Ambassador"}
+//         />
+//       );
+//       temp.push(
+//         <img
+//           key={uniqid()}
+//           className="character-choice"
+//           onClick={() => setBlock("Captain")}
+//           src={"/images/captain.PNG"}
+//           alt={"Captain"}
+//         />
+//       );
+//     }
+//     // for coup: show all possible cards to select a targeted character
+//     else if (G.turnLog.action === "coup" && isYourTurn) {
+//       // image loading optimization (with hidden)
+//       cards.forEach((card) => {
+//         temp.push(
+//           <Image
+//             w="200px"
+//             key={uniqid()}
+//             onClick={() => {
+//               coup(card.character);
+//               handleClose();
+//             }}
+//             src={card.front}
+//             alt={card.character}
+//             // hidden={Object.keys(G.turnLog.target).length === 0}
+//           />
+//         );
+//       });
+//     }
+//     // show the top two cards
+//     else if (G.turnLog.action === "exchange" && isYourTurn) {
+//       // image loading optimization with hidden
+//       G.turnLog.exchange.drawnCards.forEach((card) => {
+//         const cardSelected =
+//           Object.prototype.hasOwnProperty.call(G.turnLog.exchange, "newHand") &&
+//           G.turnLog.exchange.newHand.includes(card.id);
+//         temp.push(
+//           <img
+//             key={"choice" + card.character}
+//             onClick={() => {
+//               setHand(card.id);
+//             }}
+//             src={card.front}
+//             alt={card.character}
+//             hidden={
+//               !G.turnLog.successful || ctx.activePlayers[playerID] !== "action"
+//             }
+//           />
+//         );
+//       });
+//     }
+
+//     setChoices(temp);
+//   }, [
+//     G.turnLog,
+//     G.players,
+//     G.gameOver,
+//     ctx.currentPlayer,
+//     ctx.numPlayers,
+//     ctx.activePlayers,
+//     playerID,
+//     moves,
+//     G.winner.id,
+//     gameID,
+//   ]);
+
+//   useEffect(
+//     () =>
+//       typeof choices !== "undefined" && choices.length !== 0 && setIsOpen(true),
+//     [choices]
+//   );
+
+// return (
+//   <Modal isOpen={isOpen} size="full">
+//     <ModalContent bg="base.d400">
+//       <ModalHeader textAlign="center" color="white">
+//         {msg}
+//       </ModalHeader>
+//       <ModalBody display="flex">
+//         <Wrap m="auto" justify="center">
+//           {choices}
+//         </Wrap>
+//       </ModalBody>
+//     </ModalContent>
+//   </Modal>
+// );
+// };
+
+// export default ChoosingPanel;
+
+const ChoosingPanel = ({ G, ctx, playerID, moves, gameID, msg }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [choices, setChoices] = useState([]);
 
@@ -45,10 +241,29 @@ const ChoosingPanel = ({ G, ctx, playerID, moves, gameID }) => {
 
     const isYourTurn = playerID === ctx.currentPlayer;
 
-    const coup = (character) => moves.coup(character);
-    const setHand = (cardID) => moves.setHand(cardID);
-    const setBlock = (character) => moves.block(playerID, character);
-    const playAgain = () => moves.playAgain(playerID);
+    const coup = (character) => {
+      moves.coup(character);
+    };
+
+    const setHand = (cardID) => {
+      moves.setHand(cardID);
+    };
+
+    const allow = () => {
+      moves.allow(playerID);
+    };
+
+    const block = () => {
+      moves.block(playerID);
+    };
+
+    const setBlock = (character) => {
+      moves.block(playerID, character);
+    };
+
+    const challenge = () => {
+      moves.initiateChallenge(playerID);
+    };
 
     const leaveRoom = () => {
       moves.leave(playerID);
@@ -63,6 +278,10 @@ const ChoosingPanel = ({ G, ctx, playerID, moves, gameID }) => {
           localStorage.clear();
           window.location.href = "/";
         });
+    };
+
+    const playAgain = () => {
+      moves.playAgain(playerID);
     };
 
     let temp = [];
@@ -81,7 +300,7 @@ const ChoosingPanel = ({ G, ctx, playerID, moves, gameID }) => {
         secondClassName = "play-again-selected";
       }
       temp.push(
-        <Button
+        <button
           key={uniqid()}
           className={`play-again-btn ${secondClassName}`}
           onClick={playAgain}
@@ -95,12 +314,12 @@ const ChoosingPanel = ({ G, ctx, playerID, moves, gameID }) => {
             ? "N/A"
             : `${G.gameOver.playAgain.length}/${ctx.numPlayers}`}
           ]
-        </Button>
+        </button>
       );
       temp.push(
-        <Button key={uniqid()} className="leave-btn" onClick={leaveRoom}>
+        <button key={uniqid()} className="leave-btn" onClick={leaveRoom}>
           leave
-        </Button>
+        </button>
       );
     }
     // for blocking steal: show character choices that can block steal (ambassador, captain)
@@ -134,17 +353,31 @@ const ChoosingPanel = ({ G, ctx, playerID, moves, gameID }) => {
       // image loading optimization (with hidden)
       cards.forEach((card) => {
         temp.push(
-          <img
-            key={uniqid()}
-            className="character-choice"
-            onClick={() => {
-              coup(card.character);
-              handleClose();
-            }}
-            src={card.front}
-            alt={card.character}
-            hidden={Object.keys(G.turnLog.target).length === 0}
-          />
+          <MotionBox
+            position="relative"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1, transition: { delay: 0.5, duration: 1 } }}
+          >
+            <Image
+              w="200px"
+              key={uniqid()}
+              src={card.front}
+              alt={card.character}
+              hidden={Object.keys(G.turnLog.target).length === 0}
+            />
+            <Box
+              onClick={() => {
+                coup(card.character);
+                handleClose();
+              }}
+              position="absolute"
+              inset={0}
+              bg="transparent"
+              cursor="pointer"
+              transition="ease 250ms"
+              _hover={{ bg: "rgba(0,0,0,0.5)" }}
+            />
+          </MotionBox>
         );
       });
     }
@@ -152,9 +385,6 @@ const ChoosingPanel = ({ G, ctx, playerID, moves, gameID }) => {
     else if (G.turnLog.action === "exchange" && isYourTurn) {
       // image loading optimization with hidden
       G.turnLog.exchange.drawnCards.forEach((card) => {
-        const cardSelected =
-          Object.prototype.hasOwnProperty.call(G.turnLog.exchange, "newHand") &&
-          G.turnLog.exchange.newHand.includes(card.id);
         temp.push(
           <img
             key={"choice" + card.character}
@@ -170,8 +400,57 @@ const ChoosingPanel = ({ G, ctx, playerID, moves, gameID }) => {
         );
       });
     }
-
+    // show possible player responses
+    else if (
+      !G.players[playerID].isOut &&
+      G.turnLog.responses[playerID] === ""
+    ) {
+      if (ctx.activePlayers[playerID] === "block") {
+        temp.push(
+          <button key={uniqid()} className="choice-btn" onClick={allow}>
+            allow
+          </button>
+        );
+        temp.push(
+          <button key={uniqid()} className="choice-btn" onClick={block}>
+            block
+          </button>
+        );
+      } else if (ctx.activePlayers[playerID] === "challenge") {
+        temp.push(
+          <button key={uniqid()} className="choice-btn" onClick={allow}>
+            allow
+          </button>
+        );
+        temp.push(
+          <button key={uniqid()} className="choice-btn" onClick={challenge}>
+            challenge
+          </button>
+        );
+      } else if (ctx.activePlayers[playerID] === "blockOrChallenge") {
+        temp.push(
+          <button key={uniqid()} className="choice-btn" onClick={allow}>
+            allow
+          </button>
+        );
+        temp.push(
+          <button key={uniqid()} className="choice-btn" onClick={block}>
+            block
+          </button>
+        );
+        temp.push(
+          <button key={uniqid()} className="choice-btn" onClick={challenge}>
+            challenge
+          </button>
+        );
+      }
+    }
     setChoices(temp);
+
+    G.turnLog.action !== "" &&
+      !isObjectEmpty(G.turnLog.target) &&
+      isYourTurn &&
+      setIsOpen(true);
   }, [
     G.turnLog,
     G.players,
@@ -185,18 +464,24 @@ const ChoosingPanel = ({ G, ctx, playerID, moves, gameID }) => {
     gameID,
   ]);
 
-  useEffect(
-    () =>
-      typeof choices !== "undefined" && choices.length !== 0 && setIsOpen(true),
-    [choices]
-  );
-
   return (
-    <Modal isOpen={isOpen} size="full">
-      <ModalOverlay />
-      <ModalContent>
-        <ModalHeader>Modal Title</ModalHeader>
-        <ModalBody>{choices}</ModalBody>
+    <Modal isOpen={isOpen} size="full" motionPreset="scale">
+      <ModalContent bg="base.d400">
+        <MotionBox
+          as={ModalHeader}
+          my="auto"
+          textAlign="center"
+          color="white"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1, transition: { delay: 0.25, duration: 0.5 } }}
+        >
+          {msg}
+        </MotionBox>
+        <ModalBody display="flex" flex={0} mb="auto">
+          <Wrap m="auto" justify="center">
+            {choices}
+          </Wrap>
+        </ModalBody>
       </ModalContent>
     </Modal>
   );

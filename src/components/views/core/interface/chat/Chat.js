@@ -44,7 +44,6 @@ const Chat = ({ G, playerID, moves }) => {
         direction="column"
         overflowY="scroll"
         ref={chatRef}
-        pr={4}
         mt="auto"
         sx={{
           "::-webkit-scrollbar": {

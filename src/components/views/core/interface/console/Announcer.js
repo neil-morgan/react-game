@@ -31,7 +31,7 @@ const Announcer = ({ ctx, G, moves, playerID, gameID }) => {
     // on successful assassination
     if (ctx.activePlayers[G.turnLog.target.id] === "loseAssassinate") {
       if (G.turnLog.target.id === playerID) {
-        setMsg("choose an influence to give up (assassinated).");
+        setMsg("Choose an influence to give up (assassinated).");
         setMsgLoading(false);
       } else {
         setMsg(
@@ -50,7 +50,7 @@ const Announcer = ({ ctx, G, moves, playerID, gameID }) => {
       if (G.turnLog.player.id === playerID) {
         const numToChoose = hand.filter((card) => !card.discarded).length;
         setMsg(
-          `choose your new hand (${numToChoose}).\n the top two cards from the deck are:`
+          `Choose your new hand (${numToChoose}).\n the top two cards from the deck are:`
         );
         setMsgLoading(false);
       } else {
@@ -88,7 +88,7 @@ const Announcer = ({ ctx, G, moves, playerID, gameID }) => {
       else {
         if (ctx.activePlayers[G.turnLog.challenge.loser.id] === "loseCard") {
           if (G.turnLog.challenge.loser.id === playerID) {
-            setMsg("choose an influence to give up (challenge lost).");
+            setMsg("Choose an influence to give up (challenge lost).");
             setMsgLoading(false);
           } else {
             setMsg(
@@ -187,7 +187,7 @@ const Announcer = ({ ctx, G, moves, playerID, gameID }) => {
         G.turnLog.blockedBy.character === ""
       ) {
         if (playerID === G.turnLog.blockedBy.id) {
-          setMsg("choose a character to block with.");
+          setMsg("Choose a character to block with.");
           setMsgLoading(false);
         }
       } else if (!isYourTurn) {
@@ -235,7 +235,7 @@ const Announcer = ({ ctx, G, moves, playerID, gameID }) => {
             setMsgLoading(true);
           } else {
             if (G.turnLog.target.id === playerID) {
-              setMsg(`${name} chooses to ${action} you.`);
+              setMsg(`${name} Chooses to ${action} you.`);
               setMsgLoading(false);
             } else {
               action =
@@ -248,10 +248,10 @@ const Announcer = ({ ctx, G, moves, playerID, gameID }) => {
           }
         }
       } else if (Object.keys(G.turnLog.target).length === 0) {
-        setMsg(`choose a player to ${action}.`);
+        setMsg(`Choose a player to ${action}.`);
         setMsgLoading(false);
       } else if (G.turnLog.action === "coup") {
-        setMsg("select a character to coup.");
+        setMsg("Select a character to coup.");
         setMsgLoading(false);
       } else {
         setMsg(`waiting for ${G.turnLog.target.name} to respond`);
@@ -297,9 +297,11 @@ const Announcer = ({ ctx, G, moves, playerID, gameID }) => {
     }
   }, [G.winner, name, playerID]);
 
+  const choosingProps = { G, ctx, playerID, moves, gameID, msg };
+
   return (
     <>
-      {/* <ChoosingPanel {...choosingProps} /> */}
+      <ChoosingPanel {...choosingProps} />
       <Flex w="full" textAlign="center" position="relative" h="100px">
         <AnimatePresence>
           <MotionBox

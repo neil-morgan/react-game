@@ -14,8 +14,6 @@ const Console = ({ ctx, G, moves, playerID, revealDeck, gameID }) => {
     gameID,
   };
 
-  const choosingProps = { G, ctx, playerID, moves, gameID };
-
   const deckProps = {
     deck: G.deck,
   };
@@ -35,7 +33,6 @@ const Console = ({ ctx, G, moves, playerID, revealDeck, gameID }) => {
       flex={1}
       h="full"
     >
-      <ChoosingPanel {...choosingProps} />
       <Announcer {...announcerProps} />
       {G.winner.id !== "-1" || G.players[playerID].isOut ? (
         revealDeck ? (

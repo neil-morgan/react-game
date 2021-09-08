@@ -14,10 +14,8 @@ const Events = ({ chat }) => {
 
   return (
     <Flex
-      direction="column"
       w="300px"
       h="full"
-      mt="auto"
       overflowY="scroll"
       fontFamily="Roboto Mono"
       fontSize="xs"
@@ -34,23 +32,25 @@ const Events = ({ chat }) => {
         },
       }}
     >
-      {chat.map((msg) => {
-        if (msg.id === "-1") {
-          let msgParts = msg.content.split("\n");
+      <Flex direction="column" mt="auto">
+        {chat.map((msg) => {
+          if (msg.id === "-1") {
+            let msgParts = msg.content.split("\n");
 
-          return (
-            <Fragment key={uniqid()}>
-              {msgParts.slice(1, msgParts.length).map((msgPart) => (
-                <Fragment key={uniqid()}>&gt; {msgPart}</Fragment>
-              ))}
+            return (
+              <Fragment key={uniqid()}>
+                {msgParts.slice(1, msgParts.length).map((msgPart) => (
+                  <Fragment key={uniqid()}>&gt; {msgPart}</Fragment>
+                ))}
 
-              <chakra.span color={msg.successful ? "green.300" : "red.400"}>
-                &gt; {capitalize(msgParts[0])}
-              </chakra.span>
-            </Fragment>
-          );
-        }
-      })}
+                <chakra.span color={msg.successful ? "green.300" : "red.400"}>
+                  &gt; {capitalize(msgParts[0])}
+                </chakra.span>
+              </Fragment>
+            );
+          }
+        })}
+      </Flex>
     </Flex>
   );
 };
