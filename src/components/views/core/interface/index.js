@@ -28,7 +28,6 @@ const Interface = ({ G, ctx, playerID, moves, revealDeck }) => {
       as="section"
       mt="auto"
       justify="space-between"
-      align="flex-end"
       h="full"
       maxH="175px"
       w="full"
