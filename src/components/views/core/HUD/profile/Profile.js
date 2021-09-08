@@ -1,8 +1,6 @@
 import React from "react";
 import { Image, Flex, Heading } from "@chakra-ui/react";
-import uniqid from "uniqid";
-import { capitalize } from "../../../../../utils";
-import { IskCounter } from "../../../../";
+import { DeadCard, IskCounter } from "../../../../";
 
 const Profile = ({ G, ctx, playerID, moves }) => {
   const player = G.players[playerID];
@@ -44,11 +42,7 @@ const Profile = ({ G, ctx, playerID, moves }) => {
 
     hand.push(
       card.discarded ? (
-        // SHOW A BLANK BOX HERE
-        <div
-          key={uniqid()}
-          className="character-card character-card-discarded"
-        ></div>
+        <DeadCard card={card} />
       ) : (
         <Image
           w="50%"
@@ -58,7 +52,7 @@ const Profile = ({ G, ctx, playerID, moves }) => {
           draggable={false}
           key={player.id + card.character + index}
           src={card.front}
-          _first={{ mr: 1 }}
+          _first={{ mr: 3 }}
           onClick={() => {
             if (
               ctx.activePlayers[playerID] &&
@@ -126,13 +120,22 @@ const Profile = ({ G, ctx, playerID, moves }) => {
   };
 
   return (
-    <Flex direction="column">
-      <Flex pb={4} align="center" justify="space-between">
+    <Flex direction="column" h="210px">
+      <Flex
+        w="full"
+        px={4}
+        mb={3}
+        flex={1}
+        align="center"
+        transition="ease 250ms"
+        justify="space-between"
+      >
         <Heading size="md" color="white">
-          {capitalize(player.name)}
+          {player.name}
         </Heading>
-        <IskCounter isk={G.players[playerID].coins} />
+        <IskCounter isk={player.coins} />
       </Flex>
+
       <Flex>{hand}</Flex>
       {player.isOut || gameOver ? (
         <div className="exiled-text">{bottomRow()}</div>

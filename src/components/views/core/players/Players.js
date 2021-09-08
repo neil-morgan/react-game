@@ -1,5 +1,5 @@
 import React from "react";
-import { Flex } from "@chakra-ui/react";
+import { Flex, Wrap, WrapItem } from "@chakra-ui/react";
 import Player from "./Player";
 
 // row of players
@@ -29,9 +29,37 @@ const Players = (props) => {
     }
   }
   return (
-    <Flex as="section" py={4} flex={1} align="center" justify="center">
+    <Wrap
+      as="section"
+      spacing={4}
+      justify="center"
+      flex={1}
+      maxH="285px"
+      my="auto"
+      sx={{
+        ul: {
+          h: "full",
+          my: "auto",
+          alignItems: "center",
+          overflowY: "auto",
+          overflowX: "hidden",
+          py: 4,
+
+          "::-webkit-scrollbar": {
+            width: "16px",
+          },
+
+          "::-webkit-scrollbar-thumb": {
+            border: "6px solid rgba(0, 0, 0, 0)",
+            backgroundClip: "padding-box",
+            borderRadius: "9999px",
+            backgroundColor: "primary.200",
+          },
+        },
+      }}
+    >
       {players}
-    </Flex>
+    </Wrap>
   );
 };
 

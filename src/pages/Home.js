@@ -4,11 +4,7 @@ import { Wrapper, Lobby } from "../components";
 
 const Home = (props) => {
   const { history } = props;
-  return (
-    <Wrapper>
-      <Lobby history={history} />
-    </Wrapper>
-  );
+  return <Lobby history={history} />;
 };
 
 export default Home;

@@ -7,7 +7,7 @@ import { textUpdate } from "../../../animations";
 const IskCounter = ({ isk }) => {
   return (
     <Flex align="center">
-      <Text size="xs" color="primary.200" fontFamily="Roboto Mono">
+      <Text size="xs" color="white" fontFamily="Roboto Mono">
         isk
       </Text>
       <Flex

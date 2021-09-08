@@ -30,11 +30,11 @@ const Board = ({ G, playerID, ctx, moves, gameMetadata, gameId }) => {
   };
 
   return (
-    <Wrapper direction="column" position="absolute" inset={0}>
+    <>
       <HUD {...hudProps} />
       <Players {...playersProps} />
       <Interface {...interfaceProps} />
-    </Wrapper>
+    </>
   );
 };
 

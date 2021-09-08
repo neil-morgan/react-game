@@ -1,8 +1,6 @@
 import React, { useState } from "react";
-import { Image, Flex, Heading, Text } from "@chakra-ui/react";
-import uniqid from "uniqid";
-import { capitalize } from "../../../../utils";
-import { IskCounter } from "../../../";
+import { Image, Flex, Heading, WrapItem } from "@chakra-ui/react";
+import { DeadCard, IskCounter } from "../../../";
 
 const Player = ({ G, ctx, playerID, moves, i }) => {
   const [revealHand, setRevealHand] = useState(false);
@@ -20,15 +18,12 @@ const Player = ({ G, ctx, playerID, moves, i }) => {
     }
     hand.push(
       card.discarded ? (
-        <div
-          key={uniqid()}
-          className="character-card character-card-discarded"
-        ></div>
+        <DeadCard />
       ) : (
         <Image
           maxW="100px"
           onDragStart={(e) => e.preventDefault()}
-          _first={{ mr: 1 }}
+          _first={{ mr: 3 }}
           draggable={false}
           key={player.name + cardIndex}
           src={
@@ -115,21 +110,36 @@ const Player = ({ G, ctx, playerID, moves, i }) => {
   };
 
   return (
-    <Flex
-      direction="column"
-      maxW="320px"
+    <WrapItem
+      flexDirection="column"
+      justify="center"
+      maxH="210px"
+      h="full"
       onClick={() => (canRevealHand ? updateReveal() : setTarget())}
     >
-      <Flex pb={4} align="center" justify="space-between">
+      <Flex
+        w="full"
+        px={4}
+        mb={3}
+        flex={1}
+        align="center"
+        bg={isCurrentPlayer ? "base.900" : "transparent"}
+        transition="ease 250ms"
+        rounded={6}
+        overflow="hidden"
+        justify="space-between"
+      >
         <Heading size="md" color="white">
-          {capitalize(player.name)}
+          {player.name}
         </Heading>
-        <IskCounter isk={G.players[playerID].coins} />
+        <IskCounter isk={player.coins} />
       </Flex>
+
       <Flex>{hand}</Flex>
-      {player.isOut ||
-        (gameOver && <div className="exiled-text">{bottomRow()}</div>)}
-    </Flex>
+      {/* <Flex flex={1} w="full" px={4}>
+        {player.isOut || (gameOver && bottomRow())}
+      </Flex> */}
+    </WrapItem>
   );
 };
 

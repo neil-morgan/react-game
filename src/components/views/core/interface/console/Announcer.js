@@ -297,12 +297,10 @@ const Announcer = ({ ctx, G, moves, playerID, gameID }) => {
     }
   }, [G.winner, name, playerID]);
 
-  const choosingProps = { G, ctx, playerID, moves, gameID };
-
   return (
     <>
-      <ChoosingPanel {...choosingProps} />
-      <Flex w="full" textAlign="center" position="relative" h="full">
+      {/* <ChoosingPanel {...choosingProps} /> */}
+      <Flex w="full" textAlign="center" position="relative" h="100px">
         <AnimatePresence>
           <MotionBox
             position="absolute"

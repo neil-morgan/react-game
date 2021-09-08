@@ -17,7 +17,6 @@ const Events = ({ chat }) => {
       direction="column"
       w="300px"
       h="full"
-      justify="flex-end"
       overflowY="scroll"
       fontFamily="Roboto Mono"
       fontSize="xs"

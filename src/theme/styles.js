@@ -1,3 +1,5 @@
+import { Flex } from "@chakra-ui/layout";
+
 export const styles = {
   global: {
     "*, *::before, *::after": {
@@ -11,10 +13,25 @@ export const styles = {
       boxShadow: "none",
     },
 
+    "html, body, #root, .bgio-client": {
+      h: "full",
+    },
+
+    "#root, .bgio-client": {
+      display: "flex",
+    },
+
+    ".bgio-client": {
+      w: "full",
+      flexDirection: "column",
+      p: { base: 4, md: 8 },
+    },
+
     body: {
       overflowX: "hidden",
       overflowY: "scroll",
       fontFamily: "Inter, sans-serif",
+
       color: "gray.400",
       bg: "base.d200",
     },
@@ -61,7 +78,7 @@ export const layerStyles = {
   },
 
   outline: {
-    borderWidth: 1,
-    borderColor: "red.500",
+    borderWidth: 2,
+    borderColor: "base.800",
   },
 };

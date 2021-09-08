@@ -1,12 +1,24 @@
 import React, { useState, useEffect } from "react";
 import uniqid from "uniqid";
-import { Button } from "@chakra-ui/react";
+import {
+  Button,
+  useDisclosure,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+} from "@chakra-ui/react";
 import { cards } from "../../../../../environment/cards";
 import { api } from "../../../../../server/api";
-import { Icon } from "../../../../common";
 
 const ChoosingPanel = ({ G, ctx, playerID, moves, gameID }) => {
+  const [isOpen, setIsOpen] = useState(false);
   const [choices, setChoices] = useState([]);
+
+  const handleClose = () => setIsOpen(false);
 
   useEffect(() => {
     if (G.gameOver.newRoomID !== "") {
@@ -35,10 +47,7 @@ const ChoosingPanel = ({ G, ctx, playerID, moves, gameID }) => {
 
     const coup = (character) => moves.coup(character);
     const setHand = (cardID) => moves.setHand(cardID);
-    const allow = () => moves.allow(playerID);
-    const block = () => moves.block(playerID);
     const setBlock = (character) => moves.block(playerID, character);
-    const challenge = () => moves.initiateChallenge(playerID);
     const playAgain = () => moves.playAgain(playerID);
 
     const leaveRoom = () => {
@@ -130,6 +139,7 @@ const ChoosingPanel = ({ G, ctx, playerID, moves, gameID }) => {
             className="character-choice"
             onClick={() => {
               coup(card.character);
+              handleClose();
             }}
             src={card.front}
             alt={card.character}
@@ -160,63 +170,7 @@ const ChoosingPanel = ({ G, ctx, playerID, moves, gameID }) => {
         );
       });
     }
-    // show possible player responses
-    else if (
-      !G.players[playerID].isOut &&
-      G.turnLog.responses[playerID] === ""
-    ) {
-      if (ctx.activePlayers[playerID] === "block") {
-        temp.push(
-          <Button
-            key={uniqid()}
-            onClick={allow}
-            rightIcon={<Icon name="checkmark" boxSize={6} />}
-            size="sm"
-            colorScheme="green"
-          >
-            ALLOW
-          </Button>
-        );
-        temp.push(
-          <Button
-            key={uniqid()}
-            onClick={block}
-            rightIcon={<Icon name="cross" boxSize={5} />}
-            size="sm"
-            colorScheme="red"
-          >
-            BLOCK
-          </Button>
-        );
-      } else if (ctx.activePlayers[playerID] === "challenge") {
-        temp.push(
-          <Button key={uniqid()} onClick={allow}>
-            allow
-          </Button>
-        );
-        temp.push(
-          <Button key={uniqid()} onClick={challenge}>
-            challenge
-          </Button>
-        );
-      } else if (ctx.activePlayers[playerID] === "blockOrChallenge") {
-        temp.push(
-          <Button key={uniqid()} onClick={allow}>
-            allow
-          </Button>
-        );
-        temp.push(
-          <Button key={uniqid()} onClick={block}>
-            block
-          </Button>
-        );
-        temp.push(
-          <Button key={uniqid()} onClick={challenge}>
-            challenge
-          </Button>
-        );
-      }
-    }
+
     setChoices(temp);
   }, [
     G.turnLog,
@@ -231,7 +185,21 @@ const ChoosingPanel = ({ G, ctx, playerID, moves, gameID }) => {
     gameID,
   ]);
 
-  return choices.length > 0 && <div id="test" />;
+  useEffect(
+    () =>
+      typeof choices !== "undefined" && choices.length !== 0 && setIsOpen(true),
+    [choices]
+  );
+
+  return (
+    <Modal isOpen={isOpen} size="full">
+      <ModalOverlay />
+      <ModalContent>
+        <ModalHeader>Modal Title</ModalHeader>
+        <ModalBody>{choices}</ModalBody>
+      </ModalContent>
+    </Modal>
+  );
 };
 
 export default ChoosingPanel;
