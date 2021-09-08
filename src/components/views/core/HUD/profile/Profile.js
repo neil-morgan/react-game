@@ -1,8 +1,10 @@
 import React from "react";
-import { Image } from "@chakra-ui/react";
+import { Image, Flex, Heading } from "@chakra-ui/react";
 import uniqid from "uniqid";
+import { capitalize } from "../../../../../utils";
+import { IskCounter } from "../../../../";
 
-const YourPlayer = ({ G, ctx, playerID, moves }) => {
+const Profile = ({ G, ctx, playerID, moves }) => {
   const player = G.players[playerID];
   const isYourTurn = playerID === ctx.currentPlayer;
   const gameOver = G.winner.id !== "-1";
@@ -19,17 +21,12 @@ const YourPlayer = ({ G, ctx, playerID, moves }) => {
     cardSelected = !cardSelectable;
   }
 
-  const revealCard = (playerID, cardID) => {
-    moves.revealCard(playerID, cardID);
-  };
+  const revealCard = (playerID, cardID) => moves.revealCard(playerID, cardID);
 
-  const loseCard = (playerID, cardID) => {
+  const loseCard = (playerID, cardID) =>
     moves.loseCardAndShuffle(playerID, cardID);
-  };
 
-  const setHand = (cardID) => {
-    moves.setHand(cardID);
-  };
+  const setHand = (cardID) => moves.setHand(cardID);
 
   const hand = [];
   player.hand.forEach((card, index) => {
@@ -47,22 +44,22 @@ const YourPlayer = ({ G, ctx, playerID, moves }) => {
 
     hand.push(
       card.discarded ? (
+        // SHOW A BLANK BOX HERE
         <div
           key={uniqid()}
           className="character-card character-card-discarded"
         ></div>
       ) : (
         <Image
+          w="50%"
+          h="100%"
           maxW="100px"
-          onDragStart={(e) => {
-            e.preventDefault();
-          }}
+          onDragStart={(e) => e.preventDefault()}
           draggable={false}
           key={player.id + card.character + index}
-          className={`character-card ${cardClass}`}
           src={card.front}
+          _first={{ mr: 1 }}
           onClick={() => {
-            // handle card selection logic
             if (
               ctx.activePlayers[playerID] &&
               ctx.activePlayers[playerID].includes("lose") &&
@@ -129,52 +126,41 @@ const YourPlayer = ({ G, ctx, playerID, moves }) => {
   };
 
   return (
-    <div>
-      <div className="player-body">
-        <div className="player-name">{player.name} (You)</div>
-        <div className="no-gutters d-flex" style={{ height: "60%" }}>
-          {hand}
-        </div>
-        {player.isOut || gameOver ? (
-          <div className="exiled-text">{bottomRow()}</div>
-        ) : (
-          <div className="coin-row no-gutters">
+    <Flex direction="column">
+      <Flex pb={4} align="center" justify="space-between">
+        <Heading size="md" color="white">
+          {capitalize(player.name)}
+        </Heading>
+        <IskCounter isk={G.players[playerID].coins} />
+      </Flex>
+      <Flex>{hand}</Flex>
+      {player.isOut || gameOver ? (
+        <div className="exiled-text">{bottomRow()}</div>
+      ) : (
+        <div className="coin-row no-gutters">
+          <div
+            className="w-50 h-100 d-flex align-items-center justify-content-end"
+            style={{ paddingRight: "1%" }}
+          ></div>
+          <div
+            className="w-50 d-flex align-items-center justify-content-start"
+            style={{ paddingLeft: "1.2%", fontSize: "2.8vw" }}
+          >
             <div
-              className="w-50 h-100 d-flex align-items-center justify-content-end"
-              style={{ paddingRight: "1%" }}
+              className="response-icon"
+              style={{ paddingRight: "1vw", color: `${iconColor}` }}
             >
-              <img
-                onDragStart={(e) => {
-                  e.preventDefault();
-                }}
-                draggable={false}
-                className="img-fluid"
-                src="/images/coin.png"
-                alt="coins"
-                style={{ height: "90%" }}
-              />
-            </div>
-            <div
-              className="w-50 d-flex align-items-center justify-content-start"
-              style={{ paddingLeft: "1.2%", fontSize: "2.8vw" }}
-            >
-              {player.coins}
-              <div
-                className="response-icon"
-                style={{ paddingRight: "1vw", color: `${iconColor}` }}
-              >
-                {G.turnLog.responses[playerID] !== ""
-                  ? G.turnLog.responses[playerID] === "allow"
-                    ? "thumb up icon"
-                    : "thumb down icon"
-                  : ""}
-              </div>
+              {G.turnLog.responses[playerID] !== ""
+                ? G.turnLog.responses[playerID] === "allow"
+                  ? "thumb up icon"
+                  : "thumb down icon"
+                : ""}
             </div>
           </div>
-        )}
-      </div>
-    </div>
+        </div>
+      )}
+    </Flex>
   );
 };
 
-export default YourPlayer;
+export default Profile;

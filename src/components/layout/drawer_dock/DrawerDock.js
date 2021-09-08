@@ -7,15 +7,17 @@ import { drawerDockReveal } from "../../../animations";
 const DrawerDock = () => {
   return (
     <MotionBox
-      as={VStack}
+      as="nav"
       position="absolute"
       top={4}
       right={4}
-      spacing={3}
+      zIndex={1}
       {...drawerDockReveal}
     >
-      <CharacterDrawer />
-      <RulesDrawer />
+      <VStack spacing={3}>
+        <CharacterDrawer />
+        <RulesDrawer />
+      </VStack>
     </MotionBox>
   );
 };

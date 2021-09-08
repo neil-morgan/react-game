@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import uniqid from "uniqid";
-import { cards } from "../../../environment/cards";
-import { api } from "../../../server/api";
+import { Button } from "@chakra-ui/react";
+import { cards } from "../../../../../environment/cards";
+import { api } from "../../../../../server/api";
+import { Icon } from "../../../../common";
 
 const ChoosingPanel = ({ G, ctx, playerID, moves, gameID }) => {
   const [choices, setChoices] = useState([]);
@@ -31,29 +33,13 @@ const ChoosingPanel = ({ G, ctx, playerID, moves, gameID }) => {
 
     const isYourTurn = playerID === ctx.currentPlayer;
 
-    const coup = (character) => {
-      moves.coup(character);
-    };
-
-    const setHand = (cardID) => {
-      moves.setHand(cardID);
-    };
-
-    const allow = () => {
-      moves.allow(playerID);
-    };
-
-    const block = () => {
-      moves.block(playerID);
-    };
-
-    const setBlock = (character) => {
-      moves.block(playerID, character);
-    };
-
-    const challenge = () => {
-      moves.initiateChallenge(playerID);
-    };
+    const coup = (character) => moves.coup(character);
+    const setHand = (cardID) => moves.setHand(cardID);
+    const allow = () => moves.allow(playerID);
+    const block = () => moves.block(playerID);
+    const setBlock = (character) => moves.block(playerID, character);
+    const challenge = () => moves.initiateChallenge(playerID);
+    const playAgain = () => moves.playAgain(playerID);
 
     const leaveRoom = () => {
       moves.leave(playerID);
@@ -68,10 +54,6 @@ const ChoosingPanel = ({ G, ctx, playerID, moves, gameID }) => {
           localStorage.clear();
           window.location.href = "/";
         });
-    };
-
-    const playAgain = () => {
-      moves.playAgain(playerID);
     };
 
     let temp = [];
@@ -90,7 +72,7 @@ const ChoosingPanel = ({ G, ctx, playerID, moves, gameID }) => {
         secondClassName = "play-again-selected";
       }
       temp.push(
-        <button
+        <Button
           key={uniqid()}
           className={`play-again-btn ${secondClassName}`}
           onClick={playAgain}
@@ -104,12 +86,12 @@ const ChoosingPanel = ({ G, ctx, playerID, moves, gameID }) => {
             ? "N/A"
             : `${G.gameOver.playAgain.length}/${ctx.numPlayers}`}
           ]
-        </button>
+        </Button>
       );
       temp.push(
-        <button key={uniqid()} className="leave-btn" onClick={leaveRoom}>
+        <Button key={uniqid()} className="leave-btn" onClick={leaveRoom}>
           leave
-        </button>
+        </Button>
       );
     }
     // for blocking steal: show character choices that can block steal (ambassador, captain)
@@ -185,41 +167,53 @@ const ChoosingPanel = ({ G, ctx, playerID, moves, gameID }) => {
     ) {
       if (ctx.activePlayers[playerID] === "block") {
         temp.push(
-          <button key={uniqid()} className="choice-btn" onClick={allow}>
-            allow
-          </button>
+          <Button
+            key={uniqid()}
+            onClick={allow}
+            rightIcon={<Icon name="checkmark" boxSize={6} />}
+            size="sm"
+            colorScheme="green"
+          >
+            ALLOW
+          </Button>
         );
         temp.push(
-          <button key={uniqid()} className="choice-btn" onClick={block}>
-            block
-          </button>
+          <Button
+            key={uniqid()}
+            onClick={block}
+            rightIcon={<Icon name="cross" boxSize={5} />}
+            size="sm"
+            colorScheme="red"
+          >
+            BLOCK
+          </Button>
         );
       } else if (ctx.activePlayers[playerID] === "challenge") {
         temp.push(
-          <button key={uniqid()} className="choice-btn" onClick={allow}>
+          <Button key={uniqid()} onClick={allow}>
             allow
-          </button>
+          </Button>
         );
         temp.push(
-          <button key={uniqid()} className="choice-btn" onClick={challenge}>
+          <Button key={uniqid()} onClick={challenge}>
             challenge
-          </button>
+          </Button>
         );
       } else if (ctx.activePlayers[playerID] === "blockOrChallenge") {
         temp.push(
-          <button key={uniqid()} className="choice-btn" onClick={allow}>
+          <Button key={uniqid()} onClick={allow}>
             allow
-          </button>
+          </Button>
         );
         temp.push(
-          <button key={uniqid()} className="choice-btn" onClick={block}>
+          <Button key={uniqid()} onClick={block}>
             block
-          </button>
+          </Button>
         );
         temp.push(
-          <button key={uniqid()} className="choice-btn" onClick={challenge}>
+          <Button key={uniqid()} onClick={challenge}>
             challenge
-          </button>
+          </Button>
         );
       }
     }
@@ -237,7 +231,7 @@ const ChoosingPanel = ({ G, ctx, playerID, moves, gameID }) => {
     gameID,
   ]);
 
-  return <div id="choosing_panel">{choices}</div>;
+  return choices.length > 0 && <div id="test" />;
 };
 
 export default ChoosingPanel;

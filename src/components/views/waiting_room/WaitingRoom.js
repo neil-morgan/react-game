@@ -8,7 +8,7 @@ import {
   WrapItem,
   Button,
 } from "@chakra-ui/react";
-import { MotionFlex } from "../../";
+import { Wrapper, MotionFlex } from "../../";
 import { pageTransition } from "../../../animations";
 import copyToClipboard from "copy-to-clipboard-ultralight";
 import { useRipple } from "../../../hooks";
@@ -34,65 +34,67 @@ const WaitingRoom = ({ activePlayers, players, id, leaveRoom }) => {
   useRipple(copyRef);
 
   return (
-    <MotionFlex direction="column" m="auto" w="320px" {...pageTransition}>
-      <Flex
-        direction="column"
-        bg="base.900"
-        p={8}
-        rounded={5}
-        textAlign="center"
-      >
-        <Heading color="white">Welcome!</Heading>
-        <Text>Invite your friends</Text>
-        <Text size="xs" mt={6}>
-          Click to copy
-        </Text>
-        <Button
-          ref={copyRef}
-          id="roomID"
-          colorScheme="primary"
-          onClick={() => handleCopyClick(id)}
-          mt={2}
-          mb={8}
+    <Wrapper>
+      <MotionFlex direction="column" m="auto" w="320px" {...pageTransition}>
+        <Flex
+          direction="column"
+          bg="base.900"
+          p={8}
+          rounded={5}
+          textAlign="center"
         >
-          {copied ? "Copied" : id}
+          <Heading color="white">Welcome!</Heading>
+          <Text>Invite your friends</Text>
+          <Text size="xs" mt={6}>
+            Click to copy
+          </Text>
+          <Button
+            ref={copyRef}
+            id="roomID"
+            colorScheme="primary"
+            onClick={() => handleCopyClick(id)}
+            mt={2}
+            mb={8}
+          >
+            {copied ? "Copied" : id}
+          </Button>
+          <Text color="primary.300" size="3xl" fontWeight="bold">
+            {playersRequired}
+          </Text>{" "}
+          <Text>{`more player${playersRequired > 1 ? "s" : ""} required`}</Text>
+          <Wrap mt={6} spacing={2} justify="center">
+            {players.map((player, index) =>
+              player.name ? (
+                <Tag
+                  as={WrapItem}
+                  key={index}
+                  variant="solid"
+                  size="sm"
+                  borderRadius={3}
+                >
+                  {player.name}
+                </Tag>
+              ) : (
+                <Tag key={index} variant="ghost" borderRadius={3} size="sm">
+                  Empty
+                </Tag>
+              )
+            )}
+          </Wrap>
+        </Flex>
+        <Button
+          _active={{ color: "primary.200" }}
+          _hover={{ textDecoration: "none", color: "white" }}
+          colorScheme="primary"
+          variant="link"
+          size="xs"
+          mt={6}
+          onClick={leaveRoom}
+        >
+          leave room
         </Button>
-        <Text color="primary.300" size="3xl" fontWeight="bold">
-          {playersRequired}
-        </Text>{" "}
-        <Text>{`more player${playersRequired > 1 ? "s" : ""} required`}</Text>
-        <Wrap mt={6} spacing={2} justify="center">
-          {players.map((player, index) =>
-            player.name ? (
-              <Tag
-                as={WrapItem}
-                key={index}
-                variant="solid"
-                size="sm"
-                borderRadius={3}
-              >
-                {player.name}
-              </Tag>
-            ) : (
-              <Tag key={index} variant="ghost" borderRadius={3} size="sm">
-                Empty
-              </Tag>
-            )
-          )}
-        </Wrap>
-      </Flex>
-      <Button
-        _active={{ color: "primary.200" }}
-        _hover={{ textDecoration: "none", color: "white" }}
-        colorScheme="primary"
-        variant="link"
-        size="xs"
-        mt={6}
-        onClick={leaveRoom}
-      >
-        leave room
-      </Button>
-    </MotionFlex>
+      </MotionFlex>
+    </Wrapper>
   );
 };
 

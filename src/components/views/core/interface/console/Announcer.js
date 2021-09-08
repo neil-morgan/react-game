@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
-
+import { HStack, Flex, Box, Heading } from "@chakra-ui/react";
+import { AnimatePresence } from "framer-motion";
+import { capitalize } from "../../../../../utils";
+import { MotionBox } from "../../../../";
+import { textUpdate } from "../../../../../animations";
 import ChoosingPanel from "./ChoosingPanel";
 
-const AnnouncementArea = (props) => {
-  const { G, ctx, playerID, moves } = props;
+const Announcer = ({ ctx, G, moves, playerID, gameID }) => {
   const isYourTurn = playerID === ctx.currentPlayer;
   const name = isYourTurn ? "you" : `${G.players[ctx.currentPlayer].name}`;
 
@@ -12,7 +15,9 @@ const AnnouncementArea = (props) => {
 
   // display at beginning of turn
   useEffect(() => {
-    setMsg(isYourTurn ? `${name}r turn` : `${name}'s turn`);
+    setMsg(
+      isYourTurn ? `${capitalize(name)}r turn` : `${capitalize(name)}'s turn`
+    );
     setMsgLoading(true);
   }, [ctx.currentPlayer, isYourTurn, name]);
 
@@ -30,7 +35,7 @@ const AnnouncementArea = (props) => {
         setMsgLoading(false);
       } else {
         setMsg(
-          `waiting for ${G.turnLog.target.name} to give up an influence (assassinated)`
+          `Waiting for ${G.turnLog.target.name} to give up an influence (assassinated)`
         );
         setMsgLoading(true);
       }
@@ -260,7 +265,7 @@ const AnnouncementArea = (props) => {
         setMsg(`${name} attempts to ${G.turnLog.action}.`);
         setMsgLoading(false);
       } else {
-        setMsg(`waiting for others to respond`);
+        setMsg(`Waiting for others to respond`);
       }
     }
 
@@ -292,15 +297,31 @@ const AnnouncementArea = (props) => {
     }
   }, [G.winner, name, playerID]);
 
+  const choosingProps = { G, ctx, playerID, moves, gameID };
+
   return (
-    <div>
-      <div key={msg}>
-        {msg}
-        <span style={{ marginLeft: "0.01vw" }}></span>
-      </div>
-      <ChoosingPanel {...props} />
-    </div>
+    <>
+      <ChoosingPanel {...choosingProps} />
+      <Flex w="full" textAlign="center" position="relative" h="full">
+        <AnimatePresence>
+          <MotionBox
+            position="absolute"
+            top="50%"
+            left="50%"
+            w="full"
+            as={Heading}
+            key={msg}
+            color="white"
+            size="lg"
+            letterSpacing="wider"
+            {...textUpdate}
+          >
+            {msg}
+          </MotionBox>
+        </AnimatePresence>
+      </Flex>
+    </>
   );
 };
 
-export default AnnouncementArea;
+export default Announcer;

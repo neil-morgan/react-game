@@ -3,8 +3,8 @@ import { useParams } from "react-router-dom";
 import { Client } from "boardgame.io/react";
 import { SocketIO } from "boardgame.io/multiplayer";
 import { DEFAULT_PORT, APP_PRODUCTION } from "../environment/config";
-import game from "../environment";
-import { Board, WaitingRoom } from "../components";
+import logic from "../environment";
+import { Wrapper, Core, WaitingRoom } from "../components";
 import { api } from "../server/api";
 
 const { origin, protocol, hostname } = window.location;
@@ -13,8 +13,8 @@ const SERVER_URL = APP_PRODUCTION
   : `${protocol}//${hostname}:${DEFAULT_PORT}`;
 
 const CoupClient = Client({
-  game: game,
-  board: Board,
+  game: logic,
+  board: Core,
   debug: false,
   multiplayer: SocketIO({ server: SERVER_URL }),
 });

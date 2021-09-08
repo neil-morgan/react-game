@@ -1,25 +1,23 @@
 import React, { Fragment, useRef, useEffect } from "react";
 import { chakra, Flex } from "@chakra-ui/react";
 import uniqid from "uniqid";
+import { capitalize } from "../../../../../utils";
 
-const EventLog = ({ G }) => {
+const Events = ({ chat }) => {
   const logRef = useRef();
 
   useEffect(() => {
     if (!logRef.current) return;
     const node = logRef.current;
     node.scrollTop = node.scrollHeight;
-  }, [G.chat]);
+  }, [chat]);
 
   return (
     <Flex
       direction="column"
-      position="absolute"
-      bottom={6}
-      right={4}
-      pr={4}
-      maxW="360px"
-      maxH="200px"
+      w="300px"
+      h="full"
+      justify="flex-end"
       overflowY="scroll"
       fontFamily="Roboto Mono"
       fontSize="xs"
@@ -36,7 +34,7 @@ const EventLog = ({ G }) => {
         },
       }}
     >
-      {G.chat.map((msg) => {
+      {chat.map((msg) => {
         if (msg.id === "-1") {
           let msgParts = msg.content.split("\n");
 
@@ -47,7 +45,7 @@ const EventLog = ({ G }) => {
               ))}
 
               <chakra.span color={msg.successful ? "green.300" : "red.400"}>
-                &gt; {msgParts[0]}
+                &gt; {capitalize(msgParts[0])}
               </chakra.span>
             </Fragment>
           );
@@ -57,4 +55,4 @@ const EventLog = ({ G }) => {
   );
 };
 
-export default EventLog;
+export default Events;

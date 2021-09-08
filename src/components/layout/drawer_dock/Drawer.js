@@ -43,7 +43,7 @@ const Drawer = ({ children, heading, icon = "menu" }) => {
         finalFocusRef={openRef}
       >
         <DrawerOverlay />
-        <DrawerContent bg="base.900">
+        <DrawerContent bg="base.d100">
           <DrawerHeader
             position="relative"
             display="flex"

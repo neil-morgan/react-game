@@ -1,10 +1,14 @@
 import React from "react";
 
-import { Lobby } from "../components";
+import { Wrapper, Lobby } from "../components";
 
 const Home = (props) => {
   const { history } = props;
-  return <Lobby history={history} />;
+  return (
+    <Wrapper>
+      <Lobby history={history} />
+    </Wrapper>
+  );
 };
 
 export default Home;

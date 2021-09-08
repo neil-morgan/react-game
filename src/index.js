@@ -24,19 +24,18 @@ const App = () => {
     <ChakraProvider theme={theme}>
       <IconDefs />
       <DrawerDock />
-      <Wrapper>
-        <AnimatePresence exitBeforeEnter initial={false}>
-          <Switch location={location} key={location.pathname}>
-            <Route exact path="/">
-              <Home history={history} />
-            </Route>
-            <Route exact path="/rooms/:id">
-              <Room history={history} />
-            </Route>
-            <Redirect to="/" />
-          </Switch>
-        </AnimatePresence>
-      </Wrapper>
+
+      <AnimatePresence exitBeforeEnter initial={false}>
+        <Switch location={location} key={location.pathname}>
+          <Route exact path="/">
+            <Home history={history} />
+          </Route>
+          <Route exact path="/rooms/:id">
+            <Room history={history} />
+          </Route>
+          <Redirect to="/" />
+        </Switch>
+      </AnimatePresence>
     </ChakraProvider>
   );
 };
