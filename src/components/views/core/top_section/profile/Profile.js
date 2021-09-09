@@ -1,6 +1,6 @@
 import React from "react";
 import { Image, Flex, Heading } from "@chakra-ui/react";
-import { DeadCard, IskCounter } from "../../../../";
+import { DeadCard, IskCounter } from "../../../..";
 
 const Profile = ({ G, ctx, playerID, moves }) => {
   const player = G.players[playerID];

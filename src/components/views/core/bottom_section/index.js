@@ -4,7 +4,7 @@ import Chat from "./chat/Chat";
 import Console from "./console";
 import Events from "./events/Events";
 
-const Interface = ({ G, ctx, playerID, moves, revealDeck }) => {
+const BottomSection = ({ G, ctx, playerID, moves, revealDeck }) => {
   const chatProps = {
     G,
     moves,
@@ -39,4 +39,4 @@ const Interface = ({ G, ctx, playerID, moves, revealDeck }) => {
   );
 };
 
-export default Interface;
+export default BottomSection;

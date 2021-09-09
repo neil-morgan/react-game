@@ -210,6 +210,27 @@ import { api } from "../../../../../server/api";
 
 // export default ChoosingPanel;
 
+const Card = ({ hidden, src, alt, onClick }) => {
+  return (
+    <MotionBox
+      position="relative"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1, transition: { delay: 0.5, duration: 1 } }}
+    >
+      <Image w="200px" src={src} alt={alt} hidden={hidden} />
+      <Box
+        onClick={() => onClick()}
+        position="absolute"
+        inset={0}
+        bg="transparent"
+        cursor="pointer"
+        transition="ease 250ms"
+        _hover={{ bg: "rgba(0,0,0,0.5)" }}
+      />
+    </MotionBox>
+  );
+};
+
 const ChoosingPanel = ({ G, ctx, playerID, moves, gameID, msg }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [choices, setChoices] = useState([]);
@@ -249,20 +270,8 @@ const ChoosingPanel = ({ G, ctx, playerID, moves, gameID, msg }) => {
       moves.setHand(cardID);
     };
 
-    const allow = () => {
-      moves.allow(playerID);
-    };
-
-    const block = () => {
-      moves.block(playerID);
-    };
-
     const setBlock = (character) => {
       moves.block(playerID, character);
-    };
-
-    const challenge = () => {
-      moves.initiateChallenge(playerID);
     };
 
     const leaveRoom = () => {
@@ -329,128 +338,72 @@ const ChoosingPanel = ({ G, ctx, playerID, moves, gameID, msg }) => {
       G.turnLog.blockedBy.character === "" &&
       ctx.activePlayers[playerID] === "blockOrChallenge"
     ) {
+      setIsOpen(true);
       temp.push(
-        <img
-          key={uniqid()}
-          className="character-choice"
-          onClick={() => setBlock("Ambassador")}
+        <Card
           src={"/images/ambassador.PNG"}
           alt={"Ambassador"}
+          onClick={() => {
+            setBlock("Ambassador");
+            handleClose();
+          }}
         />
       );
       temp.push(
-        <img
-          key={uniqid()}
-          className="character-choice"
-          onClick={() => setBlock("Captain")}
+        <Card
           src={"/images/captain.PNG"}
           alt={"Captain"}
+          onClick={() => {
+            setBlock("Captain");
+            handleClose();
+          }}
         />
       );
     }
     // for coup: show all possible cards to select a targeted character
     else if (G.turnLog.action === "coup" && isYourTurn) {
+      !isObjectEmpty(G.turnLog.target) && setIsOpen(true);
       // image loading optimization (with hidden)
       cards.forEach((card) => {
         temp.push(
-          <MotionBox
-            position="relative"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1, transition: { delay: 0.5, duration: 1 } }}
-          >
-            <Image
-              w="200px"
-              key={uniqid()}
-              src={card.front}
-              alt={card.character}
-              hidden={Object.keys(G.turnLog.target).length === 0}
-            />
-            <Box
-              onClick={() => {
-                coup(card.character);
-                handleClose();
-              }}
-              position="absolute"
-              inset={0}
-              bg="transparent"
-              cursor="pointer"
-              transition="ease 250ms"
-              _hover={{ bg: "rgba(0,0,0,0.5)" }}
-            />
-          </MotionBox>
+          <Card
+            src={card.front}
+            alt={card.character}
+            hidden={Object.keys(G.turnLog.target).length === 0}
+            onClick={() => {
+              coup(card.character);
+              handleClose();
+            }}
+          />
         );
       });
     }
     // show the top two cards
     else if (G.turnLog.action === "exchange" && isYourTurn) {
-      // image loading optimization with hidden
-      G.turnLog.exchange.drawnCards.forEach((card) => {
-        temp.push(
-          <img
-            key={"choice" + card.character}
-            onClick={() => {
-              setHand(card.id);
-            }}
-            src={card.front}
-            alt={card.character}
-            hidden={
-              !G.turnLog.successful || ctx.activePlayers[playerID] !== "action"
-            }
-          />
-        );
-      });
-    }
-    // show possible player responses
-    else if (
-      !G.players[playerID].isOut &&
-      G.turnLog.responses[playerID] === ""
-    ) {
-      if (ctx.activePlayers[playerID] === "block") {
-        temp.push(
-          <button key={uniqid()} className="choice-btn" onClick={allow}>
-            allow
-          </button>
-        );
-        temp.push(
-          <button key={uniqid()} className="choice-btn" onClick={block}>
-            block
-          </button>
-        );
-      } else if (ctx.activePlayers[playerID] === "challenge") {
-        temp.push(
-          <button key={uniqid()} className="choice-btn" onClick={allow}>
-            allow
-          </button>
-        );
-        temp.push(
-          <button key={uniqid()} className="choice-btn" onClick={challenge}>
-            challenge
-          </button>
-        );
-      } else if (ctx.activePlayers[playerID] === "blockOrChallenge") {
-        temp.push(
-          <button key={uniqid()} className="choice-btn" onClick={allow}>
-            allow
-          </button>
-        );
-        temp.push(
-          <button key={uniqid()} className="choice-btn" onClick={block}>
-            block
-          </button>
-        );
-        temp.push(
-          <button key={uniqid()} className="choice-btn" onClick={challenge}>
-            challenge
-          </button>
-        );
-      }
-    }
-    setChoices(temp);
+      !isObjectEmpty(G.turnLog.exchange) && setIsOpen(true);
 
-    G.turnLog.action !== "" &&
-      !isObjectEmpty(G.turnLog.target) &&
-      isYourTurn &&
-      setIsOpen(true);
+      [...G.players[playerID].hand, ...G.turnLog.exchange.drawnCards].forEach(
+        (card) => {
+          temp.push(
+            <Card
+              key={uniqid()}
+              src={card.front}
+              alt={card.character}
+              hidden={
+                !G.turnLog.successful ||
+                ctx.activePlayers[playerID] !== "action"
+              }
+              onClick={() => {
+                setHand(card.id);
+                handleClose();
+              }}
+            />
+          );
+        }
+      );
+    }
+    console.log(G.turnLog);
+    setChoices(temp);
   }, [
     G.turnLog,
     G.players,

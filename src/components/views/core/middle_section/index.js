@@ -3,7 +3,7 @@ import { Flex, Wrap, WrapItem } from "@chakra-ui/react";
 import Player from "./Player";
 
 // row of players
-const Players = (props) => {
+const MiddleSection = (props) => {
   const { ctx, playerID } = props;
   const players = [];
   for (let index = 0; index < ctx.numPlayers; index++) {
@@ -63,4 +63,4 @@ const Players = (props) => {
   );
 };
 
-export default Players;
+export default MiddleSection;

@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Flex, Wrap, Button } from "@chakra-ui/react";
 import { MotionBox } from "../../../../";
 import { AnimatePresence } from "framer-motion";
 import { actionsTransition } from "../../../../../animations";
 
 const Actions = ({ G, ctx, playerID, moves }) => {
-  const [shouldAnimate, setShouldAnimate] = useState("default");
-
   const yourPlayer = G.players[playerID];
   const isYourTurn = ctx.currentPlayer === playerID;
 
@@ -98,22 +96,13 @@ const Actions = ({ G, ctx, playerID, moves }) => {
       case "challenge":
         return [allowButton, challengeButton];
 
-      case "blockOrChallenege":
+      case "blockOrChallenge":
         return [allowButton, blockButton, challengeButton];
 
       default:
         return defaultButtons;
     }
   };
-
-  useEffect(() => {
-    const action = ctx.activePlayers[playerID];
-
-    action === "block" ||
-      action === "challenge" ||
-      (action === "blockOrChallenege" &&
-        setShouldAnimate(ctx.activePlayers[playerID]));
-  }, [ctx.activePlayers, playerID]);
 
   return (
     <Flex position="relative" w="full" maxW="360px" flex={1}>
@@ -124,7 +113,7 @@ const Actions = ({ G, ctx, playerID, moves }) => {
           left="50%"
           bottom={0}
           as={Wrap}
-          key={shouldAnimate}
+          key={ctx.activePlayers[playerID]}
           spacing={3}
           justify="center"
           {...actionsTransition}

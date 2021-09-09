@@ -1,26 +1,21 @@
 import React, { useState, useEffect } from "react";
-import { Flex } from "@chakra-ui/react";
-import { Wrapper } from "../../";
 import PropTypes from "prop-types";
-import Interface from "./interface";
-import HUD from "./HUD";
-import Players from "./players/Players";
+import TopSection from "./top_section";
+import MiddleSection from "./middle_section";
+import BottomSection from "./bottom_section";
 
-const Board = ({ G, playerID, ctx, moves, gameMetadata, gameId }) => {
+const Core = ({ G, playerID, ctx, moves, gameMetadata, gameId }) => {
   const [revealDeck, setRevealDeck] = useState(false);
 
   // player 0 has to set the player's actual screen names due to the way boardgame.io works
-  useEffect(() => {
-    if (playerID === "0") {
-      moves.changeNames(gameMetadata);
-    }
-  }, [playerID, moves, gameMetadata]);
+  useEffect(
+    () => playerID === "0" && moves.changeNames(gameMetadata),
+    [playerID, moves, gameMetadata]
+  );
 
-  const playersProps = { G, ctx, playerID, moves };
-
-  const hudProps = { G, ctx, playerID, moves };
-
-  const interfaceProps = {
+  const topProps = { G, ctx, playerID, moves };
+  const middleProps = { G, ctx, playerID, moves };
+  const bottomProps = {
     G,
     ctx,
     playerID,
@@ -31,14 +26,14 @@ const Board = ({ G, playerID, ctx, moves, gameMetadata, gameId }) => {
 
   return (
     <>
-      <HUD {...hudProps} />
-      <Players {...playersProps} />
-      <Interface {...interfaceProps} />
+      <TopSection {...topProps} />
+      <MiddleSection {...middleProps} />
+      <BottomSection {...bottomProps} />
     </>
   );
 };
 
-Board.propTypes = {
+Core.propTypes = {
   G: PropTypes.any.isRequired,
   ctx: PropTypes.any.isRequired,
   moves: PropTypes.any.isRequired,
@@ -46,4 +41,4 @@ Board.propTypes = {
   gameMetadata: PropTypes.any.isRequired,
 };
 
-export default Board;
+export default Core;

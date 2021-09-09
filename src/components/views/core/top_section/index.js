@@ -2,7 +2,7 @@ import React from "react";
 import { Flex } from "@chakra-ui/react";
 import Profile from "./profile/Profile";
 
-const HUD = ({ G, ctx, playerID, moves }) => {
+const TopSection = ({ G, ctx, playerID, moves }) => {
   const profileProps = { G, ctx, playerID, moves };
 
   return (
@@ -12,4 +12,4 @@ const HUD = ({ G, ctx, playerID, moves }) => {
   );
 };
 
-export default HUD;
+export default TopSection;
