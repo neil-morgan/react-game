@@ -6,10 +6,16 @@ import { drawerDockReveal } from "../../../animations";
 
 const DrawerDock = () => {
   return (
-    <MotionBox as="nav" bg="base.d400" {...drawerDockReveal} p={2}>
+    <MotionBox
+      as="nav"
+      bg="base.d400"
+      {...drawerDockReveal}
+      py={{ base: 1, lg: 2 }}
+      px={2}
+    >
       <Stack
-        direction={{ base: "row", md: "column" }}
-        justify={{ base: "flex-end", md: "flex-start" }}
+        direction={{ base: "row", xl: "column" }}
+        justify={{ base: "flex-end", xl: "flex-start" }}
         spacing={3}
       >
         <CharacterDrawer />

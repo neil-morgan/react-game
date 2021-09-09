@@ -1,6 +1,5 @@
 import React, { useRef } from "react";
 import {
-  Tooltip,
   IconButton,
   Heading,
   useDisclosure,
@@ -18,23 +17,15 @@ const Drawer = ({ children, heading, icon = "menu" }) => {
 
   return (
     <>
-      <Tooltip
-        label={heading.toLowerCase()}
-        bg="transparent"
-        color="primary.300"
-        placement="left"
-        fontSize="xs"
+      <IconButton
+        ref={openRef}
+        colorScheme="primary"
+        variant="ghost"
+        onClick={onOpen}
+        size={{ base: "xs", lg: "lg" }}
       >
-        <IconButton
-          ref={openRef}
-          colorScheme="primary"
-          variant="ghost"
-          onClick={onOpen}
-          size="lg"
-        >
-          <Icon name={icon} boxSize={10} />
-        </IconButton>
-      </Tooltip>
+        <Icon name={icon} boxSize={{ base: 8, lg: 10 }} />
+      </IconButton>
 
       <ChakraDrawer
         isOpen={isOpen}

@@ -39,7 +39,12 @@ const Chat = ({ G, playerID, moves }) => {
   }, [G.chat]);
 
   return (
-    <Flex direction="column" h="full" w="300px">
+    <Flex
+      direction="column"
+      h="full"
+      w={{ base: "250px", xl: "300px" }}
+      display={{ base: "none", lg: "flex" }}
+    >
       <Flex
         direction="column"
         overflowY="scroll"
@@ -77,6 +82,7 @@ const Chat = ({ G, playerID, moves }) => {
 
       <Flex mt={4}>
         <Input
+          size="sm"
           ref={msgRef}
           type="text"
           maxLength={140}
@@ -98,6 +104,7 @@ const Chat = ({ G, playerID, moves }) => {
             disabled={msg.length === 0}
             colorScheme="primary"
             variant="ghost"
+            size="sm"
             ml={2}
           >
             <Icon name="email" boxSize={8} />

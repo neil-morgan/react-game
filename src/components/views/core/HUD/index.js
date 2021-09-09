@@ -6,7 +6,7 @@ const HUD = ({ G, ctx, playerID, moves }) => {
   const profileProps = { G, ctx, playerID, moves };
 
   return (
-    <Flex as="section" w="full">
+    <Flex as="section" w="full" justify={{ base: "center", lg: "flex-start" }}>
       <Profile {...profileProps} />
     </Flex>
   );

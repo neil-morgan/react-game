@@ -14,7 +14,8 @@ const Events = ({ chat }) => {
 
   return (
     <Flex
-      w="300px"
+      display={{ base: "none", lg: "flex" }}
+      w={{ base: "250px", xl: "300px" }}
       h="full"
       overflowY="scroll"
       fontFamily="Roboto Mono"
