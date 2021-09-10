@@ -1,7 +1,17 @@
 import { shuffle } from "../initializer";
 
 // update turnLog in one line
-const logTurn = (turnLog, action, player, successful, target, blockedBy, challenge, responses, exchange) => {
+const logTurn = (
+  turnLog,
+  action,
+  player,
+  successful,
+  target,
+  blockedBy,
+  challenge,
+  responses,
+  exchange
+) => {
   turnLog.action = action;
   turnLog.player = player;
   turnLog.successful = successful;
@@ -58,6 +68,10 @@ const getNumAlivePlayers = (G) => {
   return G.players.filter((player) => !player.isOut).length;
 };
 
+const checkAllDidAllow = (G) =>
+  G.turnLog.responses.filter((response) => response === "allow").length ===
+  getNumAlivePlayers(G) - 1;
+
 const checkForWinner = (G) => {
   const playersAlive = G.players.filter((player) => !player.isOut);
   if (playersAlive.length === 1) {
@@ -75,4 +89,13 @@ const returnToDeck = (G, cards) => {
   shuffle(G.deck);
 };
 
-export { logTurn, logStats, resetResponses, updateIsOut, getNumAlivePlayers, checkForWinner, returnToDeck };
+export {
+  checkAllDidAllow,
+  logTurn,
+  logStats,
+  resetResponses,
+  updateIsOut,
+  getNumAlivePlayers,
+  checkForWinner,
+  returnToDeck,
+};
