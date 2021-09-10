@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { HStack, Flex, Box, Heading } from "@chakra-ui/react";
+import { Flex, Heading } from "@chakra-ui/react";
 import { AnimatePresence } from "framer-motion";
 import { capitalize } from "../../../../../utils";
 import { MotionBox } from "../../../../";
 import { textUpdate } from "../../../../../animations";
 import ChoosingPanel from "./ChoosingPanel";
+import Exchange from "../../card_selector/Exchange";
 
 const Announcer = ({ ctx, G, moves, playerID, gameID }) => {
   const isYourTurn = playerID === ctx.currentPlayer;
@@ -50,11 +51,11 @@ const Announcer = ({ ctx, G, moves, playerID, gameID }) => {
       if (G.turnLog.player.id === playerID) {
         const numToChoose = hand.filter((card) => !card.discarded).length;
         setMsg(
-          `Choose your new hand (${numToChoose}).\n the top two cards from the deck are:`
+          `Select ${numToChoose} cards from the options to form your new hand.`
         );
         setMsgLoading(false);
       } else {
-        setMsg(`waiting for ${G.turnLog.player.name} to complete the exchange`);
+        setMsg(`Waiting for ${G.turnLog.player.name} to complete the exchange`);
         setMsgLoading(true);
       }
     }
@@ -301,7 +302,7 @@ const Announcer = ({ ctx, G, moves, playerID, gameID }) => {
 
   return (
     <>
-      <ChoosingPanel {...choosingProps} />
+      <Exchange {...choosingProps} />
       <Flex w="full" textAlign="center" position="relative" h="100px">
         <AnimatePresence>
           <MotionBox

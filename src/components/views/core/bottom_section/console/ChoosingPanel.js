@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import uniqid from "uniqid";
 import {
   Box,
+  Button,
   Wrap,
   Image,
   Modal,
@@ -12,33 +13,24 @@ import {
 import { MotionBox } from "../../../..";
 import { isObjectEmpty } from "../../../../../utils";
 import { cards } from "../../../../../environment/cards";
-import { checkAllDidAllow } from "../../../../../environment/actions/helper";
 import { api } from "../../../../../server/api";
 
-const Card = ({ hidden, src, alt, onClick, selected }) => {
-  console.log(selected);
+const Card = ({ hidden, src, alt, onClick }) => {
   return (
     <MotionBox
       position="relative"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1, transition: { delay: 0.5, duration: 1 } }}
     >
-      <Image
-        w="200px"
-        src={src}
-        alt={alt}
-        transform={`translateY(${selected ? "-20px" : "0px"})`}
-        hidden={hidden}
-      />
+      <Image w="200px" src={src} alt={alt} hidden={hidden} />
       <Box
         onClick={() => onClick()}
         position="absolute"
         inset={0}
-        bg={selected ? "transparent" : "rgba(0,0,0,0.5)"}
-        transform={`translateY(${selected ? "-20px" : "0px"})`}
+        bg="transparent"
         cursor="pointer"
         transition="ease 250ms"
-        _hover={{ bg: selected ? "transparent" : "rgba(0,0,0,0.25)" }}
+        _hover={{ bg: "rgba(0,0,0,0.5)" }}
       />
     </MotionBox>
   );
@@ -47,9 +39,6 @@ const Card = ({ hidden, src, alt, onClick, selected }) => {
 const ChoosingPanel = ({ G, ctx, playerID, moves, gameID, msg }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [choices, setChoices] = useState([]);
-  const [newHand, setNewHand] = useState([]);
-
-  //!CREATE THE NEW HAND AND THEN WHEN ARR LENGTH === 2 LOOP AND CALL SET HAND FOR EACH ITERATION
 
   const handleClose = () => setIsOpen(false);
 
@@ -76,10 +65,20 @@ const ChoosingPanel = ({ G, ctx, playerID, moves, gameID, msg }) => {
       }
     }
 
-    const coup = (character) => moves.coup(character);
-    const setHand = (cardID) => moves.setHand(cardID);
-    const setBlock = (character) => moves.block(playerID, character);
-    const playAgain = () => moves.playAgain(playerID);
+    const isYourTurn = playerID === ctx.currentPlayer;
+
+    const coup = (character) => {
+      moves.coup(character);
+    };
+
+    const setHand = (cardID) => {
+      moves.setHand(cardID);
+    };
+
+    const setBlock = (character) => {
+      moves.block(playerID, character);
+    };
+
     const leaveRoom = () => {
       moves.leave(playerID);
       api
@@ -95,7 +94,9 @@ const ChoosingPanel = ({ G, ctx, playerID, moves, gameID, msg }) => {
         });
     };
 
-    const isYourTurn = playerID === ctx.currentPlayer;
+    const playAgain = () => {
+      moves.playAgain(playerID);
+    };
 
     let temp = [];
 
@@ -184,7 +185,7 @@ const ChoosingPanel = ({ G, ctx, playerID, moves, gameID, msg }) => {
     }
     // show the top two cards
     else if (G.turnLog.action === "exchange" && isYourTurn) {
-      checkAllDidAllow(G) && setIsOpen(true);
+      !isObjectEmpty(G.turnLog.exchange) && setIsOpen(true);
 
       [...G.players[playerID].hand, ...G.turnLog.exchange.drawnCards].forEach(
         (card) => {
@@ -193,15 +194,13 @@ const ChoosingPanel = ({ G, ctx, playerID, moves, gameID, msg }) => {
               key={uniqid()}
               src={card.front}
               alt={card.character}
-              selected={newHand.includes(card.id)}
               hidden={
                 !G.turnLog.successful ||
                 ctx.activePlayers[playerID] !== "action"
               }
               onClick={() => {
-                setNewHand((oldHand) => [...oldHand, card.id]);
-                // setHand(card.id);
-                // handleClose();
+                setHand(card.id);
+                handleClose();
               }}
             />
           );
@@ -209,10 +208,8 @@ const ChoosingPanel = ({ G, ctx, playerID, moves, gameID, msg }) => {
       );
     }
     console.log(G.turnLog);
-
     setChoices(temp);
   }, [
-    G,
     G.turnLog,
     G.players,
     G.gameOver,
@@ -223,10 +220,7 @@ const ChoosingPanel = ({ G, ctx, playerID, moves, gameID, msg }) => {
     moves,
     G.winner.id,
     gameID,
-    newHand, //!TRACKING PROPS HERE CAUSES ENTIRE RERENDER (FLASH OF CARDS AND TEXT)
   ]);
-
-  //NEED TO TRY AND MOVE CERTAIN PARTS OUT OF USEEFFECT AND TRACK IN STATE
 
   return (
     <Modal isOpen={isOpen} size="full" motionPreset="scale">
