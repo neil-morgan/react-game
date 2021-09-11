@@ -1,3 +1,4 @@
+import Coup from "./Coup";
 import Exchange from "./Exchange";
 
-export { Exchange };
+export { Coup, Exchange };

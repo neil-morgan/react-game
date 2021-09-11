@@ -4,7 +4,6 @@ import { Client } from "boardgame.io/react";
 import { SocketIO } from "boardgame.io/multiplayer";
 import { DEFAULT_PORT, APP_PRODUCTION } from "../environment/config";
 import logic from "../environment";
-import { CommentatorProvider } from "../contexts";
 import { Core, WaitingRoom } from "../components";
 import { api } from "../server/api";
 
@@ -75,9 +74,7 @@ const Room = (props) => {
   };
 
   return show ? (
-    <CommentatorProvider>
-      <CoupClient {...clientProps} />
-    </CommentatorProvider>
+    <CoupClient {...clientProps} />
   ) : (
     <WaitingRoom {...waitingProps} />
   );

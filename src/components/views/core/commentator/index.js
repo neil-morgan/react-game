@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
-import { CommentatorContext } from "../../../../contexts";
+import React, { useState, useEffect } from "react";
 import { Flex, Heading } from "@chakra-ui/react";
 import { AnimatePresence } from "framer-motion";
 import { capitalize } from "../../../../utils";
@@ -7,10 +6,6 @@ import { MotionBox } from "../../../";
 import { textUpdate } from "../../../../animations";
 
 const Commentator = ({ ctx, G, moves, playerID }) => {
-  const { bar } = useContext(CommentatorContext);
-
-  console.log(bar.ctx);
-
   const isYourTurn = playerID === ctx.currentPlayer;
   const name = isYourTurn ? "you" : `${G.players[ctx.currentPlayer].name}`;
 

@@ -1,15 +1,8 @@
 import React, { useState, useEffect } from "react";
-import {
-  Button,
-  Wrap,
-  Modal,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-} from "@chakra-ui/react";
+import { Button, Wrap } from "@chakra-ui/react";
 import SelectableCard from "./SelectableCard";
-import Commentator from "../commentator";
 import { checkAllDidAllow } from "../../../../environment/actions/helper";
+import SelectorModal from "./SelectorModal";
 
 const Exchange = ({ G, ctx, playerID, moves }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -46,56 +39,39 @@ const Exchange = ({ G, ctx, playerID, moves }) => {
     }
   }, [G, ctx.activePlayers, ctx.currentPlayer, selection, playerID]);
 
-  const commentatorProps = {
-    ctx,
-    G,
-    moves,
-    playerID,
-  };
-
   return (
-    <Modal isOpen={isOpen} size="full" motionPreset="scale">
-      <ModalContent bg="base.d400">
-        <ModalHeader my="auto" textAlign="center" color="white">
-          <Commentator {...commentatorProps} />
-        </ModalHeader>
-        <ModalBody
-          display="flex"
-          flexDirection="column"
-          flex={0}
-          mb="auto"
-          minH="330px"
-        >
-          <Wrap m="auto" justify="center">
-            {options.length > 0 &&
-              options.map(({ front, character, id }, index) => {
-                return (
-                  <SelectableCard
-                    key={index}
-                    src={front}
-                    alt={character}
-                    selected={selection.includes(id)}
-                    onClick={() => handleSelectionClick(id)}
-                    hidden={
-                      !G.turnLog.successful ||
-                      ctx.activePlayers[playerID] !== "action"
-                    }
-                  />
-                );
-              })}
-          </Wrap>
-          <Button
-            colorScheme="primary"
-            alignSelf="center"
-            mt={8}
-            onClick={() => handleConfirmClick()}
-            disabled={selection.length < 2}
-          >
-            CONFIRM
-          </Button>
-        </ModalBody>
-      </ModalContent>
-    </Modal>
+    <SelectorModal
+      isOpen={isOpen}
+      commentatorProps={{ ctx, G, moves, playerID }}
+    >
+      <Wrap m="auto" justify="center">
+        {options.length > 0 &&
+          options.map(({ front, character, id }, index) => {
+            return (
+              <SelectableCard
+                key={index}
+                src={front}
+                alt={character}
+                selected={selection.includes(id)}
+                onClick={() => handleSelectionClick(id)}
+                hidden={
+                  !G.turnLog.successful ||
+                  ctx.activePlayers[playerID] !== "action"
+                }
+              />
+            );
+          })}
+      </Wrap>
+      <Button
+        colorScheme="primary"
+        alignSelf="center"
+        mt={8}
+        onClick={() => handleConfirmClick()}
+        disabled={selection.length < 2}
+      >
+        CONFIRM
+      </Button>
+    </SelectorModal>
   );
 };
 
