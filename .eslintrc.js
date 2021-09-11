@@ -19,7 +19,7 @@ module.exports = {
   },
   plugins: ["react"],
   rules: {
-    "no-unused-vars": "off",
+    "no-unused-vars": 1,
     "react/prop-types": "off",
     "react/react-in-jsx-scope": "off",
     "react/jsx-filename-extension": [1, { extensions: [".js", ".jsx"] }],

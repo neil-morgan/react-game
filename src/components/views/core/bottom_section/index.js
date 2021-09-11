@@ -1,22 +1,29 @@
 import React from "react";
 import { Flex } from "@chakra-ui/react";
-import Chat from "./chat/Chat";
-import Console from "./console";
-import Events from "./events/Events";
+import Chat from "./Chat";
+import Commentator from "../commentator";
+import Actions from "./Actions";
+import Events from "./Events";
 
-const BottomSection = ({ G, ctx, playerID, moves, revealDeck }) => {
+const BottomSection = ({ G, ctx, playerID, moves }) => {
+  const actionsProps = {
+    G,
+    ctx,
+    moves,
+    playerID,
+  };
+
   const chatProps = {
     G,
     moves,
     playerID,
   };
 
-  const consoleProps = {
+  const commentatorProps = {
     ctx,
     G,
     moves,
     playerID,
-    revealDeck,
   };
 
   const eventsProps = {
@@ -33,7 +40,16 @@ const BottomSection = ({ G, ctx, playerID, moves, revealDeck }) => {
       w="full"
     >
       <Chat {...chatProps} />
-      <Console {...consoleProps} />
+      <Flex
+        direction="column"
+        align="center"
+        justify="space-between"
+        flex={1}
+        h="full"
+      >
+        <Commentator {...commentatorProps} />
+        <Actions {...actionsProps} />
+      </Flex>
       <Events {...eventsProps} />
     </Flex>
   );

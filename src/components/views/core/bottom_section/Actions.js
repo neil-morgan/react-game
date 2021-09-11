@@ -1,8 +1,8 @@
 import React from "react";
 import { Flex, Wrap, Button } from "@chakra-ui/react";
-import { MotionBox } from "../../../../";
+import { MotionBox } from "../../..";
 import { AnimatePresence } from "framer-motion";
-import { actionsTransition } from "../../../../../animations";
+import { actionsTransition } from "../../../../animations";
 
 const Actions = ({ G, ctx, playerID, moves }) => {
   const yourPlayer = G.players[playerID];

@@ -10,7 +10,7 @@ import {
   useHistory,
   useLocation,
 } from "react-router-dom";
-import { DrawerDock, IconDefs, Wrapper } from "./components";
+import { IconDefs, Wrapper } from "./components";
 import { Home, Room } from "./pages";
 import { AnimatePresence } from "framer-motion";
 import "@fontsource/inter";

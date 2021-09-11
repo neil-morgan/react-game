@@ -2,7 +2,7 @@ import React from "react";
 import { Box, Image } from "@chakra-ui/react";
 import { MotionBox } from "../../..";
 
-const CardSelection = ({ hidden, src, alt, onClick, selected }) => {
+const SelectableCard = ({ hidden, src, alt, onClick, selected }) => {
   return (
     <MotionBox
       position="relative"
@@ -32,4 +32,4 @@ const CardSelection = ({ hidden, src, alt, onClick, selected }) => {
   );
 };
 
-export default CardSelection;
+export default SelectableCard;

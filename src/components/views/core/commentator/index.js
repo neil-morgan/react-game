@@ -1,13 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { CommentatorContext } from "../../../../contexts";
 import { Flex, Heading } from "@chakra-ui/react";
 import { AnimatePresence } from "framer-motion";
-import { capitalize } from "../../../../../utils";
-import { MotionBox } from "../../../../";
-import { textUpdate } from "../../../../../animations";
-import ChoosingPanel from "./ChoosingPanel";
-import Exchange from "../../card_selector/Exchange";
+import { capitalize } from "../../../../utils";
+import { MotionBox } from "../../../";
+import { textUpdate } from "../../../../animations";
 
-const Announcer = ({ ctx, G, moves, playerID, gameID }) => {
+const Commentator = ({ ctx, G, moves, playerID }) => {
+  const { bar } = useContext(CommentatorContext);
+
+  console.log(bar.ctx);
+
   const isYourTurn = playerID === ctx.currentPlayer;
   const name = isYourTurn ? "you" : `${G.players[ctx.currentPlayer].name}`;
 
@@ -298,11 +301,8 @@ const Announcer = ({ ctx, G, moves, playerID, gameID }) => {
     }
   }, [G.winner, name, playerID]);
 
-  const choosingProps = { G, ctx, playerID, moves, gameID, msg };
-
   return (
     <>
-      <Exchange {...choosingProps} />
       <Flex w="full" textAlign="center" position="relative" h="100px">
         <AnimatePresence>
           <MotionBox
@@ -325,4 +325,4 @@ const Announcer = ({ ctx, G, moves, playerID, gameID }) => {
   );
 };
 
-export default Announcer;
+export default Commentator;

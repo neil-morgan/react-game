@@ -1,6 +1,6 @@
 import React from "react";
 import { Flex } from "@chakra-ui/react";
-import Profile from "./profile/Profile";
+import Profile from "./Profile";
 
 const TopSection = ({ G, ctx, playerID, moves }) => {
   const profileProps = { G, ctx, playerID, moves };

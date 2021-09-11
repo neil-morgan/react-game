@@ -1,20 +1,17 @@
 import React, { useState, useEffect } from "react";
 import {
   Button,
-  Box,
   Wrap,
-  Image,
   Modal,
   ModalContent,
   ModalHeader,
   ModalBody,
 } from "@chakra-ui/react";
-import CardSelection from "./CardSelection";
-import { MotionBox } from "../../..";
+import SelectableCard from "./SelectableCard";
+import Commentator from "../commentator";
 import { checkAllDidAllow } from "../../../../environment/actions/helper";
 
-const Exchange = ({ G, ctx, playerID, moves, msg }) => {
-  const [heading, setHeading] = useState("");
+const Exchange = ({ G, ctx, playerID, moves }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selection, setSelection] = useState([]);
   const [options, setCardOptions] = useState([]);
@@ -40,31 +37,28 @@ const Exchange = ({ G, ctx, playerID, moves, msg }) => {
   };
 
   useEffect(() => {
-    setHeading(msg);
-    const isYourTurn = playerID === ctx.currentPlayer;
-
-    if (G.turnLog.action === "exchange" && isYourTurn) {
+    if (G.turnLog.action === "exchange" && playerID === ctx.currentPlayer) {
       setCardOptions([
         ...G.players[playerID].hand,
         ...G.turnLog.exchange.drawnCards,
       ]);
       checkAllDidAllow(G) && selection.length === 0 && handleOpen();
     }
-  }, [G, ctx.activePlayers, ctx.currentPlayer, selection, playerID, msg]);
+  }, [G, ctx.activePlayers, ctx.currentPlayer, selection, playerID]);
+
+  const commentatorProps = {
+    ctx,
+    G,
+    moves,
+    playerID,
+  };
 
   return (
     <Modal isOpen={isOpen} size="full" motionPreset="scale">
       <ModalContent bg="base.d400">
-        <MotionBox
-          as={ModalHeader}
-          my="auto"
-          textAlign="center"
-          color="white"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1, transition: { delay: 0.25, duration: 0.5 } }}
-        >
-          {heading}
-        </MotionBox>
+        <ModalHeader my="auto" textAlign="center" color="white">
+          <Commentator {...commentatorProps} />
+        </ModalHeader>
         <ModalBody
           display="flex"
           flexDirection="column"
@@ -76,7 +70,7 @@ const Exchange = ({ G, ctx, playerID, moves, msg }) => {
             {options.length > 0 &&
               options.map(({ front, character, id }, index) => {
                 return (
-                  <CardSelection
+                  <SelectableCard
                     key={index}
                     src={front}
                     alt={character}

@@ -8,9 +8,9 @@ import {
   Tooltip,
 } from "@chakra-ui/react";
 import uniqid from "uniqid";
-import { Icon } from "../../../../common";
-import { useRipple } from "../../../../../hooks";
-import { capitalize } from "../../../../../utils";
+import { Icon } from "../../../common";
+import { useRipple } from "../../../../hooks";
+import { capitalize } from "../../../../utils";
 
 const Chat = ({ G, playerID, moves }) => {
   const [msg, setMsg] = useState("");

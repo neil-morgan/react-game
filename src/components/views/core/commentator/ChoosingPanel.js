@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import uniqid from "uniqid";
 import {
   Box,
-  Button,
   Wrap,
   Image,
   Modal,
@@ -10,10 +9,10 @@ import {
   ModalHeader,
   ModalBody,
 } from "@chakra-ui/react";
-import { MotionBox } from "../../../..";
-import { isObjectEmpty } from "../../../../../utils";
-import { cards } from "../../../../../environment/cards";
-import { api } from "../../../../../server/api";
+import { MotionBox } from "../../..";
+import { isObjectEmpty } from "../../../../utils";
+import { cards } from "../../../../environment/cards";
+import { api } from "../../../../server/api";
 
 const Card = ({ hidden, src, alt, onClick }) => {
   return (
