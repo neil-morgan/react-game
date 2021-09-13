@@ -48,7 +48,7 @@ const Profile = ({ G, ctx, playerID, moves }) => {
           w="50%"
           h="100%"
           maxW="100px"
-          sx={{ ":first-child": { mr: 3 } }}
+          _first={{ mr: 3 }}
           onDragStart={(e) => e.preventDefault()}
           draggable={false}
           key={player.id + card.character + index}

@@ -58,7 +58,7 @@ const WaitingRoom = ({ activePlayers, players, id, leaveRoom }) => {
           {copied ? "Copied" : id}
         </Button>
         <Text color="primary.300" size="3xl" fontWeight="bold">
-          {playersRequired}
+          {playersRequired.toString()}
         </Text>{" "}
         <Text>{`more player${playersRequired > 1 ? "s" : ""} required`}</Text>
         <Wrap mt={6} spacing={2} justify="center">

@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { CommentatorContext } from "../../../contexts";
 import PropTypes from "prop-types";
 import { Coup, Exchange } from "./card_selector";
 import TopSection from "./top_section";
@@ -7,11 +8,18 @@ import BottomSection from "./bottom_section";
 
 const Core = ({ G, playerID, ctx, moves, gameMetadata, gameId }) => {
   const [revealDeck, setRevealDeck] = useState(false);
+  const { setCommentatorState } = useContext(CommentatorContext);
 
   // player 0 has to set the player's actual screen names due to the way boardgame.io works
-  useEffect(() => {
-    playerID === "0" && moves.changeNames(gameMetadata);
-  }, [playerID, moves, gameMetadata]);
+  useEffect(
+    () => playerID === "0" && moves.changeNames(gameMetadata),
+    [playerID, moves, gameMetadata]
+  );
+
+  useEffect(
+    () => setCommentatorState({ ctx, G, moves, playerID }),
+    [ctx, G, moves, playerID, setCommentatorState]
+  );
 
   const topProps = { G, ctx, playerID, moves };
   const middleProps = { G, ctx, playerID, moves };
