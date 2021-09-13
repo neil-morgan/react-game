@@ -19,13 +19,6 @@ const BottomSection = ({ G, ctx, playerID, moves }) => {
     playerID,
   };
 
-  const commentatorProps = {
-    ctx,
-    G,
-    moves,
-    playerID,
-  };
-
   const eventsProps = {
     chat: G.chat,
   };
@@ -47,7 +40,7 @@ const BottomSection = ({ G, ctx, playerID, moves }) => {
         flex={1}
         h="full"
       >
-        <Commentator {...commentatorProps} />
+        <Commentator />
         <Actions {...actionsProps} />
       </Flex>
       <Events {...eventsProps} />

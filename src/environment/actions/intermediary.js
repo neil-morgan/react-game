@@ -95,7 +95,10 @@ const setHand = (G, ctx, cardID) => {
     }
     // select those unchosen cards from either the original hand or from the two cards drawn
     for (let i = 0; i < notUsed.length; i++) {
-      notUsed[i] = notUsed[i] < 2 ? oldHand[notUsed[i]] : G.turnLog.exchange.drawnCards[notUsed[i] - 2];
+      notUsed[i] =
+        notUsed[i] < 2
+          ? oldHand[notUsed[i]]
+          : G.turnLog.exchange.drawnCards[notUsed[i] - 2];
     }
     returnToDeck(G, notUsed);
     ctx.events.endTurn();
@@ -109,14 +112,23 @@ const revealCard = (G, ctx, playerID, cardID) => {
     name: G.players[playerID].hand[cardID].character,
     id: cardID,
   };
-  if (G.turnLog.challenge.characters.includes(G.turnLog.challenge.revealedCard.name)) {
+  if (
+    G.turnLog.challenge.characters.includes(
+      G.turnLog.challenge.revealedCard.name
+    )
+  ) {
     // failed challenge, so the action goes through.
     G.turnLog.successful = true;
     G.turnLog.challenge.loser = {
       name: G.turnLog.challenge.challenger.name,
       id: G.turnLog.challenge.challenger.id,
     };
-    returnToDeck(G, [Card(G.players[playerID].hand[cardID].character, G.players[playerID].hand[cardID].front)]);
+    returnToDeck(G, [
+      Card(
+        G.players[playerID].hand[cardID].character,
+        G.players[playerID].hand[cardID].front
+      ),
+    ]);
 
     const { character, front } = G.deck.pop();
     G.turnLog.challenge.swapCard = { character, front };
@@ -138,7 +150,12 @@ const revealCard = (G, ctx, playerID, cardID) => {
 
 // Character action: losing a challenge, assassinate, exchange, coup
 const loseCardAndShuffle = (G, ctx, playerID, cardID) => {
-  returnToDeck(G, [Card(G.players[playerID].hand[cardID].character, G.players[playerID].hand[cardID].front)]);
+  returnToDeck(G, [
+    Card(
+      G.players[playerID].hand[cardID].character,
+      G.players[playerID].hand[cardID].front
+    ),
+  ]);
 
   G.players[playerID].hand[cardID] = {
     character: "",
@@ -193,7 +210,10 @@ const loseCardAndShuffle = (G, ctx, playerID, cardID) => {
 
 const continueTurn = (G, ctx) => {
   // winner of challenge draws a new card (this occurs after revealing the correct card)
-  const newCard = G.players[G.turnLog.challenge.challenged.id].hand[G.turnLog.challenge.revealedCard.id];
+  const newCard =
+    G.players[G.turnLog.challenge.challenged.id].hand[
+      G.turnLog.challenge.revealedCard.id
+    ];
   newCard.character = G.turnLog.challenge.swapCard.character;
   newCard.front = G.turnLog.challenge.swapCard.front;
   // loser of challenge has to give up one card
@@ -205,4 +225,11 @@ const continueTurn = (G, ctx) => {
   });
 };
 
-export { prepAction, setTarget, setHand, revealCard, loseCardAndShuffle, continueTurn };
+export {
+  prepAction,
+  setTarget,
+  setHand,
+  revealCard,
+  loseCardAndShuffle,
+  continueTurn,
+};

@@ -40,27 +40,22 @@ const Exchange = ({ G, ctx, playerID, moves }) => {
   }, [G, ctx.activePlayers, ctx.currentPlayer, selection, playerID]);
 
   return (
-    <SelectorModal
-      isOpen={isOpen}
-      commentatorProps={{ ctx, G, moves, playerID }}
-    >
+    <SelectorModal isOpen={isOpen}>
       <Wrap m="auto" justify="center">
         {options.length > 0 &&
-          options.map(({ front, character, id }, index) => {
-            return (
-              <SelectableCard
-                key={index}
-                src={front}
-                alt={character}
-                selected={selection.includes(id)}
-                onClick={() => handleSelectionClick(id)}
-                hidden={
-                  !G.turnLog.successful ||
-                  ctx.activePlayers[playerID] !== "action"
-                }
-              />
-            );
-          })}
+          options.map(({ front, character, id }, index) => (
+            <SelectableCard
+              key={index}
+              src={front}
+              alt={character}
+              selected={selection.includes(id)}
+              onClick={() => handleSelectionClick(id)}
+              hidden={
+                !G.turnLog.successful ||
+                ctx.activePlayers[playerID] !== "action"
+              }
+            />
+          ))}
       </Wrap>
       <Button
         colorScheme="primary"

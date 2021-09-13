@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { CommentatorContext } from "../../../contexts";
 import PropTypes from "prop-types";
-import { Coup, Exchange } from "./card_selector";
+import CardSelector from "./card_selector";
 import TopSection from "./top_section";
 import MiddleSection from "./middle_section";
 import BottomSection from "./bottom_section";
@@ -36,10 +36,7 @@ const Core = ({ G, playerID, ctx, moves, gameMetadata, gameId }) => {
 
   return (
     <>
-      {/* MOVE THESE TO SINGLE INDEX */}
-      <Coup {...selectorProps} />
-      <Exchange {...selectorProps} />
-
+      <CardSelector {...selectorProps} />
       <TopSection {...topProps} />
       <MiddleSection {...middleProps} />
       <BottomSection {...bottomProps} />
