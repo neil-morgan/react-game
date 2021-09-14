@@ -42,7 +42,7 @@ const Profile = ({ G, ctx, playerID, moves }) => {
 
     hand.push(
       card.discarded ? (
-        <DeadCard card={card} />
+        <DeadCard card={card} key={player.id + card.character + index} />
       ) : (
         <Image
           w="50%"

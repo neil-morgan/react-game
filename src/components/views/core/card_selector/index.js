@@ -1,18 +1,12 @@
-import { useEffect } from "react";
 import Exchange from "./Exchange";
 
-const CardSelector = ({ G, ctx, playerID, moves }) => {
-  //   console.log("pid " + playerID);
-  //   console.log("curr " + ctx.currentPlayer);
-  //   useEffect(() => {
-  //     if (G.turnLog.action === "exchange" && playerID === ctx.currentPlayer) {
+const CardSelector = ({ ctx, G, moves, playerID }) => {
+  const componentProps = { ctx, G, moves, playerID };
+  const component = {
+    exchange: <Exchange {...componentProps} />,
+  };
 
-  //     }
-  //   }, [G.turnLog.action, ctx.currentPlayer, playerID]);
-
-  const componentProps = { G, ctx, playerID, moves };
-
-  return <Exchange {...componentProps} />;
+  return component["exchange"];
 };
 
 export default CardSelector;

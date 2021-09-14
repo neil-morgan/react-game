@@ -11,33 +11,32 @@ const Exchange = ({ G, ctx, playerID, moves }) => {
 
   const setHand = (cardID) => moves.setHand(cardID);
 
-  const handleClose = () => setIsOpen(false);
-  const handleOpen = () => setIsOpen(true);
-
   const handleSelectionClick = (id) =>
     selection.includes(id)
       ? setSelection(selection.filter((item) => item !== id))
       : selection.length <= 1 &&
         setSelection(
-          0 === selection.length
+          selection.length === 0
             ? [id]
             : (oldSelection) => [...oldSelection, id]
         );
 
   const handleConfirmClick = () => {
     selection.forEach((id) => setHand(id));
-    handleClose();
+    setIsOpen(false);
   };
 
+  useEffect(() => G.turnLog.action === "" && setSelection([]), [G]);
   useEffect(() => {
     if (G.turnLog.action === "exchange" && playerID === ctx.currentPlayer) {
       setCardOptions([
         ...G.players[playerID].hand,
         ...G.turnLog.exchange.drawnCards,
       ]);
-      checkAllDidAllow(G) && selection.length === 0 && handleOpen();
+
+      checkAllDidAllow(G) && selection.length === 0 && setIsOpen(true);
     }
-  }, [G, ctx.activePlayers, ctx.currentPlayer, selection, playerID]);
+  }, [G, ctx, playerID, selection]);
 
   return (
     <SelectorModal isOpen={isOpen}>
@@ -48,6 +47,7 @@ const Exchange = ({ G, ctx, playerID, moves }) => {
               key={index}
               src={front}
               alt={character}
+              disable={selection.length === 2 && !selection.includes(id)}
               selected={selection.includes(id)}
               onClick={() => handleSelectionClick(id)}
               hidden={
