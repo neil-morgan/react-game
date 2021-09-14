@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Wrapper, Lobby } from "../components";
+import { Lobby } from "../components";
 
 const Home = (props) => {
   const { history } = props;

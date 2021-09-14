@@ -11,56 +11,51 @@ const Exchange = ({ G, ctx, playerID, moves }) => {
 
   const setHand = (cardID) => moves.setHand(cardID);
 
-  const handleClose = () => setIsOpen(false);
-  const handleOpen = () => setIsOpen(true);
-
   const handleSelectionClick = (id) =>
     selection.includes(id)
       ? setSelection(selection.filter((item) => item !== id))
       : selection.length <= 1 &&
         setSelection(
-          0 === selection.length
+          selection.length === 0
             ? [id]
             : (oldSelection) => [...oldSelection, id]
         );
 
   const handleConfirmClick = () => {
     selection.forEach((id) => setHand(id));
-    handleClose();
+    setIsOpen(false);
   };
 
+  useEffect(() => G.turnLog.action === "" && setSelection([]), [G]);
   useEffect(() => {
     if (G.turnLog.action === "exchange" && playerID === ctx.currentPlayer) {
       setCardOptions([
         ...G.players[playerID].hand,
         ...G.turnLog.exchange.drawnCards,
       ]);
-      checkAllDidAllow(G) && selection.length === 0 && handleOpen();
+
+      checkAllDidAllow(G) && selection.length === 0 && setIsOpen(true);
     }
-  }, [G, ctx.activePlayers, ctx.currentPlayer, selection, playerID]);
+  }, [G, ctx, playerID, selection]);
 
   return (
-    <SelectorModal
-      isOpen={isOpen}
-      commentatorProps={{ ctx, G, moves, playerID }}
-    >
+    <SelectorModal isOpen={isOpen}>
       <Wrap m="auto" justify="center">
         {options.length > 0 &&
-          options.map(({ front, character, id }, index) => {
-            return (
-              <SelectableCard
-                key={index}
-                src={front}
-                alt={character}
-                selected={selection.includes(id)}
-                onClick={() => handleSelectionClick(id)}
-                hidden={
-                  !G.turnLog.successful ||
-                  ctx.activePlayers[playerID] !== "action"
-                }
-              />
-            );
-          })}
+          options.map(({ front, character, id }, index) => (
+            <SelectableCard
+              key={index}
+              src={front}
+              alt={character}
+              disable={selection.length === 2 && !selection.includes(id)}
+              selected={selection.includes(id)}
+              onClick={() => handleSelectionClick(id)}
+              hidden={
+                !G.turnLog.successful ||
+                ctx.activePlayers[playerID] !== "action"
+              }
+            />
+          ))}
       </Wrap>
       <Button
         colorScheme="primary"

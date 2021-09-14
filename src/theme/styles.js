@@ -1,5 +1,3 @@
-import { Flex } from "@chakra-ui/layout";
-
 export const styles = {
   global: {
     "*, *::before, *::after": {

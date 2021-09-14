@@ -206,7 +206,7 @@ const ChoosingPanel = ({ G, ctx, playerID, moves, gameID, msg }) => {
         }
       );
     }
-    console.log(G.turnLog);
+
     setChoices(temp);
   }, [
     G.turnLog,

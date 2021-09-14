@@ -2,7 +2,7 @@ import React from "react";
 import { Box, Image } from "@chakra-ui/react";
 import { MotionBox } from "../../..";
 
-const SelectableCard = ({ hidden, src, alt, onClick, selected }) => {
+const SelectableCard = ({ hidden, src, alt, onClick, selected, disable }) => {
   return (
     <MotionBox
       position="relative"
@@ -15,6 +15,7 @@ const SelectableCard = ({ hidden, src, alt, onClick, selected }) => {
         alt={alt}
         transition="ease 250ms"
         transform={`translateY(${selected ? "-20px" : "0px"})`}
+        pointerEvents={disable ? "none" : "auto"}
         userSelect="none"
         hidden={hidden}
       />
@@ -26,6 +27,7 @@ const SelectableCard = ({ hidden, src, alt, onClick, selected }) => {
         transform={`translateY(${selected ? "-20px" : "0px"})`}
         cursor="pointer"
         transition="ease 250ms"
+        pointerEvents={disable ? "none" : "auto"}
         _hover={{ bg: selected ? "transparent" : "rgba(0,0,0,0.25)" }}
       />
     </MotionBox>

@@ -18,7 +18,7 @@ const Player = ({ G, ctx, playerID, moves, i }) => {
     }
     hand.push(
       card.discarded ? (
-        <DeadCard />
+        <DeadCard key={player.name + cardIndex} />
       ) : (
         <Image
           maxW="100px"
