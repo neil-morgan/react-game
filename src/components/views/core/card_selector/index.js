@@ -72,10 +72,14 @@ const CardSelector = ({ G, ctx, playerID, moves }) => {
   //!CHECK THAT THIS IS RETURNING TRUE FOR BLOCKING PLAYER
   const stealAction = useCallback(() => {
     setOptions([cards[2], cards[3]]);
-    Object.keys(G.turnLog.blockedBy).length !== 0 &&
+    if (
+      Object.keys(G.turnLog.blockedBy).length !== 0 &&
       G.turnLog.blockedBy.character === "" &&
-      ctx.activePlayers[playerID] === "blockOrChallenge" &&
+      ctx.activePlayers[playerID] === "blockOrChallenge"
+    ) {
+      console.log(true);
       setIsOpen(true);
+    }
   }, [G.turnLog.blockedBy, ctx.activePlayers, playerID]);
 
   useEffect(() => {

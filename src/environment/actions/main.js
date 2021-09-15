@@ -165,7 +165,6 @@ const initiateChallenge = (G, ctx, playerID) => {
 
 // returns what characters can challenge the current action
 const getChallengeCharacters = (G, isBlocked) => {
-  console.log(G.turnLog.blockedBy.character);
   const action = G.turnLog.action;
   if (action === "foreign aid" || action === "tax") {
     return ["Duke"];
