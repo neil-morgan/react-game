@@ -26,7 +26,6 @@ const Exchange = ({ G, ctx, playerID, moves }) => {
     setIsOpen(false);
   };
 
-  useEffect(() => G.turnLog.action === "" && setSelection([]), [G]);
   useEffect(() => {
     if (G.turnLog.action === "exchange" && playerID === ctx.currentPlayer) {
       setCardOptions([
@@ -37,6 +36,8 @@ const Exchange = ({ G, ctx, playerID, moves }) => {
       checkAllDidAllow(G) && selection.length === 0 && setIsOpen(true);
     }
   }, [G, ctx, playerID, selection]);
+
+  useEffect(() => G.turnLog.action === "" && setSelection([]), [G]);
 
   return (
     <SelectorModal isOpen={isOpen}>
