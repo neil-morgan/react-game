@@ -8,6 +8,7 @@ import { cards } from "../../../../environment/cards";
 const CardSelector = ({ G, ctx, playerID, moves }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [actionType, setActionType] = useState("");
+  const [maxSelection, setMaxSelection] = useState(2);
   const [selection, setSelection] = useState([]);
   const [options, setCardOptions] = useState([]);
 
@@ -29,6 +30,7 @@ const CardSelector = ({ G, ctx, playerID, moves }) => {
     // setIsOpen(false);
   };
 
+  //!HANDLE IF ACTION TYPE COUP HERE
   const handleSelectionClick = (id) =>
     selection.includes(id)
       ? setSelection(selection.filter((item) => item !== id))
@@ -41,6 +43,7 @@ const CardSelector = ({ G, ctx, playerID, moves }) => {
 
   const exchangeAction = useCallback(() => {
     setActionType("exchange");
+    setMaxSelection(2);
     setCardOptions([
       ...G.players[playerID].hand,
       ...G.turnLog.exchange.drawnCards,
@@ -50,6 +53,7 @@ const CardSelector = ({ G, ctx, playerID, moves }) => {
 
   const coupAction = useCallback(() => {
     setActionType("coup");
+    setMaxSelection(1);
     setCardOptions(cards);
     setIsOpen(true);
   }, []);
@@ -82,7 +86,9 @@ const CardSelector = ({ G, ctx, playerID, moves }) => {
               key={index}
               src={front}
               alt={character}
-              disable={selection.length === 2 && !selection.includes(id)}
+              disable={
+                selection.length === maxSelection && !selection.includes(id)
+              }
               selected={selection.includes(id)}
               onClick={() => handleSelectionClick(id)}
             />
@@ -93,7 +99,7 @@ const CardSelector = ({ G, ctx, playerID, moves }) => {
         alignSelf="center"
         mt={8}
         onClick={() => handleConfirmClick()}
-        disabled={selection.length < 2}
+        disabled={selection.length < maxSelection}
       >
         CONFIRM
       </Button>
