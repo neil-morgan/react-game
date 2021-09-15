@@ -4,14 +4,18 @@ import SelectableCard from "./SelectableCard";
 import { checkAllDidAllow } from "../../../../environment/actions/helper";
 import SelectorModal from "./SelectorModal";
 import { cards } from "../../../../environment/cards";
+import { isObjectEmpty } from "../../../../utils";
 
 const CardSelector = ({ G, ctx, playerID, moves }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [actionType, setActionType] = useState("");
   const [maxSelection, setMaxSelection] = useState(2);
   const [selection, setSelection] = useState([]);
-  const [options, setCardOptions] = useState([]);
+  const [options, setOptions] = useState([]);
 
+  const isYourTurn = playerID === ctx.currentPlayer;
+
+  const block = (character) => moves.block(playerID, character);
   const coup = (character) => moves.coup(character);
   const setHand = (cardID) => moves.setHand(cardID);
 
@@ -21,17 +25,19 @@ const CardSelector = ({ G, ctx, playerID, moves }) => {
         selection.forEach((id) => setHand(id));
         break;
       case "coup":
-        console.log(selection);
+        coup(options[selection].character);
+        break;
+      case "steal":
+        "";
         break;
       default:
         null;
     }
 
-    // setIsOpen(false);
+    setIsOpen(false);
   };
 
-  //!HANDLE IF ACTION TYPE COUP HERE
-  const handleSelectionClick = (id) =>
+  const handleCardSelectionClick = (id) =>
     selection.includes(id)
       ? setSelection(selection.filter((item) => item !== id))
       : selection.length <= 1 &&
@@ -42,26 +48,38 @@ const CardSelector = ({ G, ctx, playerID, moves }) => {
         );
 
   const exchangeAction = useCallback(() => {
+    if (!isYourTurn) {
+      return;
+    }
     setActionType("exchange");
-    setMaxSelection(2);
-    setCardOptions([
-      ...G.players[playerID].hand,
-      ...G.turnLog.exchange.drawnCards,
-    ]);
+    setMaxSelection(
+      G.players[playerID].hand.filter((card) => !card.discarded).length
+    );
+    setOptions([...G.players[playerID].hand, ...G.turnLog.exchange.drawnCards]);
     checkAllDidAllow(G) && setIsOpen(true);
-  }, [G, playerID]);
+  }, [G, playerID, isYourTurn]);
 
   const coupAction = useCallback(() => {
+    if (!isYourTurn) {
+      return;
+    }
     setActionType("coup");
     setMaxSelection(1);
-    setCardOptions(cards);
-    setIsOpen(true);
-  }, []);
+    setOptions(cards);
+    !isObjectEmpty(G.turnLog.target) && setIsOpen(true);
+  }, [G.turnLog.target, isYourTurn]);
 
-  console.log(options);
+  //!CHECK THAT THIS IS RETURNING TRUE FOR BLOCKING PLAYER
+  const stealAction = useCallback(() => {
+    setOptions([cards[2], cards[3]]);
+    Object.keys(G.turnLog.blockedBy).length !== 0 &&
+      G.turnLog.blockedBy.character === "" &&
+      ctx.activePlayers[playerID] === "blockOrChallenge" &&
+      setIsOpen(true);
+  }, [G.turnLog.blockedBy, ctx.activePlayers, playerID]);
 
   useEffect(() => {
-    if (playerID === ctx.currentPlayer && selection.length === 0) {
+    if (selection.length === 0) {
       switch (G.turnLog.action) {
         case "exchange":
           exchangeAction();
@@ -69,11 +87,20 @@ const CardSelector = ({ G, ctx, playerID, moves }) => {
         case "coup":
           coupAction();
           break;
+        case "steal":
+          stealAction();
+          break;
         default:
           null;
       }
     }
-  }, [G, ctx, playerID, selection, coupAction, exchangeAction]);
+  }, [
+    G.turnLog.action,
+    selection.length,
+    coupAction,
+    exchangeAction,
+    stealAction,
+  ]);
 
   useEffect(() => G.turnLog.action === "" && setSelection([]), [G]);
 
@@ -81,16 +108,16 @@ const CardSelector = ({ G, ctx, playerID, moves }) => {
     <SelectorModal isOpen={isOpen}>
       <Wrap m="auto" justify="center">
         {options.length > 0 &&
-          options.map(({ front, character, id }, index) => (
+          options.map(({ front, character }, index) => (
             <SelectableCard
               key={index}
               src={front}
               alt={character}
               disable={
-                selection.length === maxSelection && !selection.includes(id)
+                selection.length === maxSelection && !selection.includes(index)
               }
-              selected={selection.includes(id)}
-              onClick={() => handleSelectionClick(id)}
+              selected={selection.includes(index)}
+              onClick={() => handleCardSelectionClick(index)}
             />
           ))}
       </Wrap>

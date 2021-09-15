@@ -52,7 +52,9 @@ const Commentator = () => {
       if (G.turnLog.player.id === playerID) {
         const numToChoose = hand.filter((card) => !card.discarded).length;
         setMsg(
-          `Select ${numToChoose} cards from the options to form your new hand.`
+          `Select ${numToChoose} card${
+            numToChoose === 2 ? "s" : ""
+          } from the options to form your new hand.`
         );
         setMsgLoading(false);
       } else {
