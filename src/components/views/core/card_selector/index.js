@@ -15,8 +15,8 @@ const CardSelector = ({ G, ctx, playerID, moves }) => {
 
   const isYourTurn = playerID === ctx.currentPlayer;
 
-  const block = (character) => moves.block(playerID, character);
   const coup = (character) => moves.coup(character);
+  const setBlock = (character) => moves.block(playerID, character);
   const setHand = (cardID) => moves.setHand(cardID);
 
   const handleConfirmClick = () => {
@@ -33,7 +33,6 @@ const CardSelector = ({ G, ctx, playerID, moves }) => {
       default:
         null;
     }
-
     setIsOpen(false);
   };
 
@@ -47,7 +46,17 @@ const CardSelector = ({ G, ctx, playerID, moves }) => {
             : (oldSelection) => [...oldSelection, id]
         );
 
-  const exchangeAction = useCallback(() => {
+  const executeCoup = useCallback(() => {
+    if (!isYourTurn) {
+      return;
+    }
+    setActionType("coup");
+    setMaxSelection(1);
+    setOptions(cards);
+    !isObjectEmpty(G.turnLog.target) && setIsOpen(true);
+  }, [G.turnLog.target, isYourTurn]);
+
+  const executeExchange = useCallback(() => {
     if (!isYourTurn) {
       return;
     }
@@ -59,51 +68,49 @@ const CardSelector = ({ G, ctx, playerID, moves }) => {
     checkAllDidAllow(G) && setIsOpen(true);
   }, [G, playerID, isYourTurn]);
 
-  const coupAction = useCallback(() => {
-    if (!isYourTurn) {
-      return;
-    }
-    setActionType("coup");
-    setMaxSelection(1);
-    setOptions(cards);
-    !isObjectEmpty(G.turnLog.target) && setIsOpen(true);
-  }, [G.turnLog.target, isYourTurn]);
-
   //!CHECK THAT THIS IS RETURNING TRUE FOR BLOCKING PLAYER
-  const stealAction = useCallback(() => {
+  const executeSteal = useCallback(() => {
+    console.log("CALLED");
     setOptions([cards[2], cards[3]]);
+    console.log(options);
+    console.log(G.turnLog.blockedBy);
+    console.log(G.turnLog.blockedBy.character);
+    console.log(ctx.activePlayers[playerID]);
     if (
       Object.keys(G.turnLog.blockedBy).length !== 0 &&
       G.turnLog.blockedBy.character === "" &&
       ctx.activePlayers[playerID] === "blockOrChallenge"
     ) {
-      console.log(true);
       setIsOpen(true);
     }
   }, [G.turnLog.blockedBy, ctx.activePlayers, playerID]);
 
   useEffect(() => {
+    console.log(G.turnLog.blockedBy);
+    console.log(playerID);
     if (selection.length === 0) {
       switch (G.turnLog.action) {
         case "exchange":
-          exchangeAction();
+          executeExchange();
           break;
         case "coup":
-          coupAction();
+          executeCoup();
           break;
         case "steal":
-          stealAction();
+          executeSteal();
           break;
         default:
           null;
       }
     }
   }, [
+    playerID,
+    G.turnLog.blockedBy,
     G.turnLog.action,
     selection.length,
-    coupAction,
-    exchangeAction,
-    stealAction,
+    executeCoup,
+    executeExchange,
+    executeSteal,
   ]);
 
   useEffect(() => G.turnLog.action === "" && setSelection([]), [G]);

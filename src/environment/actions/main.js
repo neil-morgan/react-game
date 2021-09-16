@@ -117,6 +117,7 @@ const block = (G, ctx, playerID, character) => {
     if (
       Object.prototype.hasOwnProperty.call(!G.turnLog.blockedBy, "character")
     ) {
+      console.log(true);
       G.turnLog.blockedBy.character = "";
     } else {
       G.turnLog.blockedBy.character = character;
