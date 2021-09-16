@@ -80,7 +80,7 @@ const Commentator = () => {
         } else {
           setMsg(
             `${
-              isChallenger ? "you" : G.turnLog.challenge.challenger.name
+              isChallenger ? "You" : G.turnLog.challenge.challenger.name
             } challenge${isChallenger ? "" : "s"}!\n Waiting for ${
               G.turnLog.challenge.challenged.name
             }'s response`
@@ -98,9 +98,9 @@ const Commentator = () => {
             setMsg(
               `${
                 G.turnLog.challenge.challenged.id === playerID
-                  ? `your new card is ${G.turnLog.challenge.swapCard.character}.\n`
+                  ? `Your new card is ${G.turnLog.challenge.swapCard.character}.\n`
                   : ""
-              }waiting for ${
+              }Waiting for ${
                 G.turnLog.challenge.challenger.name
               } to give up an influence`
             );
@@ -112,7 +112,7 @@ const Commentator = () => {
           setMsg(
             `${
               G.turnLog.challenge.challenger.id === playerID
-                ? "your"
+                ? "Your"
                 : `${G.turnLog.challenge.challenger.name}'s`
             } challenge succeeds.`
           );
@@ -141,7 +141,7 @@ const Commentator = () => {
         else {
           if (G.turnLog.challenge.challenged.id === playerID) {
             setMsg(
-              `you reveal ${G.turnLog.challenge.revealedCard.name}.\n${G.turnLog.challenge.challenger.name}'s challenge fails!`
+              `You reveal ${G.turnLog.challenge.revealedCard.name}.\n${G.turnLog.challenge.challenger.name}'s challenge fails!`
             );
           } else {
             setMsg(
@@ -149,7 +149,7 @@ const Commentator = () => {
                 G.turnLog.challenge.revealedCard.name
               }.\n${
                 G.turnLog.challenge.challenger.id === playerID
-                  ? "your"
+                  ? "Your"
                   : `${G.turnLog.challenge.challenger.name}'s`
               } challenge fails!`
             );
@@ -197,7 +197,7 @@ const Commentator = () => {
       } else if (!isYourTurn) {
         let blockedMsg =
           G.turnLog.blockedBy.id === playerID
-            ? `you block`
+            ? `You block`
             : `${G.turnLog.blockedBy.name} blocks`;
         if (blocksWith) {
           blockedMsg += ` with ${G.turnLog.blockedBy.character}`;
@@ -239,7 +239,7 @@ const Commentator = () => {
             setMsgLoading(true);
           } else {
             if (G.turnLog.target.id === playerID) {
-              setMsg(`${name} Chooses to ${action} you.`);
+              setMsg(`${name} chooses to ${action} you.`);
               setMsgLoading(false);
             } else {
               action =
@@ -258,7 +258,7 @@ const Commentator = () => {
         setMsg("Select a character to coup.");
         setMsgLoading(false);
       } else {
-        setMsg(`waiting for ${G.turnLog.target.name} to respond`);
+        setMsg(`Waiting for ${G.turnLog.target.name} to respond`);
         setMsgLoading(true);
       }
     }

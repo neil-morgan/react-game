@@ -28,7 +28,7 @@ const CardSelector = ({ G, ctx, playerID, moves }) => {
         coup(options[selection].character);
         break;
       case "steal":
-        "";
+        setBlock(options[selection].character);
         break;
       default:
         null;
@@ -68,14 +68,10 @@ const CardSelector = ({ G, ctx, playerID, moves }) => {
     checkAllDidAllow(G) && setIsOpen(true);
   }, [G, playerID, isYourTurn]);
 
-  //!CHECK THAT THIS IS RETURNING TRUE FOR BLOCKING PLAYER
   const executeSteal = useCallback(() => {
-    console.log("CALLED");
+    setActionType("steal");
     setOptions([cards[2], cards[3]]);
-    console.log(options);
-    console.log(G.turnLog.blockedBy);
-    console.log(G.turnLog.blockedBy.character);
-    console.log(ctx.activePlayers[playerID]);
+    setMaxSelection(1);
     if (
       Object.keys(G.turnLog.blockedBy).length !== 0 &&
       G.turnLog.blockedBy.character === "" &&
@@ -86,8 +82,6 @@ const CardSelector = ({ G, ctx, playerID, moves }) => {
   }, [G.turnLog.blockedBy, ctx.activePlayers, playerID]);
 
   useEffect(() => {
-    console.log(G.turnLog.blockedBy);
-    console.log(playerID);
     if (selection.length === 0) {
       switch (G.turnLog.action) {
         case "exchange":
