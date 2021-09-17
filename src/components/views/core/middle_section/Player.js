@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Image, Flex, Heading, WrapItem } from "@chakra-ui/react";
-import { DeadCard, IskCounter } from "../../../";
+import { Flex, Heading, WrapItem } from "@chakra-ui/react";
+import { PlayerCard, IskCounter } from "../../../";
 
 const Player = ({ G, ctx, playerID, moves, i }) => {
   const [revealHand, setRevealHand] = useState(false);
@@ -17,23 +17,15 @@ const Player = ({ G, ctx, playerID, moves, i }) => {
         card.id === G.turnLog.challenge.revealedCard.id;
     }
     hand.push(
-      card.discarded ? (
-        <DeadCard key={player.name + cardIndex} />
-      ) : (
-        <Image
-          maxW="100px"
-          onDragStart={(evt) => evt.preventDefault()}
-          _first={{ mr: 3 }}
-          draggable={false}
-          key={player.name + cardIndex}
-          src={
-            gameOver || revealCard || revealHand
-              ? card.front
-              : "/images/back.PNG"
-          } // on game over, reveal the winner's cards to everyone
-          alt={gameOver || revealCard || revealHand ? card.character : "card"}
-        />
-      )
+      <PlayerCard
+        id={player.name + cardIndex}
+        key={player.name + cardIndex}
+        toggle={card.discarded}
+        src={
+          gameOver || revealCard || revealHand ? card.front : "/images/back.PNG"
+        }
+        alt={gameOver || revealCard || revealHand ? card.character : "card"}
+      />
     );
   });
 

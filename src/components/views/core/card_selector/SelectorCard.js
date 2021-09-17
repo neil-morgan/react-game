@@ -1,13 +1,22 @@
 import React from "react";
 import { Box, Image } from "@chakra-ui/react";
-import { MotionBox } from "../../..";
+import { MotionBox } from "../../../";
 
-const SelectableCard = ({ hidden, src, alt, onClick, selected, disable }) => {
+const SelectorCard = ({
+  hidden,
+  src,
+  alt,
+  onClick,
+  selected,
+  disable,
+  ...rest
+}) => {
   return (
     <MotionBox
       position="relative"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1, transition: { delay: 0.5, duration: 1 } }}
+      {...rest}
     >
       <Image
         w="200px"
@@ -34,4 +43,4 @@ const SelectableCard = ({ hidden, src, alt, onClick, selected, disable }) => {
   );
 };
 
-export default SelectableCard;
+export default SelectorCard;

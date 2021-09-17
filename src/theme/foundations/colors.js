@@ -17,7 +17,7 @@ const red = {
   a200: "#ff5252",
   a400: "#ff1744",
   a700: "#d50000",
-}
+};
 
 const pink = {
   50: "#fce4ec",
@@ -38,7 +38,7 @@ const pink = {
   a200: "#ff4081",
   a400: "#f50057",
   a700: "#c51162",
-}
+};
 
 const purple = {
   50: "#f3e5f5",
@@ -59,7 +59,7 @@ const purple = {
   a200: "#e040fb",
   a400: "#d500f9",
   a700: "#aa00ff",
-}
+};
 
 const darkPurple = {
   50: "#ede7f6",
@@ -80,7 +80,7 @@ const darkPurple = {
   a200: "#7c4dff",
   a400: "#651fff",
   a700: "#6200ea",
-}
+};
 
 const indigo = {
   50: "#e8eaf6",
@@ -101,7 +101,7 @@ const indigo = {
   a200: "#536dfe",
   a400: "#3d5afe",
   a700: "#304ffe",
-}
+};
 
 const steelBlue = {
   50: "#eaf6ff",
@@ -122,7 +122,7 @@ const steelBlue = {
   a200: "#76abe7",
   a400: "#286cd9",
   a700: "#1c48a0",
-}
+};
 
 const blue = {
   50: "#e3f2fd",
@@ -143,7 +143,7 @@ const blue = {
   a200: "#448aff",
   a400: "#2979ff",
   a700: "#2962ff",
-}
+};
 
 const lightBlue = {
   50: "#e1f5fe",
@@ -164,7 +164,7 @@ const lightBlue = {
   a200: "#40c4ff",
   a400: "#00b0ff",
   a700: "#0091ea",
-}
+};
 
 const cyan = {
   50: "#e0f7fa",
@@ -185,7 +185,7 @@ const cyan = {
   a200: "#18ffff",
   a400: "#00e5ff",
   a700: "#00b8d4",
-}
+};
 
 const teal = {
   50: "#e0f2f1",
@@ -206,7 +206,7 @@ const teal = {
   a200: "#64ffda",
   a400: "#1de9b6",
   a700: "#00bfa5",
-}
+};
 
 const green = {
   50: "#e8f5e9",
@@ -227,7 +227,7 @@ const green = {
   a200: "#69f0ae",
   a400: "#00e676",
   a700: "#00c853",
-}
+};
 
 const lightGreen = {
   50: "#f1f8e9",
@@ -248,7 +248,7 @@ const lightGreen = {
   a200: "#b2ff59",
   a400: "#76ff03",
   a700: "#64dd17",
-}
+};
 
 const lime = {
   50: "#f9fbe7",
@@ -269,7 +269,7 @@ const lime = {
   a200: "#eeff41",
   a400: "#c6ff00",
   a700: "#aeea00",
-}
+};
 
 const yellow = {
   50: "#fffde7",
@@ -290,7 +290,7 @@ const yellow = {
   a200: "#ffff00",
   a400: "#ffea00",
   a700: "#ffd600",
-}
+};
 
 const amber = {
   50: "#fff8e1",
@@ -311,7 +311,7 @@ const amber = {
   a200: "#ffd740",
   a400: "#ffc400",
   a700: "#ffab00",
-}
+};
 
 const orange = {
   50: "#fff3e0",
@@ -332,7 +332,7 @@ const orange = {
   a200: "#ffab40",
   a400: "#ff9100",
   a700: "#ff6d00",
-}
+};
 
 const darkOrange = {
   50: "#fbe9e7",
@@ -353,7 +353,7 @@ const darkOrange = {
   a200: "#ff6e40",
   a400: "#ff3d00",
   a700: "#dd2c00",
-}
+};
 
 const brown = {
   50: "#efebe9",
@@ -370,7 +370,7 @@ const brown = {
   d200: "#1D1311",
   d400: "#160E0D",
   d700: "#0E0908",
-}
+};
 
 const gray = {
   50: "#fafafa",
@@ -387,7 +387,7 @@ const gray = {
   d200: "#111111",
   d400: "#0D0D0D",
   d700: "#090909",
-}
+};
 
 const blueGray = {
   50: "#eceff1",
@@ -404,7 +404,7 @@ const blueGray = {
   d200: "#12181B",
   d400: "#0D1214",
   d700: "#080C0D",
-}
+};
 
 const palette = {
   red,
@@ -427,13 +427,14 @@ const palette = {
   brown,
   gray,
   blueGray,
-}
+};
 
-const base = palette.steelBlue
-const primary = palette.lightBlue
-const secondary = palette.blueGray
+const base = palette.steelBlue;
+const primary = palette.lightBlue;
+const secondary = palette.blueGray;
 export const colors = {
   base,
   primary,
   secondary,
-}
+  red,
+};

@@ -1,6 +1,6 @@
 import React from "react";
 import { Image, Flex, Heading } from "@chakra-ui/react";
-import { DeadCard, IskCounter } from "../../../";
+import { PlayerCard, IskCounter } from "../../../";
 
 const Profile = ({ G, ctx, playerID, moves }) => {
   const player = G.players[playerID];
@@ -40,41 +40,34 @@ const Profile = ({ G, ctx, playerID, moves }) => {
       cardClass = "card-selectable";
     }
 
+    //!TEST CARD.DISCARDED
     hand.push(
-      card.discarded ? (
-        <DeadCard card={card} key={player.id + card.character + index} />
-      ) : (
-        <Image
-          w="50%"
-          h="100%"
-          maxW="100px"
-          _first={{ mr: 3 }}
-          onDragStart={(e) => e.preventDefault()}
-          draggable={false}
-          key={player.id + card.character + index}
-          src={card.front}
-          onClick={() => {
-            if (
-              ctx.activePlayers[playerID] &&
-              ctx.activePlayers[playerID].includes("lose") &&
-              !card.discarded
-            ) {
-              loseCard(playerID, card.id);
-            } else if (
-              Object.prototype.hasOwnProperty.call(
-                G.turnLog.exchange,
-                "newHand"
-              ) &&
-              isYourTurn
-            ) {
-              setHand(card.id);
-            } else if (cardSelectable && !card.discarded) {
-              revealCard(playerID, card.id);
-            }
-          }}
-          alt={card.character}
-        />
-      )
+      <PlayerCard
+        id={player.id + card.character + index}
+        key={player.id + card.character + index}
+        toggle={card.discarded}
+        src={card.front}
+        alt={card.character}
+        onClick={() => {
+          if (
+            ctx.activePlayers[playerID] &&
+            ctx.activePlayers[playerID].includes("lose") &&
+            !card.discarded
+          ) {
+            loseCard(playerID, card.id);
+          } else if (
+            Object.prototype.hasOwnProperty.call(
+              G.turnLog.exchange,
+              "newHand"
+            ) &&
+            isYourTurn
+          ) {
+            setHand(card.id);
+          } else if (cardSelectable && !card.discarded) {
+            revealCard(playerID, card.id);
+          }
+        }}
+      />
     );
   });
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { Button, Wrap } from "@chakra-ui/react";
-import SelectableCard from "./SelectableCard";
 import { checkAllDidAllow } from "../../../../environment/actions/helper";
+import SelectorCard from "./SelectorCard";
 import SelectorModal from "./SelectorModal";
 import { cards } from "../../../../environment/cards";
 import { isObjectEmpty } from "../../../../utils";
@@ -110,7 +110,7 @@ const CardSelector = ({ G, ctx, playerID, moves }) => {
       <Wrap m="auto" justify="center">
         {options.length > 0 &&
           options.map(({ front, character }, index) => (
-            <SelectableCard
+            <SelectorCard
               key={index}
               src={front}
               alt={character}
