@@ -30,8 +30,6 @@ const CardSelector = ({ G, ctx, playerID, moves }) => {
       case "steal":
         setBlock(options[selection].character);
         break;
-      default:
-        null;
     }
     setIsOpen(false);
   };
@@ -50,17 +48,17 @@ const CardSelector = ({ G, ctx, playerID, moves }) => {
     if (!isYourTurn) {
       return;
     }
-    setActionType("coup");
+    setActionType(G.turnLog.action);
     setMaxSelection(1);
     setOptions(cards);
     !isObjectEmpty(G.turnLog.target) && setIsOpen(true);
-  }, [G.turnLog.target, isYourTurn]);
+  }, [G.turnLog.target, G.turnLog.action, isYourTurn]);
 
   const executeExchange = useCallback(() => {
     if (!isYourTurn) {
       return;
     }
-    setActionType("exchange");
+    setActionType(G.turnLog.action);
     setMaxSelection(
       G.players[playerID].hand.filter((card) => !card.discarded).length
     );
@@ -69,7 +67,7 @@ const CardSelector = ({ G, ctx, playerID, moves }) => {
   }, [G, playerID, isYourTurn]);
 
   const executeSteal = useCallback(() => {
-    setActionType("steal");
+    setActionType(G.turnLog.action);
     setOptions([cards[2], cards[3]]);
     setMaxSelection(1);
     if (
@@ -79,7 +77,7 @@ const CardSelector = ({ G, ctx, playerID, moves }) => {
     ) {
       setIsOpen(true);
     }
-  }, [G.turnLog.blockedBy, ctx.activePlayers, playerID]);
+  }, [G.turnLog.blockedBy, G.turnLog.action, ctx.activePlayers, playerID]);
 
   useEffect(() => {
     if (selection.length === 0) {
@@ -93,8 +91,6 @@ const CardSelector = ({ G, ctx, playerID, moves }) => {
         case "steal":
           executeSteal();
           break;
-        default:
-          null;
       }
     }
   }, [
