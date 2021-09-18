@@ -1,20 +1,9 @@
+import React, { useState, useEffect } from "react";
 import { Flex, Image } from "@chakra-ui/react";
 import { AnimatePresence } from "framer-motion";
 import { MotionBox } from "..";
 
 const LiveCard = ({ src, alt, onClick }) => {
-  const animation = {
-    initial: { opacity: 1, scale: 1 },
-    animate: { opacity: 1, scale: 1 },
-    exit: {
-      opacity: 0,
-      scale: 0.9,
-      transition: {
-        duration: 2,
-      },
-    },
-  };
-
   return (
     <MotionBox
       position="absolute"
@@ -24,16 +13,20 @@ const LiveCard = ({ src, alt, onClick }) => {
       onClick={onClick}
       src={src}
       alt={alt}
-      {...animation}
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{
+        opacity: 0,
+        scale: 0.9,
+        transition: {
+          duration: 2,
+        },
+      }}
     />
   );
 };
 
 const DeadCard = () => {
-  const animation = {
-    initial: { opacity: 0 },
-    animate: { opacity: 1 },
-  };
   return (
     <MotionBox
       position="absolute"
@@ -41,30 +34,51 @@ const DeadCard = () => {
       w="50%"
       h={0}
       bg="red.d200"
-      {...animation}
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{
+        opacity: 0,
+        scale: 0.9,
+        transition: {
+          duration: 1,
+        },
+      }}
     />
   );
 };
 
-const PlayerCard = (props) => (
-  <Flex
-    position="relative"
-    h="155px"
-    w="100px"
-    rounded={6}
-    bg="base.d700"
-    _first={{ mr: 3 }}
-    justify="center"
-    alignItems="center"
-  >
-    <AnimatePresence>
-      {props.toggle ? (
-        <DeadCard key={"dead-card" + props.id} />
-      ) : (
-        <LiveCard key={"live-card" + props.id} {...props} />
-      )}
-    </AnimatePresence>
-  </Flex>
-);
+const PlayerCard = (props) => {
+  const [toggle, setToggle] = useState(true);
+
+  // useEffect(() => {
+  //   setToggle(props.toggle);
+  // }, [props.toggle]);
+  //!WHY DOES BUTTON TOGGLE HERE WORK
+  //!BUT PASSED PROPS DO NOT
+
+  return (
+    <>
+      <Flex
+        position="relative"
+        h="155px"
+        w="100px"
+        rounded={6}
+        bg="base.d700"
+        _first={{ mr: 3 }}
+        justify="center"
+        alignItems="center"
+      >
+        <AnimatePresence exitBeforeEnter>
+          {toggle ? (
+            <DeadCard key={"dead-card"} />
+          ) : (
+            <LiveCard key={"live-card"} {...props} />
+          )}
+        </AnimatePresence>
+      </Flex>
+      <button onClick={() => setToggle((s) => !s)}>toggle</button>
+    </>
+  );
+};
 
 export default PlayerCard;
