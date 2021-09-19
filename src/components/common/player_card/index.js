@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from "react";
 import { Flex, Image } from "@chakra-ui/react";
 import { AnimatePresence } from "framer-motion";
 import { MotionBox } from "..";
@@ -48,14 +47,7 @@ const DeadCard = () => {
 };
 
 const PlayerCard = (props) => {
-  const [toggle, setToggle] = useState(true);
-
-  // useEffect(() => {
-  //   setToggle(props.toggle);
-  // }, [props.toggle]);
-  //!WHY DOES BUTTON TOGGLE HERE WORK
-  //!BUT PASSED PROPS DO NOT
-
+  console.log(props);
   return (
     <>
       <Flex
@@ -69,14 +61,13 @@ const PlayerCard = (props) => {
         alignItems="center"
       >
         <AnimatePresence exitBeforeEnter>
-          {toggle ? (
-            <DeadCard key={"dead-card"} />
+          {props.toggle ? (
+            <DeadCard key={props.toggle} />
           ) : (
-            <LiveCard key={"live-card"} {...props} />
+            <LiveCard key={props.toggle} {...props} />
           )}
         </AnimatePresence>
       </Flex>
-      <button onClick={() => setToggle((s) => !s)}>toggle</button>
     </>
   );
 };

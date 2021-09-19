@@ -1,5 +1,4 @@
-import React from "react";
-import { Image, Flex, Heading } from "@chakra-ui/react";
+import { Flex, Heading } from "@chakra-ui/react";
 import { PlayerCard, IskCounter } from "../../../";
 
 const Profile = ({ G, ctx, playerID, moves }) => {
@@ -25,51 +24,6 @@ const Profile = ({ G, ctx, playerID, moves }) => {
     moves.loseCardAndShuffle(playerID, cardID);
 
   const setHand = (cardID) => moves.setHand(cardID);
-
-  const hand = [];
-  player.hand.forEach((card, index) => {
-    let cardClass = "";
-    if (
-      (cardSelected && G.turnLog.challenge.revealedCard.id === card.id) ||
-      (isYourTurn &&
-        Object.prototype.hasOwnProperty.call(G.turnLog.exchange, "newHand") &&
-        G.turnLog.exchange.newHand.includes(card.id))
-    ) {
-      cardClass = "card-selected";
-    } else if (cardSelectable) {
-      cardClass = "card-selectable";
-    }
-
-    //!TEST CARD.DISCARDED
-    hand.push(
-      <PlayerCard
-        id={player.id + card.character + index}
-        key={player.id + card.character + index}
-        toggle={card.discarded}
-        src={card.front}
-        alt={card.character}
-        onClick={() => {
-          if (
-            ctx.activePlayers[playerID] &&
-            ctx.activePlayers[playerID].includes("lose") &&
-            !card.discarded
-          ) {
-            loseCard(playerID, card.id);
-          } else if (
-            Object.prototype.hasOwnProperty.call(
-              G.turnLog.exchange,
-              "newHand"
-            ) &&
-            isYourTurn
-          ) {
-            setHand(card.id);
-          } else if (cardSelectable && !card.discarded) {
-            revealCard(playerID, card.id);
-          }
-        }}
-      />
-    );
-  });
 
   /* animation/styling stuff */
 
@@ -129,7 +83,36 @@ const Profile = ({ G, ctx, playerID, moves }) => {
         <IskCounter isk={player.coins} />
       </Flex>
 
-      <Flex>{hand}</Flex>
+      <Flex>
+        {player.hand.map((card, index) => (
+          <PlayerCard
+            id={player.id + card.character + index}
+            key={player.id + card.character + index}
+            toggle={card.discarded}
+            src={card.front}
+            alt={card.character}
+            onClick={() => {
+              if (
+                ctx.activePlayers[playerID] &&
+                ctx.activePlayers[playerID].includes("lose") &&
+                !card.discarded
+              ) {
+                loseCard(playerID, card.id);
+              } else if (
+                Object.prototype.hasOwnProperty.call(
+                  G.turnLog.exchange,
+                  "newHand"
+                ) &&
+                isYourTurn
+              ) {
+                setHand(card.id);
+              } else if (cardSelectable && !card.discarded) {
+                revealCard(playerID, card.id);
+              }
+            }}
+          />
+        ))}
+      </Flex>
       {player.isOut || gameOver ? (
         <div className="exiled-text">{bottomRow()}</div>
       ) : (
