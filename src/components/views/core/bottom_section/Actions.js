@@ -106,7 +106,7 @@ const Actions = ({ G, ctx, playerID, moves }) => {
 
   return (
     <Flex position="relative" w="full" maxW="360px" flex={1}>
-      <AnimatePresence>
+      <AnimatePresence initial={false}>
         <MotionBox
           position="absolute"
           w="full"

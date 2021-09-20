@@ -1,8 +1,14 @@
-import PlayerCard from "./player_card";
-import Icon from "./icon/Icon";
-import IconDefs from "./icon/IconDefs";
-import paths from "./icon/paths";
-import IskCounter from "./isk_counter";
-import { MotionBox, MotionFlex } from "./motion_box";
+import { DeadCard, LiveCard } from "./PlayerCards";
+import { Icon, IconDefs } from "./Icon";
+import IskCounter from "./IskCounter";
+import { MotionBox, MotionFlex } from "./MotionBox";
 
-export { Icon, IconDefs, paths, PlayerCard, IskCounter, MotionBox, MotionFlex };
+export {
+  DeadCard,
+  Icon,
+  IconDefs,
+  IskCounter,
+  LiveCard,
+  MotionBox,
+  MotionFlex,
+};

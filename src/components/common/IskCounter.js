@@ -1,8 +1,8 @@
 import React from "react";
 import { Flex, Heading, Text } from "@chakra-ui/react";
 import { AnimatePresence } from "framer-motion";
-import { MotionBox } from "../..";
-import { textUpdate } from "../../../animations";
+import { MotionBox } from "../common";
+import { textUpdate } from "../../animations";
 
 const IskCounter = ({ isk }) => {
   return (

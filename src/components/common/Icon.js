@@ -1,3 +1,31 @@
+import { forwardRef } from "react";
+import { Icon as ChakraIcon } from "@chakra-ui/react";
+
+export const Icon = forwardRef(({ name, ...rest }, ref) => (
+  <ChakraIcon ref={ref} {...rest}>
+    <use
+      href={`#${paths.find((path) => path.name === name.trim()).name}-icon`}
+    />
+  </ChakraIcon>
+));
+
+export const IconDefs = () => (
+  <svg style={{ display: "none" }}>
+    <defs>
+      {paths.map((icon, index) => (
+        <svg
+          id={`${icon.name}-icon`}
+          viewBox="0 0 20 20"
+          fill="currentColor"
+          key={index}
+        >
+          <path d={icon.path} />
+        </svg>
+      ))}
+    </defs>
+  </svg>
+);
+
 const paths = [
   {
     name: "checkmark_circled",
@@ -161,4 +189,6 @@ const paths = [
   },
 ];
 
-export default paths;
+Icon.displayName = "Icon";
+
+export default Icon;

@@ -1,6 +1,6 @@
 import { Flex, Heading, Image } from "@chakra-ui/react";
 import { AnimatePresence } from "framer-motion";
-import { PlayerCard, IskCounter, MotionBox } from "../../../";
+import { DeadCard, IskCounter, LiveCard, MotionBox } from "../../../";
 
 const Profile = ({ G, ctx, playerID, moves }) => {
   const player = G.players[playerID];
@@ -101,12 +101,10 @@ const Profile = ({ G, ctx, playerID, moves }) => {
           >
             <AnimatePresence exitBeforeEnter initial={false}>
               {!card.discarded ? (
-                <MotionBox
-                  key="living-card"
-                  position="absolute"
-                  inset={0}
-                  h="full"
-                  as={Image}
+                <LiveCard
+                  key="live-card"
+                  src={card.front}
+                  alt={card.character}
                   onClick={() => {
                     if (
                       ctx.activePlayers[playerID] &&
@@ -126,36 +124,9 @@ const Profile = ({ G, ctx, playerID, moves }) => {
                       revealCard(playerID, card.id);
                     }
                   }}
-                  src={card.front}
-                  alt={card.character}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{
-                    opacity: 0,
-                    scale: 0.9,
-                    transition: {
-                      duration: 2,
-                    },
-                  }}
                 />
               ) : (
-                <MotionBox
-                  key="dead-card"
-                  position="absolute"
-                  pb="50%"
-                  w="50%"
-                  h={0}
-                  bg="red.d200"
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{
-                    opacity: 0,
-                    scale: 0.9,
-                    transition: {
-                      duration: 1,
-                    },
-                  }}
-                />
+                <DeadCard key="dead-card" />
               )}
             </AnimatePresence>
           </Flex>
