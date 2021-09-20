@@ -47,7 +47,6 @@ const DeadCard = () => {
 };
 
 const PlayerCard = (props) => {
-  console.log(props);
   return (
     <>
       <Flex
@@ -61,11 +60,7 @@ const PlayerCard = (props) => {
         alignItems="center"
       >
         <AnimatePresence exitBeforeEnter>
-          {props.toggle ? (
-            <DeadCard key={props.toggle} />
-          ) : (
-            <LiveCard key={props.toggle} {...props} />
-          )}
+          {!props.toggle && <LiveCard key={props.toggle} {...props} />}
         </AnimatePresence>
       </Flex>
     </>
