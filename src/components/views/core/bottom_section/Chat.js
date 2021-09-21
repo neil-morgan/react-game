@@ -10,7 +10,6 @@ import {
 import uniqid from "uniqid";
 import { Icon } from "../../../common";
 import { useRipple } from "../../../../hooks";
-import { capitalize } from "../../../../utils";
 
 const Chat = ({ G, playerID, moves }) => {
   const [msg, setMsg] = useState("");
@@ -50,6 +49,7 @@ const Chat = ({ G, playerID, moves }) => {
         overflowY="scroll"
         ref={chatRef}
         mt="auto"
+        pr={3}
         sx={{
           "::-webkit-scrollbar": {
             width: "3px",
@@ -71,7 +71,7 @@ const Chat = ({ G, playerID, moves }) => {
                   fontFamily="Roboto Mono"
                   color="primary.200"
                 >
-                  {capitalize(G.players[msg.id].name) + ": "}
+                  {G.players[msg.id].name + ": "}
                 </chakra.span>
                 {msg.content}
               </Text>

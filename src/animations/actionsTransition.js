@@ -2,7 +2,6 @@ const actionsTransition = {
   initial: {
     opacity: 0,
     y: -20,
-    x: "-50%",
   },
   animate: {
     y: 0,

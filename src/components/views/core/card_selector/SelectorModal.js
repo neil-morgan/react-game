@@ -4,7 +4,7 @@ import Commentator from "../commentator";
 
 const SelectorModal = ({ isOpen, children }) => {
   return (
-    <Modal isOpen={isOpen} motionPreset="scale">
+    <Modal isOpen={isOpen} motionPreset="scale" size="full">
       <ModalContent bg="base.d400">
         <ModalHeader my="auto" textAlign="center" color="white">
           <Commentator />

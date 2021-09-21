@@ -33,7 +33,7 @@ const Events = ({ chat }) => {
         },
       }}
     >
-      <Flex direction="column" mt="auto">
+      <Flex direction="column" mt="auto" pr={3}>
         {chat.map((msg) => {
           if (msg.id === "-1") {
             let msgParts = msg.content.split("\n");

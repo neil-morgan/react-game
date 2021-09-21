@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Flex, Heading, Image, WrapItem } from "@chakra-ui/react";
-import { IskCounter, MotionBox } from "../../../";
+import { Flex, Heading, WrapItem } from "@chakra-ui/react";
+import { CardWrapper, IskCounter, LiveCard, DeadCard } from "../../../";
 import { AnimatePresence } from "framer-motion";
 
 const Player = ({ G, ctx, playerID, moves, i }) => {
@@ -116,26 +116,11 @@ const Player = ({ G, ctx, playerID, moves, i }) => {
               card.id === G.turnLog.challenge.revealedCard.id;
           }
           return (
-            <Flex
-              position="relative"
-              key={index}
-              h="155px"
-              w="100px"
-              rounded={6}
-              bg="base.d700"
-              _first={{ mr: 3 }}
-              justify="center"
-              alignItems="center"
-            >
+            <CardWrapper key={index}>
               <AnimatePresence exitBeforeEnter initial={false}>
                 {!card.discarded ? (
-                  <MotionBox
+                  <LiveCard
                     key="live-card"
-                    position="absolute"
-                    inset={0}
-                    h="full"
-                    as={Image}
-                    toggle={card.discarded}
                     src={
                       gameOver || revealCard || revealHand
                         ? card.front
@@ -146,37 +131,12 @@ const Player = ({ G, ctx, playerID, moves, i }) => {
                         ? card.character
                         : "card"
                     }
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{
-                      opacity: 0,
-                      scale: 0.9,
-                      transition: {
-                        duration: 2,
-                      },
-                    }}
                   />
                 ) : (
-                  <MotionBox
-                    key="dead-card"
-                    position="absolute"
-                    pb="50%"
-                    w="50%"
-                    h={0}
-                    bg="red.d200"
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{
-                      opacity: 0,
-                      scale: 0.9,
-                      transition: {
-                        duration: 1,
-                      },
-                    }}
-                  />
+                  <DeadCard key="dead-card" />
                 )}
               </AnimatePresence>
-            </Flex>
+            </CardWrapper>
           );
         })}
       </Flex>

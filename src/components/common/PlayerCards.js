@@ -1,6 +1,7 @@
-import { Image } from "@chakra-ui/react";
+import { Flex, Image } from "@chakra-ui/react";
 import { liveCardTransition, deadCardTransition } from "../../animations";
 import { MotionBox } from "./MotionBox";
+import { Icon } from "./Icon";
 
 export const LiveCard = ({ src, alt, onClick }) => (
   <MotionBox
@@ -17,11 +18,26 @@ export const LiveCard = ({ src, alt, onClick }) => (
 
 export const DeadCard = () => (
   <MotionBox
+    as={Icon}
+    name="skull"
+    color="red.800"
+    boxSize="50px"
     position="absolute"
-    pb="50%"
-    w="50%"
-    h={0}
-    bg="red.d200"
     {...deadCardTransition}
   />
+);
+
+export const CardWrapper = ({ children }) => (
+  <Flex
+    position="relative"
+    h="155px"
+    w="100px"
+    rounded={6}
+    bg="base.d700"
+    _first={{ mr: 3 }}
+    justify="center"
+    alignItems="center"
+  >
+    {children}
+  </Flex>
 );

@@ -1,13 +1,11 @@
-import { Flex, Heading, Image } from "@chakra-ui/react";
+import { Flex, Heading } from "@chakra-ui/react";
 import { AnimatePresence } from "framer-motion";
-import { DeadCard, IskCounter, LiveCard, MotionBox } from "../../../";
+import { CardWrapper, DeadCard, IskCounter, LiveCard } from "../../../";
 
 const Profile = ({ G, ctx, playerID, moves }) => {
   const player = G.players[playerID];
   const isYourTurn = playerID === ctx.currentPlayer;
   const gameOver = G.winner.id !== "-1";
-
-  console.log(player);
 
   let cardSelectable =
     (Object.prototype.hasOwnProperty.call(G.turnLog.exchange, "newHand") &&
@@ -88,17 +86,7 @@ const Profile = ({ G, ctx, playerID, moves }) => {
 
       <Flex>
         {player.hand.map((card, index) => (
-          <Flex
-            position="relative"
-            key={index}
-            h="155px"
-            w="100px"
-            rounded={6}
-            bg="base.d700"
-            _first={{ mr: 3 }}
-            justify="center"
-            alignItems="center"
-          >
+          <CardWrapper key={index}>
             <AnimatePresence exitBeforeEnter initial={false}>
               {!card.discarded ? (
                 <LiveCard
@@ -129,7 +117,7 @@ const Profile = ({ G, ctx, playerID, moves }) => {
                 <DeadCard key="dead-card" />
               )}
             </AnimatePresence>
-          </Flex>
+          </CardWrapper>
         ))}
       </Flex>
 

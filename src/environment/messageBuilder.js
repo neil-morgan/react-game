@@ -1,6 +1,6 @@
 // to display to the chat once a turn ends
 export const getTurnMsg = (turnLog) => {
-  let success = turnLog.successful ? "successfully " : "unsuccessfully ";
+  let success = turnLog.successful ? "successfully " : "fails to ";
   let target = "";
   if (turnLog.action === "income") {
     success = "";

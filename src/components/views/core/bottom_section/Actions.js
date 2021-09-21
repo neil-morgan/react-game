@@ -4,6 +4,36 @@ import { MotionBox } from "../../..";
 import { AnimatePresence } from "framer-motion";
 import { actionsTransition } from "../../../../animations";
 
+const getButtons = (action, buttonSet) =>
+  buttonSet[action].map(
+    ({ label, onClick, color = "primary", size = "xs", disabled }, index) => (
+      <Button
+        key={index}
+        onClick={onClick}
+        disabled={disabled}
+        size={size}
+        colorScheme={color}
+        letterSpacing="wide"
+      >
+        {label.toUpperCase()}
+      </Button>
+    )
+  );
+
+const Buttons = ({ action, buttonSet }) => (
+  <MotionBox
+    as={Wrap}
+    position="absolute"
+    w="full"
+    maxW="360px"
+    spacing={3}
+    justify="center"
+    {...actionsTransition}
+  >
+    {getButtons(action, buttonSet)}
+  </MotionBox>
+);
+
 const Actions = ({ G, ctx, playerID, moves }) => {
   const yourPlayer = G.players[playerID];
   const isYourTurn = ctx.currentPlayer === playerID;
@@ -26,25 +56,21 @@ const Actions = ({ G, ctx, playerID, moves }) => {
       label: "income",
       onClick: () => income(),
       disabled: !isYourTurn || defaultArgs.mustCoup || defaultArgs.done,
-      color: "primary",
     },
     {
       label: "foreign aid",
       onClick: () => prepAction("foreign aid"),
       disabled: !isYourTurn || defaultArgs.mustCoup || defaultArgs.done,
-      color: "primary",
     },
     {
       label: "coup",
       onClick: () => prepAction("coup"),
       disabled: !isYourTurn || !defaultArgs.canCoup || defaultArgs.done,
-      color: "primary",
     },
     {
       label: "tax",
       onClick: () => prepAction("tax"),
       disabled: !isYourTurn || defaultArgs.mustCoup || defaultArgs.done,
-      color: "primary",
     },
     {
       label: "assassinate",
@@ -54,19 +80,16 @@ const Actions = ({ G, ctx, playerID, moves }) => {
         !defaultArgs.canAssassinate ||
         defaultArgs.mustCoup ||
         defaultArgs.done,
-      color: "primary",
     },
     {
       label: "steal",
       onClick: () => prepAction("steal"),
       disabled: !isYourTurn || defaultArgs.mustCoup || defaultArgs.done,
-      color: "primary",
     },
     {
       label: "exchange",
       onClick: () => prepAction("exchange"),
       disabled: !isYourTurn || defaultArgs.mustCoup || defaultArgs.done,
-      color: "primary",
     },
   ];
 
@@ -74,69 +97,48 @@ const Actions = ({ G, ctx, playerID, moves }) => {
     label: "allow",
     onClick: () => allow(),
     color: "green",
+    size: "md",
   };
 
   const blockButton = {
     label: "block",
     onClick: () => block(),
     color: "red",
+    size: "md",
   };
 
   const challengeButton = {
     label: "challenge",
     onClick: () => challenge(),
     color: "red",
+    size: "md",
   };
 
-  const buttons = () => {
-    switch (ctx.activePlayers[playerID]) {
-      case "block":
-        return [allowButton, blockButton];
-
-      case "challenge":
-        return [allowButton, challengeButton];
-
-      case "blockOrChallenge":
-        return [allowButton, blockButton, challengeButton];
-
-      default:
-        return defaultButtons;
-    }
+  const buttonSet = {
+    block: [allowButton, blockButton],
+    challenge: [allowButton, challengeButton],
+    blockOrChallenge: [allowButton, blockButton, challengeButton],
+    default: defaultButtons,
   };
+
+  const action = ctx.activePlayers[playerID];
 
   return (
-    <Flex position="relative" w="full" maxW="360px" flex={1}>
-      <AnimatePresence initial={false}>
-        <MotionBox
-          position="absolute"
-          w="full"
-          left="50%"
-          bottom={0}
-          as={Wrap}
-          key={ctx.activePlayers[playerID]}
-          spacing={3}
-          justify="center"
-          {...actionsTransition}
-          hidden={
-            G.turnLog.action === "exchange" &&
-            G.turnLog.successful &&
-            ctx.activePlayers[playerID] === "action" &&
-            isYourTurn
-          }
-        >
-          {buttons().map(({ label, onClick, color, disabled }, index) => (
-            <Button
-              key={index}
-              onClick={onClick}
-              disabled={disabled}
-              size="xs"
-              colorScheme={color}
-              letterSpacing="wide"
-            >
-              {label.toUpperCase()}
-            </Button>
-          ))}
-        </MotionBox>
+    <Flex position="relative" w="full" flex={1} justify="center" align="center">
+      <AnimatePresence exitBeforeEnter>
+        {action === "block" ? (
+          <Buttons key="block" action="block" buttonSet={buttonSet} />
+        ) : action === "challenge" ? (
+          <Buttons key="challenge" action="challenge" buttonSet={buttonSet} />
+        ) : action === "blockOrChallenge" ? (
+          <Buttons
+            key="blockOrChallenge"
+            action="blockOrChallenge"
+            buttonSet={buttonSet}
+          />
+        ) : (
+          <Buttons key="default" action="default" buttonSet={buttonSet} />
+        )}
       </AnimatePresence>
     </Flex>
   );

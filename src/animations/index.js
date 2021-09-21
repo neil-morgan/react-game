@@ -1,5 +1,5 @@
 import actionsTransition from "./actionsTransition";
-import { liveCardTransition, deadCardTransition } from "./cardAnimtions";
+import { liveCardTransition, deadCardTransition } from "./cardAnimations";
 import textUpdate from "./textUpdate";
 import drawerDockReveal from "./drawerDockReveal";
 import lobbyButtonTransition from "./lobbyButtonTransition";
