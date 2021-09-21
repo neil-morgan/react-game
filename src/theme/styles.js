@@ -26,10 +26,8 @@ export const styles = {
     },
 
     body: {
-      overflowX: "hidden",
-      overflowY: "scroll",
+      overflow: "hidden",
       fontFamily: "Inter, sans-serif",
-
       color: "gray.400",
       bg: "base.d200",
     },

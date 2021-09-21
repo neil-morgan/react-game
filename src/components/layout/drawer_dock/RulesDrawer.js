@@ -13,8 +13,8 @@ const GENERAL_ACTIONS = [
   ],
 ];
 
-const RulesDrawer = () => (
-  <Drawer heading="Rules" icon="scroll">
+const RulesDrawer = ({ animation }) => (
+  <Drawer heading="Rules" icon="scroll" animation={animation}>
     <Flex direction="column">
       <Heading size="md" color="white">
         Basics

@@ -1,28 +1,32 @@
-import { Stack } from "@chakra-ui/react";
-import { MotionBox } from "../../";
+import { Flex, Stack } from "@chakra-ui/react";
 import CharacterDrawer from "./CharacterDrawer";
 import RulesDrawer from "./RulesDrawer";
-import { drawerDockReveal } from "../../../animations";
+import { MotionBox } from "../../";
+import { drawerItemsAnimation } from "../../../animations";
 
-const DrawerDock = () => {
-  return (
+const drawerItems = [CharacterDrawer, RulesDrawer];
+
+const DrawerDock = () => (
+  <Flex
+    as="nav"
+    bg="base.d400"
+    py={{ base: 1, lg: 2 }}
+    px={2}
+    justify={{ base: "flex-end", xl: "flex-start" }}
+  >
     <MotionBox
-      as="nav"
-      bg="base.d400"
-      {...drawerDockReveal}
-      py={{ base: 1, lg: 2 }}
-      px={2}
+      as={Stack}
+      variants={drawerItemsAnimation.parent}
+      initial="hidden"
+      animate="show"
+      direction={{ base: "row-reverse", xl: "column" }}
+      spacing={3}
     >
-      <Stack
-        direction={{ base: "row", xl: "column" }}
-        justify={{ base: "flex-end", xl: "flex-start" }}
-        spacing={3}
-      >
-        <CharacterDrawer />
-        <RulesDrawer />
-      </Stack>
+      {drawerItems.map((Component, index) => (
+        <Component key={index} animation={drawerItemsAnimation.animation} />
+      ))}
     </MotionBox>
-  );
-};
+  </Flex>
+);
 
 export default DrawerDock;

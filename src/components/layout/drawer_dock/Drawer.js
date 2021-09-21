@@ -9,23 +9,25 @@ import {
   DrawerOverlay,
   DrawerContent,
 } from "@chakra-ui/react";
-import { Icon } from "../..";
+import { Icon, MotionBox } from "../..";
 
-const Drawer = ({ children, heading, icon = "menu" }) => {
+const Drawer = ({ children, heading, icon = "menu", animation }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const openRef = useRef();
 
   return (
     <>
-      <IconButton
+      <MotionBox
+        as={IconButton}
         ref={openRef}
         colorScheme="primary"
         variant="ghost"
         onClick={onOpen}
         size={{ base: "xs", lg: "lg" }}
+        variants={animation}
       >
         <Icon name={icon} boxSize={{ base: 8, lg: 10 }} />
-      </IconButton>
+      </MotionBox>
 
       <ChakraDrawer
         isOpen={isOpen}

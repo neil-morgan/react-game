@@ -1,7 +1,7 @@
 import actionsTransition from "./actionsTransition";
 import { liveCardTransition, deadCardTransition } from "./cardAnimations";
 import textUpdate from "./textUpdate";
-import drawerDockReveal from "./drawerDockReveal";
+import drawerItemsAnimation from "./drawerItemsAnimation";
 import lobbyButtonTransition from "./lobbyButtonTransition";
 import pageTransition from "./pageTransition";
 
@@ -9,7 +9,7 @@ export {
   actionsTransition,
   deadCardTransition,
   textUpdate,
-  drawerDockReveal,
+  drawerItemsAnimation,
   liveCardTransition,
   lobbyButtonTransition,
   pageTransition,

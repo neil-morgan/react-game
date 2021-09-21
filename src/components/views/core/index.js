@@ -6,11 +6,12 @@ import TopSection from "./top_section";
 import MiddleSection from "./middle_section";
 import BottomSection from "./bottom_section";
 
-const Core = ({ G, playerID, ctx, moves, gameMetadata, gameId }) => {
+const Core = ({ G, playerID, ctx, moves, gameMetadata }) => {
   const [revealDeck, setRevealDeck] = useState(false);
   const { setCommentatorState } = useContext(CommentatorContext);
 
-  // player 0 has to set the player's actual screen names due to the way boardgame.io works
+  const props = { G, ctx, playerID, moves };
+
   useEffect(
     () => playerID === "0" && moves.changeNames(gameMetadata),
     [playerID, moves, gameMetadata]
@@ -21,25 +22,12 @@ const Core = ({ G, playerID, ctx, moves, gameMetadata, gameId }) => {
     [ctx, G, moves, playerID, setCommentatorState]
   );
 
-  const topProps = { G, ctx, playerID, moves };
-  const middleProps = { G, ctx, playerID, moves };
-  const bottomProps = {
-    G,
-    ctx,
-    playerID,
-    moves,
-    revealDeck,
-    gameId,
-  };
-
-  const selectorProps = { G, ctx, playerID, moves };
-
   return (
     <>
-      <CardSelector {...selectorProps} />
-      <TopSection {...topProps} />
-      <MiddleSection {...middleProps} />
-      <BottomSection {...bottomProps} />
+      <CardSelector {...props} />
+      <TopSection {...props} />
+      <MiddleSection {...props} />
+      <BottomSection {...props} />
     </>
   );
 };
