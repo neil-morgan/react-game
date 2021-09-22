@@ -1,6 +1,12 @@
 import React, { useState } from "react";
 import { Flex, Heading, WrapItem } from "@chakra-ui/react";
-import { CardWrapper, IskCounter, LiveCard, DeadCard } from "../../../";
+import {
+  CardWrapper,
+  IskCounter,
+  LiveCard,
+  DeadCard,
+  PlayerWrapper,
+} from "../../../";
 import { AnimatePresence } from "framer-motion";
 
 const Player = ({ G, ctx, playerID, moves, i }) => {
@@ -82,68 +88,47 @@ const Player = ({ G, ctx, playerID, moves, i }) => {
   };
 
   return (
-    <WrapItem
-      flexDirection="column"
-      justify="center"
-      maxH="210px"
-      h="full"
+    <PlayerWrapper
+      isCurrentPlayer={isCurrentPlayer}
+      player={player}
       onClick={() => (canRevealHand ? updateReveal() : setTarget())}
     >
-      <Flex
-        w="full"
-        px={4}
-        mb={3}
-        flex={1}
-        align="center"
-        bg={isCurrentPlayer ? "base.900" : "transparent"}
-        transition="ease 250ms"
-        rounded={6}
-        overflow="hidden"
-        justify="space-between"
-      >
-        <Heading size="md" color="white">
-          {player.name}
-        </Heading>
-        <IskCounter isk={player.coins} />
-      </Flex>
+      {player.hand.map((card, index) => {
+        let revealCard = false;
+        if (ctx.activePlayers[i] === "revealCard") {
+          revealCard =
+            G.turnLog.challenge.revealedCard.length !== 0 &&
+            card.id === G.turnLog.challenge.revealedCard.id;
+        }
+        return (
+          <CardWrapper key={index}>
+            <AnimatePresence exitBeforeEnter initial={false}>
+              {!card.discarded ? (
+                <LiveCard
+                  key="live-card"
+                  src={
+                    gameOver || revealCard || revealHand
+                      ? card.front
+                      : "/images/back.PNG"
+                  }
+                  alt={
+                    gameOver || revealCard || revealHand
+                      ? card.character
+                      : "card"
+                  }
+                />
+              ) : (
+                <DeadCard key="dead-card" />
+              )}
+            </AnimatePresence>
+          </CardWrapper>
+        );
+      })}
 
-      <Flex>
-        {player.hand.map((card, index) => {
-          let revealCard = false;
-          if (ctx.activePlayers[i] === "revealCard") {
-            revealCard =
-              G.turnLog.challenge.revealedCard.length !== 0 &&
-              card.id === G.turnLog.challenge.revealedCard.id;
-          }
-          return (
-            <CardWrapper key={index}>
-              <AnimatePresence exitBeforeEnter initial={false}>
-                {!card.discarded ? (
-                  <LiveCard
-                    key="live-card"
-                    src={
-                      gameOver || revealCard || revealHand
-                        ? card.front
-                        : "/images/back.PNG"
-                    }
-                    alt={
-                      gameOver || revealCard || revealHand
-                        ? card.character
-                        : "card"
-                    }
-                  />
-                ) : (
-                  <DeadCard key="dead-card" />
-                )}
-              </AnimatePresence>
-            </CardWrapper>
-          );
-        })}
-      </Flex>
       {/* <Flex flex={1} w="full" px={4}>
         {player.isOut || (gameOver && bottomRow())}
       </Flex> */}
-    </WrapItem>
+    </PlayerWrapper>
   );
 };
 

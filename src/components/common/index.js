@@ -1,4 +1,4 @@
-import { CardWrapper, DeadCard, LiveCard } from "./PlayerCards";
+import { CardWrapper, DeadCard, LiveCard, PlayerWrapper } from "./PlayerCards";
 import { Icon, IconDefs } from "./Icon";
 import IskCounter from "./IskCounter";
 import { MotionBox, MotionFlex } from "./MotionBox";
@@ -12,4 +12,5 @@ export {
   LiveCard,
   MotionBox,
   MotionFlex,
+  PlayerWrapper,
 };

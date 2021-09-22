@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { CommentatorContext } from "../../../contexts";
+import { GameBoard } from "../../layout";
 import PropTypes from "prop-types";
 import CardSelector from "./card_selector";
 import TopSection from "./top_section";
