@@ -303,7 +303,7 @@ const Commentator = () => {
 
   return (
     <>
-      <Flex w="full" textAlign="center" position="relative" h="100px">
+      <Flex w="full" textAlign="center" position="relative" h="50px">
         <AnimatePresence>
           <MotionBox
             position="absolute"

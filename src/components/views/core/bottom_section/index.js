@@ -24,14 +24,7 @@ const BottomSection = ({ G, ctx, playerID, moves }) => {
   };
 
   return (
-    <Flex
-      as="section"
-      mt="auto"
-      justify="space-between"
-      h="full"
-      maxH="175px"
-      w="full"
-    >
+    <Flex as="section" mt="auto" justify="space-between" h="125px" w="full">
       <Chat {...chatProps} />
       <Flex
         direction="column"

@@ -1,4 +1,4 @@
-import { Flex, Image, Heading, WrapItem } from "@chakra-ui/react";
+import { Flex, Image, Heading, WrapItem, AspectRatio } from "@chakra-ui/react";
 import { liveCardTransition, deadCardTransition } from "../../animations";
 import { MotionBox } from "./MotionBox";
 import { Icon, IskCounter } from "./";
@@ -7,7 +7,6 @@ const LiveCard = ({ src, alt, onClick }) => (
   <MotionBox
     position="absolute"
     inset={0}
-    h="full"
     as={Image}
     onClick={onClick}
     src={src}
@@ -28,10 +27,11 @@ const DeadCard = () => (
 );
 
 const CardWrapper = ({ children }) => (
-  <Flex
+  <AspectRatio
     position="relative"
-    h={{ base: "77.5px", md: "155px" }}
+    h={{ base: "50px", sm: "77.5px", md: "155px" }}
     w={{ base: "50px", md: "100px" }}
+    overflow="hidden"
     rounded={6}
     bg="base.d700"
     _first={{ mr: 3 }}
@@ -39,7 +39,7 @@ const CardWrapper = ({ children }) => (
     alignItems="center"
   >
     {children}
-  </Flex>
+  </AspectRatio>
 );
 
 const PlayerWrapper = ({ isCurrentPlayer, onClick, player, children }) => (
@@ -52,9 +52,7 @@ const PlayerWrapper = ({ isCurrentPlayer, onClick, player, children }) => (
   >
     <Flex
       w="full"
-      px={4}
       mb={3}
-      flex={1}
       align="center"
       bg={isCurrentPlayer ? "base.900" : "transparent"}
       transition="ease 250ms"
@@ -62,7 +60,7 @@ const PlayerWrapper = ({ isCurrentPlayer, onClick, player, children }) => (
       overflow="hidden"
       justify="space-between"
     >
-      <Heading size="md" color="white">
+      <Heading fontSize={{ base: "10px", md: "md" }} color="white">
         {player.name}
       </Heading>
       <IskCounter isk={player.coins} />
