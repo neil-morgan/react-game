@@ -34,9 +34,9 @@ const BottomSection = ({ G, ctx, playerID, moves }) => {
         h="full"
       >
         <Commentator />
-        <Actions {...actionsProps} />
       </Flex>
-      <Events {...eventsProps} />
+      {/* <Events {...eventsProps} /> */}
+      <Actions {...actionsProps} />
     </Flex>
   );
 };

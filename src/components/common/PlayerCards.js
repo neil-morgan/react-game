@@ -20,14 +20,14 @@ const DeadCard = () => (
     as={Icon}
     name="skull"
     color="red.800"
-    boxSize="50px"
+    boxSize="60px"
     position="absolute"
     {...deadCardTransition}
   />
 );
 
 const CardWrapper = ({ children }) => (
-  <AspectRatio
+  <Flex
     position="relative"
     h={{ base: "50px", sm: "77.5px", md: "155px" }}
     w={{ base: "50px", md: "100px" }}
@@ -39,7 +39,7 @@ const CardWrapper = ({ children }) => (
     alignItems="center"
   >
     {children}
-  </AspectRatio>
+  </Flex>
 );
 
 const PlayerWrapper = ({ isCurrentPlayer, onClick, player, children }) => (

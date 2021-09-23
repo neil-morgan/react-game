@@ -22,7 +22,7 @@ export const styles = {
     ".bgio-client": {
       w: "full",
       flexDirection: "column",
-      p: { base: 4, md: 8 },
+      p: 4,
     },
 
     body: {
