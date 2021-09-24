@@ -25,8 +25,8 @@ const BottomSection = ({ G, ctx, playerID, moves }) => {
 
   return (
     <Flex as="section" mt="auto" justify="space-between" h="125px" w="full">
-      <Chat {...chatProps} />
-      <Flex
+      {/* <Chat {...chatProps} /> */}
+      {/* <Flex
         direction="column"
         align="center"
         justify="space-between"
@@ -34,7 +34,7 @@ const BottomSection = ({ G, ctx, playerID, moves }) => {
         h="full"
       >
         <Commentator />
-      </Flex>
+      </Flex> */}
       {/* <Events {...eventsProps} /> */}
       <Actions {...actionsProps} />
     </Flex>

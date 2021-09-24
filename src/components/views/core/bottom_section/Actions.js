@@ -1,64 +1,19 @@
-import { Flex, Button } from "@chakra-ui/react";
+import { Wrap, Flex, Button as ChakraButton } from "@chakra-ui/react";
 import { MotionBox } from "../../..";
 import { AnimatePresence } from "framer-motion";
 import { actionsTransition } from "../../../../animations";
-import { Icon } from "../../../";
 
-const isEven = (num) => num % 2 == 0;
-
-const getButtons = (action, buttonSet) => {
-  // const angle = 20;
-  // const positions = buttonSet[action].length;
-  // const initialPosition = !isEven(positions) ? 0 : -Math.abs(angle);
-
-  const positions = buttonSet[action].length;
-  const range = 130;
-  const center = range / 2 - 20;
-  const angle = range / positions;
-  const initial = center - (positions / 2) * angle + angle / 2;
-
-  const getButtonAngle = (num) => {
-    // if (initial + angle * positions + 10) {
-    //   return initial;
-    // }
-    return initial + angle * num;
-  };
-
-  return (
-    <>
-      {buttonSet[action].map(
-        (
-          { label, onClick, color = "primary", size = "xs", disabled },
-          index
-        ) => {
-          return (
-            <Button
-              position="absolute"
-              w="110px"
-              top="50%"
-              right="140px"
-              transform={`translateY(-50%) rotate(${getButtonAngle(index)}deg)`}
-              transformOrigin="186px 50%"
-              key={index}
-              onClick={onClick}
-              disabled={disabled}
-              size={size}
-              colorScheme={color}
-              letterSpacing="wide"
-            >
-              {label.toUpperCase()}
-            </Button>
-          );
-        }
-      )}
-    </>
-  );
-};
-
-const Buttons = ({ action, buttonSet }) => (
-  <MotionBox position="relative" w="full" h="full">
-    {getButtons(action, buttonSet)}
-  </MotionBox>
+const Button = ({ label, onClick, color = "primary", disabled }) => (
+  <ChakraButton
+    colorScheme={color}
+    disabled={disabled}
+    onClick={onClick}
+    fontSize="1em"
+    w="6em"
+    h="2em"
+  >
+    {label}
+  </ChakraButton>
 );
 
 const Actions = ({ G, ctx, playerID, moves }) => {
@@ -71,117 +26,132 @@ const Actions = ({ G, ctx, playerID, moves }) => {
   const block = () => moves.block(playerID);
   const challenge = () => moves.initiateChallenge(playerID);
 
-  const defaultArgs = {
+  const disabledArgs = {
     canCoup: yourPlayer.coins >= 7,
     mustCoup: yourPlayer.coins >= 10,
     canAssassinate: yourPlayer.coins >= 3,
     done: ctx.currentPlayer === G.turnLog.player.id || G.winner.id !== "-1",
   };
 
-  const defaultButtons = [
-    {
+  const buttonProps = {
+    income: {
       label: "income",
       onClick: () => income(),
-      disabled: !isYourTurn || defaultArgs.mustCoup || defaultArgs.done,
+      disabled: !isYourTurn || disabledArgs.mustCoup || disabledArgs.done,
     },
-    {
+    foreignAid: {
       label: "foreign aid",
       onClick: () => prepAction("foreign aid"),
-      disabled: !isYourTurn || defaultArgs.mustCoup || defaultArgs.done,
+      disabled: !isYourTurn || disabledArgs.mustCoup || disabledArgs.done,
     },
-    // {
-    //   label: "coup",
-    //   onClick: () => prepAction("coup"),
-    //   disabled: !isYourTurn || !defaultArgs.canCoup || defaultArgs.done,
-    // },
-    {
+
+    tax: {
       label: "tax",
       onClick: () => prepAction("tax"),
-      disabled: !isYourTurn || defaultArgs.mustCoup || defaultArgs.done,
+      disabled: !isYourTurn || disabledArgs.mustCoup || disabledArgs.done,
     },
-    {
+    assassinate: {
       label: "assassinate",
       onClick: () => prepAction("assassinate"),
       disabled:
         !isYourTurn ||
-        !defaultArgs.canAssassinate ||
-        defaultArgs.mustCoup ||
-        defaultArgs.done,
+        !disabledArgs.canAssassinate ||
+        disabledArgs.mustCoup ||
+        disabledArgs.done,
     },
-    {
+    steal: {
       label: "steal",
       onClick: () => prepAction("steal"),
-      disabled: !isYourTurn || defaultArgs.mustCoup || defaultArgs.done,
+      disabled: !isYourTurn || disabledArgs.mustCoup || disabledArgs.done,
     },
-    {
+    exchange: {
       label: "exchange",
       onClick: () => prepAction("exchange"),
-      disabled: !isYourTurn || defaultArgs.mustCoup || defaultArgs.done,
+      disabled: !isYourTurn || disabledArgs.mustCoup || disabledArgs.done,
     },
-  ];
-
-  const coupButton = {
-    onClick: () => prepAction("coup"),
-    disabled: !isYourTurn || !defaultArgs.canCoup || defaultArgs.done,
-    colorScheme: "red",
+    coup: {
+      label: "coup",
+      onClick: () => prepAction("coup"),
+      disabled: !isYourTurn || !disabledArgs.canCoup || disabledArgs.done,
+      colorScheme: "red",
+    },
+    allow: {
+      label: "allow",
+      onClick: () => allow(),
+      color: "green",
+    },
+    block: {
+      label: "block",
+      onClick: () => block(),
+      color: "red",
+    },
+    challenge: {
+      label: "challenge",
+      onClick: () => challenge(),
+      color: "red",
+    },
   };
 
-  const allowButton = {
-    label: "allow",
-    onClick: () => allow(),
-    color: "green",
-    size: "md",
-  };
+  const DefaultButtons = () => (
+    <>
+      <Button {...buttonProps.coup} />
+      <Button {...buttonProps.income} />
+      <Button {...buttonProps.tax} />
+      <Button {...buttonProps.foreignAid} />
+      <Button {...buttonProps.assassinate} />
+      <Button {...buttonProps.steal} />
+      <Button {...buttonProps.exchange} />
+    </>
+  );
 
-  const blockButton = {
-    label: "block",
-    onClick: () => block(),
-    color: "red",
-    size: "md",
-  };
+  const BlockButtons = () => (
+    <>
+      <Button {...buttonProps.allow} />
+      <Button {...buttonProps.block} />
+    </>
+  );
 
-  const challengeButton = {
-    label: "challenge",
-    onClick: () => challenge(),
-    color: "red",
-    size: "md",
-  };
+  const ChallengeButtons = () => (
+    <>
+      <Button {...buttonProps.allow} />
+      <Button {...buttonProps.challenge} />
+    </>
+  );
 
-  const buttonSet = {
-    block: [allowButton, blockButton],
-    challenge: [allowButton, challengeButton],
-    blockOrChallenge: [allowButton, blockButton, challengeButton],
-    default: defaultButtons,
+  const BlockOrChallengeButtons = () => (
+    <>
+      <Button {...buttonProps.allow} />
+      <Button {...buttonProps.block} />
+      <Button {...buttonProps.challenge} />
+    </>
+  );
+
+  const getButtonSet = {
+    block: BlockButtons(),
+    challenge: ChallengeButtons(),
+    blockOrChallenge: BlockOrChallengeButtons(),
+    default: DefaultButtons(),
   };
 
   const action = ctx.activePlayers[playerID];
 
+  const Buttons = ({ buttonSet }) => (
+    <MotionBox position="relative" w="60em">
+      {getButtonSet[buttonSet]}
+    </MotionBox>
+  );
+
   return (
-    <Flex position="relative" w="125px">
-      <Button
-        zIndex={1}
-        {...coupButton}
-        position="absolute"
-        inset={0}
-        w="full"
-        h="full"
-        rounded="50%"
-      >
-        <Icon name="skull" boxSize={"75px"} />
-      </Button>
+    <Flex fontSize="calc(14px + (26 - 14) * ((100vw - 300px) / (1600 - 300)))">
       <AnimatePresence exitBeforeEnter>
         {action === "block" ? (
-          <Buttons key="block" action="block" buttonSet={buttonSet} />
+          <Buttons key="block" buttonSet="block" />
         ) : action === "challenge" ? (
-          <Buttons key="challenge" action="challenge" buttonSet={buttonSet} />
+          <Buttons key="challenge" buttonSet="challenge" />
         ) : action === "blockOrChallenge" ? (
-          <Buttons
-            key="blockOrChallenge"
-            action="blockOrChallenge"
-            buttonSet={buttonSet}
-          />
+          <Buttons key="blockOrChallenge" buttonSet="blockOrChallenge" />
         ) : (
-          <Buttons key="default" action="default" buttonSet={buttonSet} />
+          <Buttons key="default" buttonSet="default" />
         )}
       </AnimatePresence>
     </Flex>
