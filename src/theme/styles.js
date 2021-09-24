@@ -22,14 +22,13 @@ export const styles = {
     ".bgio-client": {
       w: "full",
       flexDirection: "column",
-      p: 4,
     },
 
     body: {
       overflow: "hidden",
       fontFamily: "Inter, sans-serif",
       color: "gray.400",
-      bg: "base.d200",
+      bg: "base.d400",
     },
   },
 };

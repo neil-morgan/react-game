@@ -6,6 +6,7 @@ import CardSelector from "./card_selector";
 import TopSection from "./top_section";
 import MiddleSection from "./middle_section";
 import BottomSection from "./bottom_section";
+import Console from "./console";
 
 const Core = ({ G, playerID, ctx, moves, gameMetadata }) => {
   const [revealDeck, setRevealDeck] = useState(false);
@@ -25,10 +26,11 @@ const Core = ({ G, playerID, ctx, moves, gameMetadata }) => {
 
   return (
     <>
-      <CardSelector {...props} />
+      {/* <CardSelector {...props} />
       <TopSection {...props} />
-      <MiddleSection {...props} />
-      <BottomSection {...props} />
+      <MiddleSection {...props} /> */}
+      {/* <BottomSection {...props} /> */}
+      <Console {...props} />
     </>
   );
 };
