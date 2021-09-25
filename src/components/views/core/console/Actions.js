@@ -153,7 +153,7 @@ const Actions = ({ G, ctx, playerID, moves }) => {
   );
 
   return (
-    <Flex flexDirection="column" w="18em" ml="1em">
+    <Flex flexDirection="column" w="18em">
       <Flex
         as="header"
         h="4em"

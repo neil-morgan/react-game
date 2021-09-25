@@ -1,1 +1,56 @@
-export { theme } from "./theme"
+import { extendTheme } from "@chakra-ui/react";
+import "focus-visible/dist/focus-visible";
+
+import { styles, layerStyles, textStyles } from "./styles";
+
+import {
+  Container,
+  Heading,
+  Text,
+  Button,
+  Link,
+  Divider,
+  Section,
+  List,
+  Tooltip,
+} from "./components";
+
+import {
+  breakpoints,
+  colors,
+  fontWeights,
+  fontRanges,
+  fontSizes,
+  fonts,
+} from "./foundations";
+
+const overrides = {
+  config: { initialColorMode: "dark", useSystemColorMode: false },
+
+  components: {
+    Container,
+    Heading,
+    Divider,
+    Section,
+    Button,
+    Link,
+    List,
+    Text,
+    Tooltip,
+  },
+
+  layerStyles,
+  textStyles,
+  styles,
+
+  breakpoints,
+  colors,
+  fontWeights,
+  fontRanges,
+  fontSizes,
+  fonts,
+};
+
+const theme = extendTheme(overrides);
+
+export default theme;

@@ -1,18 +1,28 @@
-import { Flex } from "@chakra-ui/react";
+import { Flex, useMediaQuery } from "@chakra-ui/react";
+import { getFluidFontSize } from "../../../../utils";
 import Actions from "./Actions";
 import Profile from "./Profile";
 
-// { G, ctx, playerID, moves }
-//font-size: calc([minimum size] + ([maximum size] - [minimum size]) * ((100vw - [minimum viewport width]) / ([maximum viewport width] - [minimum viewport width])))
-
 const Console = (props) => {
+  const [isPortrait] = useMediaQuery("(orientation: portrait)");
+
   return (
     <Flex
-      fontSize="calc(10px + (16 - 10) * ((100vw - 300px) / (1920 - 300)))"
-      mt="auto"
       p="0.5em"
       justify="space-between"
-      bg="base.d100"
+      {...getFluidFontSize()}
+      {...(isPortrait
+        ? {
+            flexDirection: "row",
+            mt: "auto",
+            h: "auto",
+          }
+        : {
+            flexDirection: "column",
+            mt: 0,
+            h: "full",
+            alignSelf: "flex-end",
+          })}
     >
       <Profile {...props} />
       <Actions {...props} />
