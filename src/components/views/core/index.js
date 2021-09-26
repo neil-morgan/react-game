@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { CommentatorContext } from "../../../contexts";
+import { useWindowDimensions } from "../../../hooks";
 import { GameBoard } from "../../layout";
 import PropTypes from "prop-types";
 import CardSelector from "./card_selector";
@@ -10,7 +11,11 @@ import Console from "./console";
 
 const Core = ({ G, playerID, ctx, moves, gameMetadata }) => {
   const [revealDeck, setRevealDeck] = useState(false);
+  const { height, width } = useWindowDimensions();
   const { setCommentatorState } = useContext(CommentatorContext);
+
+  console.log(height);
+  console.log(width);
 
   const props = { G, ctx, playerID, moves };
 
