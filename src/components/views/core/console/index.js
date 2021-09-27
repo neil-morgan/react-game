@@ -1,17 +1,17 @@
-import { Flex, useMediaQuery } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 import { getFluidFontSize } from "../../../../utils";
 import Actions from "./Actions";
 import Profile from "./Profile";
 
 const Console = (props) => {
-  const [isPortrait] = useMediaQuery("(orientation: portrait)");
+  const { isLandscape, isMobile } = props.media;
 
   return (
     <Flex
       p="0.5em"
       justify="space-between"
       {...getFluidFontSize()}
-      {...(isPortrait
+      {...(isLandscape && isMobile
         ? {
             flexDirection: "row",
             mt: "auto",
