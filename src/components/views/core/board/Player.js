@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { CardWrapper, LiveCard, DeadCard, PlayerWrapper } from "../../../";
+import { CardWrapper, LiveCard, DeadCard, PlayerWrapper } from "../../..";
 import { AnimatePresence } from "framer-motion";
 
 const Player = ({ G, ctx, playerID, moves, i }) => {

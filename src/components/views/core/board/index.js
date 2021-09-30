@@ -40,6 +40,7 @@ const Board = (props) => {
       as="section"
       direction="column"
       flex={1}
+      px={4}
       justify="center"
     >
       <Carousel gap={32}>

@@ -19,9 +19,7 @@ const useBoundingRect = (limit) => {
   const [dimensions, setDimensions] = useState({});
   const [node, setNode] = useState(null);
 
-  const ref = useCallback((node) => {
-    setNode(node);
-  }, []);
+  const ref = useCallback((node) => setNode(node), []);
 
   useLayoutEffect(() => {
     if ("undefined" !== typeof window && node) {
@@ -41,6 +39,8 @@ const useBoundingRect = (limit) => {
       };
     }
   }, [node, limit]);
+
+  console.log(dimensions);
 
   return [ref, dimensions, node];
 };

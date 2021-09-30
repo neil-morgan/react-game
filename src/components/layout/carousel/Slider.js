@@ -1,30 +1,18 @@
-import React, { useLayoutEffect } from "react";
 import { Progress, Button, Flex, Box } from "@chakra-ui/react";
-import { useBoundingRect } from "../../../hooks";
 import { percentage } from "../../../utils";
 import { Icon } from "../../";
 
 const Slider = ({
   setTrackIsActive,
-  initSliderWidth,
   setActiveItem,
   activeItem,
   constraint,
   itemWidth,
+  sliderRef,
   positions,
   children,
   gap,
 }) => {
-  const [ref, { width }] = useBoundingRect();
-
-  //!HERE BE THE DRAGON
-  console.log(width);
-
-  useLayoutEffect(
-    () => initSliderWidth(Math.round(width)),
-    [width, initSliderWidth]
-  );
-
   const handleFocus = () => setTrackIsActive(true);
 
   const handleDecrementClick = () => {
@@ -42,7 +30,7 @@ const Slider = ({
   return (
     <>
       <Box
-        ref={ref}
+        ref={sliderRef}
         w={{ base: "100%", md: `calc(100% + ${gap}px)` }}
         ml={{ base: 0, md: `-${gap / 2}px` }}
         px={`${gap / 2}px`}
