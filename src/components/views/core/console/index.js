@@ -8,20 +8,24 @@ const Console = (props) => {
 
   return (
     <Flex
-      p="0.5em"
+      as="section"
+      p="0.6em"
       justify="space-between"
       {...getFluidFontSize()}
-      {...(isLandscape && isMobile
-        ? {
-            flexDirection: "row",
-            mt: "auto",
-            h: "auto",
-          }
+      {...(isMobile
+        ? isLandscape
+          ? {
+              flexDirection: "column",
+              mt: 0,
+              h: "full",
+              alignSelf: "flex-end",
+            }
+          : {
+              flexDirection: "row",
+              h: "auto",
+            }
         : {
-            flexDirection: "column",
-            mt: 0,
-            h: "full",
-            alignSelf: "flex-end",
+            flexDirection: "row",
           })}
     >
       <Profile {...props} />

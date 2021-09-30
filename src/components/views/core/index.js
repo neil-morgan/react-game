@@ -6,7 +6,7 @@ import { GameBoard } from "../../layout";
 import PropTypes from "prop-types";
 import CardSelector from "./card_selector";
 import TopSection from "./top_section";
-import MiddleSection from "./middle_section";
+import Board from "./board";
 import BottomSection from "./bottom_section";
 import Console from "./console";
 
@@ -16,7 +16,7 @@ const Core = ({ G, playerID, ctx, moves, gameMetadata }) => {
 
   const [isLandscape] = useMediaQuery("(orientation: landscape)");
   const [isPortrait] = useMediaQuery("(orientation: portrait)");
-  const [isMobile] = useMediaQuery(`(max-width:${useTheme().breakpoints.sm})`);
+  const [isMobile] = useMediaQuery(`(max-width:${useTheme().breakpoints.lg})`);
 
   const media = {
     isLandscape,
@@ -38,9 +38,9 @@ const Core = ({ G, playerID, ctx, moves, gameMetadata }) => {
 
   return (
     <>
-      {/* <CardSelector {...props} />
-      <TopSection {...props} />
-      <MiddleSection {...props} /> */}
+      {/* <CardSelector {...props} /> */}
+      {/* <TopSection {...props} /> */}
+      <Board {...props} />
       {/* <BottomSection {...props} /> */}
       <Console {...props} />
     </>

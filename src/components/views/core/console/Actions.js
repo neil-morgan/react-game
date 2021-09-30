@@ -1,8 +1,6 @@
 import {
   Grid,
   GridItem,
-  Wrap,
-  Heading,
   Flex,
   Text,
   Button as ChakraButton,
@@ -194,6 +192,7 @@ const Actions = ({ G, ctx, playerID, moves }) => {
           </AnimatePresence>
         </Flex>
       </Flex>
+
       <AnimatePresence exitBeforeEnter>
         {action === "block" ? (
           <Buttons key="block" buttonSet="block" />

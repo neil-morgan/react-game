@@ -1,11 +1,13 @@
 import React from "react";
-import { Flex, Wrap, WrapItem } from "@chakra-ui/react";
+import { Flex, SimpleGrid } from "@chakra-ui/react";
+import { getFluidFontSize } from "../../../../utils";
 import Player from "./Player";
 
 // row of players
-const MiddleSection = (props) => {
+const Board = (props) => {
   const { ctx, playerID } = props;
   const players = [];
+
   for (let index = 0; index < ctx.numPlayers; index++) {
     const i = parseInt(ctx.playOrder[index]);
     if (i !== parseInt(playerID)) {
@@ -28,39 +30,20 @@ const MiddleSection = (props) => {
       );
     }
   }
+
   return (
-    <Wrap
+    <SimpleGrid
+      columns={4}
+      {...getFluidFontSize()}
       as="section"
-      spacing={4}
-      justify="center"
       flex={1}
-      maxH="285px"
-      my="auto"
-      sx={{
-        ul: {
-          h: "full",
-          my: "auto",
-          alignItems: "center",
-          overflowY: "auto",
-          overflowX: "hidden",
-          py: 4,
-
-          "::-webkit-scrollbar": {
-            width: "16px",
-          },
-
-          "::-webkit-scrollbar-thumb": {
-            border: "6px solid rgba(0, 0, 0, 0)",
-            backgroundClip: "padding-box",
-            borderRadius: "9999px",
-            backgroundColor: "primary.200",
-          },
-        },
-      }}
+      gap="0.6em"
+      p="0.6em"
+      justify="center"
     >
-      {players}
-    </Wrap>
+      {/* {players} */}
+    </SimpleGrid>
   );
 };
 
-export default MiddleSection;
+export default Board;
