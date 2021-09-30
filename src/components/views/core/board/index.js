@@ -1,6 +1,7 @@
 import React from "react";
 import { Flex, SimpleGrid } from "@chakra-ui/react";
 import { getFluidFontSize } from "../../../../utils";
+import { Carousel } from "../../../";
 import Player from "./Player";
 
 // row of players
@@ -32,18 +33,40 @@ const Board = (props) => {
   }
 
   return (
-    <SimpleGrid
+    <Flex
       bg="red.500"
-      columns={4}
+      w="full"
       {...getFluidFontSize()}
       as="section"
+      direction="column"
       flex={1}
-      gap="0.6em"
-      p="0.6em"
       justify="center"
     >
+      <Carousel gap={32}>
+        <Flex bg="blue.500" flex={1}>
+          asdasdasd
+        </Flex>
+        <Flex bg="blue.500" flex={1}>
+          asdasdasd
+        </Flex>
+        <Flex bg="blue.500" flex={1}>
+          asdasdasd
+        </Flex>
+        <Flex bg="blue.500" flex={1}>
+          asdasdasd
+        </Flex>
+        <Flex bg="blue.500" flex={1}>
+          asdasdasd
+        </Flex>
+        <Flex bg="blue.500" flex={1}>
+          asdasdasd
+        </Flex>
+        <Flex bg="blue.500" flex={1}>
+          asdasdasd
+        </Flex>
+      </Carousel>
       {/* {players} */}
-    </SimpleGrid>
+    </Flex>
   );
 };
 

@@ -31,7 +31,6 @@ const useBoundingRect = (limit) => {
         );
 
       measure();
-
       const listener = debounce(limit ? limit : 100, measure);
 
       window.addEventListener("resize", listener);
