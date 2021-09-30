@@ -11,6 +11,7 @@ const Console = (props) => {
       as="section"
       p="0.6em"
       justify="space-between"
+      bg="green.500"
       {...getFluidFontSize()}
       {...(isMobile
         ? isLandscape

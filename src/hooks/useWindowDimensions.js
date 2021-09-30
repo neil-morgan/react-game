@@ -15,11 +15,13 @@ const useWindowDimensions = () => {
   );
 
   useEffect(() => {
-    const handleResize = () => setWindowDimensions(getWindowDimensions());
-    const listener = throttle(handleResize, 100);
+    if ("undefined" !== typeof window) {
+      const handleResize = () => setWindowDimensions(getWindowDimensions());
+      const listener = throttle(handleResize, 100);
 
-    window.addEventListener("resize", listener);
-    return () => window.removeEventListener("resize", listener);
+      window.addEventListener("resize", listener);
+      return () => window.removeEventListener("resize", listener);
+    }
   }, []);
 
   return windowDimensions;

@@ -33,6 +33,7 @@ const Board = (props) => {
 
   return (
     <SimpleGrid
+      bg="red.500"
       columns={4}
       {...getFluidFontSize()}
       as="section"
