@@ -6,7 +6,7 @@ const Wrapper = ({ children, ...rest }) => {
     <Flex
       as="main"
       flex={1}
-      w="full"
+      maxW="full"
       h="full"
       direction={{ base: "column", md: "row" }}
       {...rest}

@@ -1,18 +1,42 @@
-import { Progress, Button, Flex, Box } from "@chakra-ui/react";
+import { useEffect } from "react";
+import {
+  useMediaQuery,
+  useTheme,
+  Progress,
+  Button,
+  Flex,
+  Box,
+} from "@chakra-ui/react";
+
+import { useBoundingRect } from "../../../hooks";
 import { percentage } from "../../../utils";
 import { Icon } from "../../";
 
 const Slider = ({
   setTrackIsActive,
+  setMultiplier,
   setActiveItem,
+  setConstraint,
+  setItemWidth,
   activeItem,
   constraint,
   itemWidth,
-  sliderRef,
   positions,
   children,
   gap,
 }) => {
+  const { breakpoints } = useTheme();
+
+  const [sliderRef, { width }] = useBoundingRect();
+
+  const [isBetweenBaseAndMd] = useMediaQuery(
+    `(min-width: ${breakpoints.base}) and (max-width: ${breakpoints.md})`
+  );
+  const [isBetweenMdAndXl] = useMediaQuery(
+    `(min-width: ${breakpoints.md}) and (max-width: ${breakpoints.xl})`
+  );
+  const [isGreaterThanXL] = useMediaQuery(`(min-width: ${breakpoints.xl})`);
+
   const handleFocus = () => setTrackIsActive(true);
 
   const handleDecrementClick = () => {
@@ -27,44 +51,43 @@ const Slider = ({
       setActiveItem((prev) => prev + 1);
   };
 
+  useEffect(() => {
+    if (isBetweenBaseAndMd) {
+      setItemWidth(Math.round(width));
+      setMultiplier(0.65);
+      setConstraint(1);
+    }
+    if (isBetweenMdAndXl) {
+      setItemWidth(Math.round(width) / 2);
+      setMultiplier(0.5);
+      setConstraint(2);
+    }
+    if (isGreaterThanXL) {
+      setItemWidth(Math.round(width) / 3);
+      setMultiplier(0.35);
+      setConstraint(3);
+    }
+  }, [
+    isBetweenBaseAndMd,
+    isBetweenMdAndXl,
+    isGreaterThanXL,
+    setMultiplier,
+    setConstraint,
+    setItemWidth,
+    itemWidth,
+    width,
+  ]);
+
   return (
-    <>
-      <Box
-        ref={sliderRef}
-        w={{ base: "100%", md: `calc(100% + ${gap}px)` }}
-        ml={{ base: 0, md: `-${gap / 2}px` }}
-        px={`${gap / 2}px`}
-        position="relative"
-        overflow="hidden"
-        _before={{
-          bgGradient: "linear(to-r, base.d400, transparent)",
-          position: "absolute",
-          w: `${gap / 2}px`,
-          content: "''",
-          zIndex: 1,
-          h: "100%",
-          left: 0,
-          top: 0,
-        }}
-        _after={{
-          bgGradient: "linear(to-l, base.d400, transparent)",
-          position: "absolute",
-          w: `${gap / 2}px`,
-          content: "''",
-          zIndex: 1,
-          h: "100%",
-          right: 0,
-          top: 0,
-        }}
-      >
+    <Box p={gap}>
+      <Box ref={sliderRef} w="full" position="relative" overflow="hidden">
         {children}
       </Box>
 
-      <Flex w={`${itemWidth}px`} mt={`${gap / 2}px`} mx="auto">
+      <Flex w={`${itemWidth}px`} mt={gap} mx="auto">
         <Button
           onClick={handleDecrementClick}
           onFocus={handleFocus}
-          mr={`${gap / 3}px`}
           color="gray.200"
           variant="link"
           minW={0}
@@ -74,6 +97,7 @@ const Slider = ({
 
         <Progress
           value={percentage(activeItem, positions.length - constraint)}
+          transition="ease 250ms"
           alignSelf="center"
           borderRadius="2px"
           bg="base.d100"
@@ -89,7 +113,6 @@ const Slider = ({
         <Button
           onClick={handleIncrementClick}
           onFocus={handleFocus}
-          ml={`${gap / 3}px`}
           color="gray.200"
           variant="link"
           zIndex={2}
@@ -98,7 +121,7 @@ const Slider = ({
           <Icon name="chevron_right" boxSize={9} />
         </Button>
       </Flex>
-    </>
+    </Box>
   );
 };
 

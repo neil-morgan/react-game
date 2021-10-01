@@ -20,7 +20,7 @@ export const styles = {
     },
 
     ".bgio-client": {
-      w: "full",
+      w: { base: "full", md: "calc(100% - 55px)" },
       flexDirection: "column",
     },
 

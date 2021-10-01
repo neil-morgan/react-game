@@ -23,10 +23,12 @@ const useBoundingRect = (limit) => {
 
   useLayoutEffect(() => {
     if ("undefined" !== typeof window && node) {
-      const measure = () =>
+      const measure = () => {
+        console.log("fired");
         window.requestAnimationFrame(() =>
           setDimensions(getDimensionObject(node))
         );
+      };
 
       measure();
       const listener = debounce(limit ? limit : 100, measure);
@@ -39,8 +41,6 @@ const useBoundingRect = (limit) => {
       };
     }
   }, [node, limit]);
-
-  console.log(dimensions);
 
   return [ref, dimensions, node];
 };

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Flex } from "@chakra-ui/react";
+import { Flex, Box } from "@chakra-ui/react";
 
 const Item = ({
   setTrackIsActive,
@@ -30,17 +30,15 @@ const Item = ({
 
   return (
     <Flex
-      onFocus={handleFocus}
-      onBlur={handleBlur}
-      onKeyUp={handleKeyUp}
       onKeyDown={handleKeyDown}
+      onFocus={handleFocus}
+      onKeyUp={handleKeyUp}
+      onBlur={handleBlur}
       w={`${itemWidth}px`}
-      _notLast={{
-        mr: `${gap}px`,
-      }}
-      py="4px"
     >
-      {children}
+      <Box flex={1} pl={gap} pr={gap}>
+        {children}
+      </Box>
     </Flex>
   );
 };

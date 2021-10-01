@@ -4,7 +4,13 @@ import { MotionBox } from "./MotionBox";
 import { Icon, IskCounter } from "./";
 
 const LiveCard = ({ src, alt, onClick }) => (
-  <MotionBox as={Image} onClick={onClick} src={src} alt={alt} />
+  <MotionBox
+    as={Image}
+    draggable={false}
+    onClick={onClick}
+    src={src}
+    alt={alt}
+  />
 );
 
 const DeadCard = () => (

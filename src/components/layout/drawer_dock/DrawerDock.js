@@ -8,7 +8,14 @@ const drawerItems = [CharacterDrawer, RulesDrawer];
 
 const DrawerDock = () => {
   return (
-    <Flex as="nav" bg="base.d400" py={{ base: 1, lg: 2 }} px={2}>
+    <Flex
+      as="nav"
+      w={{ base: "full", md: "55px" }}
+      justify={{ base: "flex-end", md: "center" }}
+      p={2}
+      // bg="base.d400"
+      bg="red.500"
+    >
       <MotionBox
         direction={{ base: "row-reverse", md: "column" }}
         as={Stack}
