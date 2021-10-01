@@ -6,10 +6,13 @@ import Item from "./Item";
 
 const Carousel = ({ children, gap = 4 }) => {
   const [trackIsActive, setTrackIsActive] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(false);
   const [multiplier, setMultiplier] = useState(0.35);
   const [activeItem, setActiveItem] = useState(0);
   const [constraint, setConstraint] = useState(0);
   const [itemWidth, setItemWidth] = useState(0);
+
+  const itemLength = children.length;
 
   const positions = useMemo(
     () => children.map((_, index) => -Math.abs(itemWidth * index)),
@@ -18,10 +21,13 @@ const Carousel = ({ children, gap = 4 }) => {
 
   const sliderProps = {
     setTrackIsActive,
+    setIsDisabled,
     setMultiplier,
     setActiveItem,
     setConstraint,
     setItemWidth,
+    isDisabled,
+    itemLength,
     activeItem,
     constraint,
     itemWidth,
@@ -34,6 +40,7 @@ const Carousel = ({ children, gap = 4 }) => {
     setTrackIsActive,
     trackIsActive,
     setActiveItem,
+    isDisabled,
     activeItem,
     constraint,
     multiplier,

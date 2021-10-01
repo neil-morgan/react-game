@@ -1,5 +1,5 @@
 import { Flex } from "@chakra-ui/react";
-import DrawerDock from "../drawer_dock/DrawerDock";
+import DrawerDock from "../drawer_dock";
 
 const Wrapper = ({ children, ...rest }) => {
   return (

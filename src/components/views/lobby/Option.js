@@ -13,7 +13,15 @@ const Option = ({ children }) => {
       w="full"
       {...pageTransition}
     >
-      <Flex direction="column" w="full" bg="base.900" rounded={5} p={8}>
+      <Flex
+        direction="column"
+        w="full"
+        bg="base.d400"
+        borderWidth={1}
+        borderColor="base.d100"
+        rounded={5}
+        p={8}
+      >
         {children}
       </Flex>
     </MotionFlex>

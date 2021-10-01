@@ -6,6 +6,7 @@ const Track = ({
   setTrackIsActive,
   trackIsActive,
   setActiveItem,
+  isDisabled,
   activeItem,
   constraint,
   multiplier,
@@ -90,7 +91,7 @@ const Track = ({
 
   const handleKeyDown = useCallback(
     (event) => {
-      if (trackIsActive) {
+      if (trackIsActive && !isDisabled) {
         if (activeItem < positions.length - constraint) {
           if (event.key === "ArrowRight" || event.key === "ArrowUp") {
             event.preventDefault();
@@ -105,7 +106,14 @@ const Track = ({
         }
       }
     },
-    [trackIsActive, setActiveItem, activeItem, constraint, positions.length]
+    [
+      setActiveItem,
+      trackIsActive,
+      isDisabled,
+      activeItem,
+      constraint,
+      positions,
+    ]
   );
 
   useEffect(() => {
@@ -130,10 +138,9 @@ const Track = ({
             animate={controls}
             style={{ x }}
             drag="x"
-            _active={{ cursor: "grabbing" }}
             minWidth="min-content"
             flexWrap="nowrap"
-            cursor="grab"
+            justify="center"
           >
             {children}
           </MotionFlex>

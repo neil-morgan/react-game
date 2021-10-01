@@ -8,7 +8,7 @@ import {
   WrapItem,
   Button,
 } from "@chakra-ui/react";
-import { MotionFlex } from "../../";
+import { MotionFlex } from "../..";
 import { pageTransition } from "../../../animations";
 import copyToClipboard from "copy-to-clipboard-ultralight";
 import { useRipple } from "../../../hooks";
@@ -37,7 +37,9 @@ const WaitingRoom = ({ activePlayers, players, id, leaveRoom }) => {
     <MotionFlex direction="column" m="auto" w="320px" {...pageTransition}>
       <Flex
         direction="column"
-        bg="base.900"
+        bg="base.d400"
+        borderWidth={1}
+        borderColor="base.d100"
         p={8}
         rounded={5}
         textAlign="center"
