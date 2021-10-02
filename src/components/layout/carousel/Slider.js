@@ -2,7 +2,6 @@ import { useEffect, useCallback } from "react";
 import {
   useMediaQuery,
   useTheme,
-  Progress,
   HStack,
   Button,
   Flex,
@@ -10,7 +9,6 @@ import {
 } from "@chakra-ui/react";
 
 import { useBoundingRect } from "../../../hooks";
-import { percentage } from "../../../utils";
 import { Icon } from "../../";
 
 const Slider = ({
@@ -21,7 +19,6 @@ const Slider = ({
   setConstraint,
   setItemWidth,
   isDisabled,
-  itemLength,
   activeItem,
   constraint,
   itemWidth,
@@ -68,7 +65,7 @@ const Slider = ({
 
   const handleSm = useCallback(() => {
     setItemWidth(Math.round(width) / 2);
-    setIsDisabled(itemLength <= 2);
+    setIsDisabled(positions.length <= 2);
     setMultiplier(0.65);
     setConstraint(2);
   }, [
@@ -76,13 +73,13 @@ const Slider = ({
     setConstraint,
     setMultiplier,
     setItemWidth,
-    itemLength,
+    positions,
     width,
   ]);
 
   const handleMd = useCallback(() => {
     setItemWidth(Math.round(width) / 3);
-    setIsDisabled(itemLength <= 3);
+    setIsDisabled(positions.length <= 3);
     setMultiplier(0.55);
     setConstraint(3);
   }, [
@@ -90,13 +87,13 @@ const Slider = ({
     setConstraint,
     setMultiplier,
     setItemWidth,
-    itemLength,
+    positions,
     width,
   ]);
 
   const handleLg = useCallback(() => {
     setItemWidth(Math.round(width) / 4);
-    setIsDisabled(itemLength <= 4);
+    setIsDisabled(positions.length <= 4);
     setMultiplier(0.45);
     setConstraint(4);
   }, [
@@ -104,13 +101,15 @@ const Slider = ({
     setConstraint,
     setMultiplier,
     setItemWidth,
-    itemLength,
+    positions,
     width,
   ]);
 
   const handleXl = useCallback(() => {
     setItemWidth(
-      itemLength <= 4 ? Math.round(width) / 5 : Math.round(width) / itemLength
+      positions.length <= 4
+        ? Math.round(width) / 5
+        : Math.round(width) / positions.length
     );
     setIsDisabled(true);
     setMultiplier(0.35);
@@ -120,7 +119,7 @@ const Slider = ({
     setConstraint,
     setMultiplier,
     setItemWidth,
-    itemLength,
+    positions,
     width,
   ]);
 
@@ -162,44 +161,45 @@ const Slider = ({
             disabled={activeItem === positions.length - positions.length}
             onClick={handleDecrementClick}
             onFocus={handleFocus}
+            transition="400ms ease"
             color="gray.200"
             variant="link"
             minW={0}
-            mr={3}
           >
             <Icon name="chevron_left" boxSize={8} />
           </Button>
 
           <HStack
             spacing="14px"
+            mx={6}
             position="relative"
             _after={{
               content: "''",
               position: "absolute",
               top: "50%",
-              transform: "translateY(-50%) translateX(0px)",
-              left: 0,
-              w: `${14 * 7}px`,
-              h: "14px",
-              rounded: 5,
+              transform: `translateY(-50%) translateX(${activeItem * 28}px)`,
+              transition: "ease 500ms",
+              left: "-7px",
+              w: `${14 * (constraint + constraint - 1) + 14}px`,
+              h: "28px",
+              rounded: 4,
               borderColor: "primary.300",
               borderWidth: 1,
+              pointerEvents: "none",
             }}
           >
-            {Array.from(Array(itemLength)).map((_, index) => (
-              <Box
+            {Array.from(Array(positions.length)).map((_, index) => (
+              <Flex
                 onClick={() => handleDotClick(index)}
+                justify="space-between"
+                key={index}
                 as="button"
                 h="14px"
                 w="14px"
-                rounded="full"
-                bg={
-                  index >= activeItem && index <= activeItem + constraint - 1
-                    ? "green.500"
-                    : "red.500"
-                }
-                key={index}
-              />
+              >
+                <Box w="6px" h="full" bg="primary.300" rounded={1} />
+                <Box w="6px" h="full" bg="primary.300" rounded={1} />
+              </Flex>
             ))}
           </HStack>
 
@@ -207,11 +207,11 @@ const Slider = ({
             disabled={activeItem === positions.length - constraint}
             onClick={handleIncrementClick}
             onFocus={handleFocus}
+            transition="400ms ease"
             color="gray.200"
             variant="link"
             zIndex={2}
             minW={0}
-            ml={3}
           >
             <Icon name="chevron_right" boxSize={8} />
           </Button>
