@@ -32,6 +32,10 @@ const Track = ({
   const handleDragStart = () => setDragStartPosition(positions[activeItem]);
 
   const handleDragEnd = (_, info) => {
+    if (isDisabled) {
+      return;
+    }
+
     const distance = info.offset.x;
     const velocity = info.velocity.x * multiplier;
     const direction = velocity < 0 || distance < 0 ? 1 : -1;
@@ -128,25 +132,23 @@ const Track = ({
   }, [handleClick, handleResize, handleKeyDown, positions]);
 
   return (
-    <>
-      {itemWidth && (
-        <div ref={node}>
-          <MotionFlex
-            dragConstraints={node}
-            onDragStart={handleDragStart}
-            onDragEnd={handleDragEnd}
-            animate={controls}
-            style={{ x }}
-            drag="x"
-            minWidth="min-content"
-            flexWrap="nowrap"
-            justify="center"
-          >
-            {children}
-          </MotionFlex>
-        </div>
-      )}
-    </>
+    itemWidth && (
+      <div ref={node}>
+        <MotionFlex
+          drag={isDisabled ? null : "x"}
+          onDragStart={handleDragStart}
+          onDragEnd={handleDragEnd}
+          dragConstraints={node}
+          animate={controls}
+          style={{ x }}
+          minWidth="min-content"
+          flexWrap="nowrap"
+          justify="center"
+        >
+          {children}
+        </MotionFlex>
+      </div>
+    )
   );
 };
 

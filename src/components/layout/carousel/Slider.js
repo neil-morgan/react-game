@@ -1,8 +1,9 @@
-import { useState, useEffect, useCallback } from "react";
+import { useEffect, useCallback } from "react";
 import {
   useMediaQuery,
   useTheme,
   Progress,
+  HStack,
   Button,
   Flex,
   Box,
@@ -56,36 +57,47 @@ const Slider = ({
       setActiveItem((prev) => prev + 1);
   };
 
+  const handleDotClick = (index) => {
+    setTrackIsActive(true);
+    setActiveItem(
+      index > positions.length - constraint
+        ? positions.length - constraint
+        : index
+    );
+  };
+
   const handleSm = useCallback(() => {
-    setItemWidth(Math.round(width) / 3);
+    setItemWidth(Math.round(width) / 2);
+    setIsDisabled(itemLength <= 2);
     setMultiplier(0.65);
-    setConstraint(1);
+    setConstraint(2);
   }, [
-    // setIsDisabled,
+    setIsDisabled,
     setConstraint,
     setMultiplier,
     setItemWidth,
-    // itemLength,
+    itemLength,
     width,
   ]);
 
   const handleMd = useCallback(() => {
     setItemWidth(Math.round(width) / 3);
-    setMultiplier(0.65);
-    setConstraint(1);
+    setIsDisabled(itemLength <= 3);
+    setMultiplier(0.55);
+    setConstraint(3);
   }, [
-    // setIsDisabled,
+    setIsDisabled,
     setConstraint,
     setMultiplier,
     setItemWidth,
-    // itemLength,
+    itemLength,
     width,
   ]);
 
   const handleLg = useCallback(() => {
     setItemWidth(Math.round(width) / 4);
     setIsDisabled(itemLength <= 4);
-    setMultiplier(0.5);
+    setMultiplier(0.45);
     setConstraint(4);
   }, [
     setIsDisabled,
@@ -97,7 +109,9 @@ const Slider = ({
   ]);
 
   const handleXl = useCallback(() => {
-    setItemWidth(Math.round(width) / itemLength);
+    setItemWidth(
+      itemLength <= 4 ? Math.round(width) / 5 : Math.round(width) / itemLength
+    );
     setIsDisabled(true);
     setMultiplier(0.35);
     setConstraint(null);
@@ -143,7 +157,7 @@ const Slider = ({
       </Box>
 
       {!isDisabled && (
-        <Flex w={`${itemWidth}px`} mt={gap * 4} mx="auto">
+        <Flex w={`${itemWidth}px`} mt={gap * 2} mx="auto">
           <Button
             disabled={activeItem === positions.length - positions.length}
             onClick={handleDecrementClick}
@@ -151,24 +165,43 @@ const Slider = ({
             color="gray.200"
             variant="link"
             minW={0}
+            mr={3}
           >
-            <Icon name="chevron_left" boxSize={7} />
+            <Icon name="chevron_left" boxSize={8} />
           </Button>
 
-          <Progress
-            value={percentage(activeItem, positions.length - constraint)}
-            transition="ease 250ms"
-            alignSelf="center"
-            borderRadius="2px"
-            bg="base.d100"
-            flex={1}
-            h="3px"
-            sx={{
-              "> div": {
-                backgroundColor: "gray.400",
-              },
+          <HStack
+            spacing="14px"
+            position="relative"
+            _after={{
+              content: "''",
+              position: "absolute",
+              top: "50%",
+              transform: "translateY(-50%) translateX(0px)",
+              left: 0,
+              w: `${14 * 7}px`,
+              h: "14px",
+              rounded: 5,
+              borderColor: "primary.300",
+              borderWidth: 1,
             }}
-          />
+          >
+            {Array.from(Array(itemLength)).map((_, index) => (
+              <Box
+                onClick={() => handleDotClick(index)}
+                as="button"
+                h="14px"
+                w="14px"
+                rounded="full"
+                bg={
+                  index >= activeItem && index <= activeItem + constraint - 1
+                    ? "green.500"
+                    : "red.500"
+                }
+                key={index}
+              />
+            ))}
+          </HStack>
 
           <Button
             disabled={activeItem === positions.length - constraint}
@@ -178,8 +211,9 @@ const Slider = ({
             variant="link"
             zIndex={2}
             minW={0}
+            ml={3}
           >
-            <Icon name="chevron_right" boxSize={7} />
+            <Icon name="chevron_right" boxSize={8} />
           </Button>
         </Flex>
       )}

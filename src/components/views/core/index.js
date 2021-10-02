@@ -38,7 +38,7 @@ const Core = ({ G, playerID, ctx, moves, gameMetadata }) => {
 
   return (
     <>
-      {/* <CardSelector {...props} /> */}
+      <CardSelector {...props} />
       {/* <TopSection {...props} /> */}
       <Board {...props} />
       {/* <BottomSection {...props} /> */}

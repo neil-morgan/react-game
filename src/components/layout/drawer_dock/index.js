@@ -14,8 +14,7 @@ const DrawerDock = () => (
     p={2}
     borderLeftWidth={{ base: 0, md: 1 }}
     borderTopWidth={{ base: 1, md: 0 }}
-    borderColor="base.900"
-    bg="base.d400"
+    borderColor="base.d100"
   >
     <MotionBox
       direction={{ base: "row-reverse", md: "column" }}
