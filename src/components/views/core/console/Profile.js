@@ -1,12 +1,6 @@
 import { Flex, Heading } from "@chakra-ui/react";
 import { AnimatePresence } from "framer-motion";
-import {
-  CardWrapper,
-  DeadCard,
-  IskCounter,
-  LiveCard,
-  PlayerWrapper,
-} from "../../../";
+import { CardWrapper, DeadCard, LiveCard } from "../../../";
 
 const Profile = ({ G, ctx, playerID, moves }) => {
   const player = G.players[playerID];

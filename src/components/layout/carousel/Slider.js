@@ -1,15 +1,7 @@
 import { useEffect, useCallback } from "react";
-import {
-  useMediaQuery,
-  useTheme,
-  HStack,
-  Button,
-  Flex,
-  Box,
-} from "@chakra-ui/react";
-
+import { useMediaQuery, useTheme, Box } from "@chakra-ui/react";
 import { useBoundingRect } from "../../../hooks";
-import { Icon } from "../../";
+import Navigator from "./Navigator";
 
 const Slider = ({
   setTrackIsActive,
@@ -114,11 +106,13 @@ const Slider = ({
     setIsDisabled(true);
     setMultiplier(0.35);
     setConstraint(null);
+    setActiveItem(0);
   }, [
     setIsDisabled,
     setConstraint,
     setMultiplier,
     setItemWidth,
+    setActiveItem,
     positions,
     width,
   ]);
@@ -139,6 +133,18 @@ const Slider = ({
     handleXl,
   ]);
 
+  const navigatorProps = {
+    handleDecrementClick,
+    handleIncrementClick,
+    handleDotClick,
+    handleFocus,
+    activeItem,
+    constraint,
+    isDisabled,
+    positions,
+    itemWidth,
+  };
+
   return (
     <Box p={gap}>
       <Box
@@ -154,69 +160,7 @@ const Slider = ({
       >
         {children}
       </Box>
-
-      {!isDisabled && (
-        <Flex w={`${itemWidth}px`} mt={gap * 2} mx="auto">
-          <Button
-            disabled={activeItem === positions.length - positions.length}
-            onClick={handleDecrementClick}
-            onFocus={handleFocus}
-            transition="400ms ease"
-            color="gray.200"
-            variant="link"
-            minW={0}
-          >
-            <Icon name="chevron_left" boxSize={8} />
-          </Button>
-
-          <HStack
-            spacing="14px"
-            mx={6}
-            position="relative"
-            _after={{
-              content: "''",
-              position: "absolute",
-              top: "50%",
-              transform: `translateY(-50%) translateX(${activeItem * 28}px)`,
-              transition: "ease 500ms",
-              left: "-7px",
-              w: `${14 * (constraint + constraint - 1) + 14}px`,
-              h: "28px",
-              rounded: 4,
-              borderColor: "primary.300",
-              borderWidth: 1,
-              pointerEvents: "none",
-            }}
-          >
-            {Array.from(Array(positions.length)).map((_, index) => (
-              <Flex
-                onClick={() => handleDotClick(index)}
-                justify="space-between"
-                key={index}
-                as="button"
-                h="14px"
-                w="14px"
-              >
-                <Box w="6px" h="full" bg="primary.300" rounded={1} />
-                <Box w="6px" h="full" bg="primary.300" rounded={1} />
-              </Flex>
-            ))}
-          </HStack>
-
-          <Button
-            disabled={activeItem === positions.length - constraint}
-            onClick={handleIncrementClick}
-            onFocus={handleFocus}
-            transition="400ms ease"
-            color="gray.200"
-            variant="link"
-            zIndex={2}
-            minW={0}
-          >
-            <Icon name="chevron_right" boxSize={8} />
-          </Button>
-        </Flex>
-      )}
+      <Navigator {...navigatorProps} />
     </Box>
   );
 };

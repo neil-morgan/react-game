@@ -41,9 +41,16 @@ const Board = (props) => {
       flex={1}
       justify="center"
     >
-      <Carousel gap={1}>
+      <Carousel gap={{ base: 1, md: 3 }} mt="auto">
         {Array.from(Array(7)).map((_, index) => (
-          <Flex key={index} bg="base.d100" rounded={6} flex={1} p={2}>
+          <Flex
+            key={index}
+            borderWidth={1}
+            borderColor="base.700"
+            rounded={6}
+            flex={1}
+            p={3}
+          >
             {players}
           </Flex>
         ))}

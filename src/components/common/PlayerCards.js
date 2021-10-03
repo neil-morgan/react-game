@@ -36,25 +36,4 @@ const CardWrapper = ({ children }) => (
   </Flex>
 );
 
-const PlayerWrapper = ({ isCurrentPlayer, onClick, player, children }) => (
-  <Flex display="inline-flex" flexDirection="column" onClick={onClick}>
-    <Flex
-      mb={3}
-      align="center"
-      bg={isCurrentPlayer ? "base.900" : "transparent"}
-      transition="ease 250ms"
-      rounded={6}
-      overflow="hidden"
-      justify="space-between"
-    >
-      <Heading fontSize={{ base: "10px", md: "md" }} color="white">
-        {player.name}
-      </Heading>
-      <IskCounter isk={player.coins} />
-    </Flex>
-
-    <Flex>{children}</Flex>
-  </Flex>
-);
-
-export { DeadCard, LiveCard, CardWrapper, PlayerWrapper };
+export { DeadCard, LiveCard, CardWrapper };

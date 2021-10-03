@@ -5,7 +5,6 @@ import { useWindowDimensions } from "../../../hooks";
 import { GameBoard } from "../../layout";
 import PropTypes from "prop-types";
 import CardSelector from "./card_selector";
-import TopSection from "./top_section";
 import Board from "./board";
 import BottomSection from "./bottom_section";
 import Console from "./console";
