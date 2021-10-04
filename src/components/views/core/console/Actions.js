@@ -101,7 +101,7 @@ const Actions = ({ G, ctx, playerID, moves }) => {
   };
 
   const DefaultButtons = () => (
-    <Grid templateColumns="repeat(2, 1fr)" w="full" h="full" gap="0.4em">
+    <>
       <GridItem as={Button} colSpan={2} {...buttonProps.coup} />
       <GridItem as={Button} {...buttonProps.income} />
       <GridItem as={Button} {...buttonProps.tax} />
@@ -109,7 +109,7 @@ const Actions = ({ G, ctx, playerID, moves }) => {
       <GridItem as={Button} {...buttonProps.assassinate} />
       <GridItem as={Button} {...buttonProps.steal} />
       <GridItem as={Button} {...buttonProps.exchange} />
-    </Grid>
+    </>
   );
 
   const BlockButtons = () => (
@@ -145,7 +145,15 @@ const Actions = ({ G, ctx, playerID, moves }) => {
   const isk = yourPlayer.coins;
 
   const Buttons = ({ buttonSet }) => (
-    <MotionBox position="relative" w="full" h="full">
+    <MotionBox
+      as={Grid}
+      templateColumns="repeat(2, 1fr)"
+      templateRows="repeat(4, 1fr)"
+      w="full"
+      h="full"
+      gap="0.4em"
+      position="relative"
+    >
       {getButtonSet[buttonSet]}
     </MotionBox>
   );
@@ -154,8 +162,8 @@ const Actions = ({ G, ctx, playerID, moves }) => {
     <Flex flexDirection="column" w="18em">
       <Flex
         as="header"
-        h="4em"
-        mb="0.5em"
+        h="2em"
+        mb="1em"
         justify="center"
         align="center"
         w="full"

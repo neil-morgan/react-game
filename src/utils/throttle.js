@@ -1,4 +1,4 @@
-const throttle = (fn, wait) => {
+const throttle = (wait, fn) => {
   let timeout = false;
 
   return () => {

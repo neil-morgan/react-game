@@ -2,15 +2,21 @@ import { Flex } from "@chakra-ui/react";
 import { getFluidFontSize } from "../../../../utils";
 import Actions from "./Actions";
 import Profile from "./Profile";
+import Chat from "./Chat";
 
 const Console = (props) => (
   <Flex
     as="section"
-    p={{ base: 2, md: 6 }}
+    px={{ base: 2, md: 6 }}
+    py={{ base: 4, md: 6 }}
+    bg="base.d700"
+    borderTopWidth={1}
+    borderColor="base.700"
     justify="space-between"
     {...getFluidFontSize()}
   >
     <Profile {...props} />
+    <Chat {...props} />
     <Actions {...props} />
   </Flex>
 );

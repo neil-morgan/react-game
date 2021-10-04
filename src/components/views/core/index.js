@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useMediaQuery, useTheme } from "@chakra-ui/react";
 import { CommentatorContext } from "../../../contexts";
-import { useWindowDimensions } from "../../../hooks";
-import { GameBoard } from "../../layout";
+
 import PropTypes from "prop-types";
 import CardSelector from "./card_selector";
 import Board from "./board";
-import BottomSection from "./bottom_section";
+
 import Console from "./console";
+import Commentator from "./commentator";
 
 const Core = ({ G, playerID, ctx, moves, gameMetadata }) => {
   const [revealDeck, setRevealDeck] = useState(false);
@@ -41,6 +41,7 @@ const Core = ({ G, playerID, ctx, moves, gameMetadata }) => {
       {/* <TopSection {...props} /> */}
       <Board {...props} />
       {/* <BottomSection {...props} /> */}
+      <Commentator h="120px" />
       <Console {...props} />
     </>
   );

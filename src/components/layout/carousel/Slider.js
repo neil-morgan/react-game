@@ -1,5 +1,5 @@
 import { useEffect, useCallback } from "react";
-import { useMediaQuery, useTheme, Box } from "@chakra-ui/react";
+import { useMediaQuery, useTheme, Flex, Box } from "@chakra-ui/react";
 import { useBoundingRect } from "../../../hooks";
 import Navigator from "./Navigator";
 
@@ -143,10 +143,11 @@ const Slider = ({
     isDisabled,
     positions,
     itemWidth,
+    gap,
   };
 
   return (
-    <Box p={gap}>
+    <Flex direction="column" px={gap}>
       <Box
         {...(!isDisabled && {
           _active: { cursor: "grabbing" },
@@ -161,7 +162,7 @@ const Slider = ({
         {children}
       </Box>
       <Navigator {...navigatorProps} />
-    </Box>
+    </Flex>
   );
 };
 

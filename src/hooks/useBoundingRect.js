@@ -1,5 +1,5 @@
 import { useState, useCallback, useLayoutEffect } from "react";
-import { debounce } from "../utils";
+import { throttle } from "../utils";
 
 const getDimensionObject = (node) => {
   const rect = node.getBoundingClientRect();
@@ -15,7 +15,7 @@ const getDimensionObject = (node) => {
   };
 };
 
-const useBoundingRect = (limit) => {
+const useBoundingRect = (limit = 100) => {
   const [dimensions, setDimensions] = useState({});
   const [node, setNode] = useState(null);
 
@@ -29,7 +29,7 @@ const useBoundingRect = (limit) => {
         );
 
       measure();
-      const listener = debounce(limit ? limit : 100, measure);
+      const listener = throttle(limit, measure);
 
       window.addEventListener("resize", listener);
       window.addEventListener("scroll", listener);

@@ -1,6 +1,6 @@
 import React from "react";
 import { Flex } from "@chakra-ui/react";
-import Chat from "./Chat";
+import Chat from "../console/Chat";
 import Commentator from "../commentator";
 import Actions from "./Actions";
 import Events from "./Events";

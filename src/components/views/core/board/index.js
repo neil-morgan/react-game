@@ -38,10 +38,10 @@ const Board = (props) => {
       {...getFluidFontSize()}
       as="section"
       direction="column"
-      flex={1}
       justify="center"
+      mt="auto"
     >
-      <Carousel gap={{ base: 1, md: 3 }} mt="auto">
+      <Carousel gap={{ base: 1, md: 3 }}>
         {Array.from(Array(7)).map((_, index) => (
           <Flex
             key={index}

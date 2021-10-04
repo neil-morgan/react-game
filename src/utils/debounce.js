@@ -1,10 +1,10 @@
-const debounce = (limit, callback) => {
+const debounce = (wait, fn) => {
   let timeoutId;
   return (...args) => {
     if (timeoutId) {
       clearTimeout(timeoutId);
     }
-    timeoutId = setTimeout(callback, limit, args);
+    timeoutId = setTimeout(fn, wait, args);
   };
 };
 
