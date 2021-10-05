@@ -1,12 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import {
-  chakra,
-  Flex,
-  Input,
-  IconButton,
-  Text,
-  Tooltip,
-} from "@chakra-ui/react";
+import { chakra, Flex, Input, IconButton, Text } from "@chakra-ui/react";
 import uniqid from "uniqid";
 import { Icon } from "../../../common";
 import { useRipple } from "../../../../hooks";
@@ -100,25 +93,18 @@ const Chat = ({ G, playerID, moves }) => {
             onKeyUp={(e) => handleKeyUp(e)}
             autoComplete="off"
           />
-          <Tooltip
-            label="Send"
-            bg="transparent"
-            color="primary.300"
-            placement="right"
-            fontSize="xs"
+
+          <IconButton
+            ref={sendRef}
+            onClick={() => sendMessage(msg)}
+            disabled={msg.length === 0}
+            colorScheme="primary"
+            variant="ghost"
+            size="sm"
+            ml={2}
           >
-            <IconButton
-              ref={sendRef}
-              onClick={() => sendMessage(msg)}
-              disabled={msg.length === 0}
-              colorScheme="primary"
-              variant="ghost"
-              size="sm"
-              ml={2}
-            >
-              <Icon name="email" boxSize={8} />
-            </IconButton>
-          </Tooltip>
+            <Icon name="email" boxSize={8} />
+          </IconButton>
         </Flex>
       </Flex>
     </Flex>

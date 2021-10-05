@@ -1,11 +1,12 @@
 import React from "react";
 import { Flex } from "@chakra-ui/react";
 import { getFluidFontSize } from "../../../../utils";
-import { Carousel } from "../../../";
+import { Carousel } from "../../..";
 import Player from "./Player";
+import Commentator from "../commentator";
 
 // row of players
-const Board = (props) => {
+const MiddleSection = (props) => {
   const { ctx, playerID } = props;
   const players = [];
 
@@ -33,30 +34,33 @@ const Board = (props) => {
   }
 
   return (
-    <Flex
-      w="full"
-      {...getFluidFontSize()}
-      as="section"
-      direction="column"
-      justify="center"
-      mt="auto"
-    >
-      <Carousel gap={{ base: 1, md: 3 }}>
-        {Array.from(Array(7)).map((_, index) => (
-          <Flex
-            key={index}
-            borderWidth={1}
-            borderColor="base.700"
-            rounded={6}
-            flex={1}
-            p={3}
-          >
-            {players}
-          </Flex>
-        ))}
-      </Carousel>
-    </Flex>
+    <>
+      <Flex
+        w="full"
+        {...getFluidFontSize()}
+        as="section"
+        direction="column"
+        justify="center"
+        mt="auto"
+      >
+        <Carousel gap={{ base: 1, md: 3 }}>
+          {Array.from(Array(7)).map((_, index) => (
+            <Flex
+              key={index}
+              borderWidth={1}
+              borderColor="base.700"
+              rounded={6}
+              flex={1}
+              p={3}
+            >
+              {players}
+            </Flex>
+          ))}
+        </Carousel>
+      </Flex>
+      <Commentator minH={{ base: "60px", md: "100px" }} />
+    </>
   );
 };
 
-export default Board;
+export default MiddleSection;

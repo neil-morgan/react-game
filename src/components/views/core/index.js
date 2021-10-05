@@ -4,10 +4,9 @@ import { CommentatorContext } from "../../../contexts";
 
 import PropTypes from "prop-types";
 import CardSelector from "./card_selector";
-import Board from "./board";
-
-import Console from "./console";
-import Commentator from "./commentator";
+import TopSection from "./top_section";
+import MiddleSection from "./middle_section";
+import BottomSection from "./bottom_section";
 
 const Core = ({ G, playerID, ctx, moves, gameMetadata }) => {
   const [revealDeck, setRevealDeck] = useState(false);
@@ -38,11 +37,9 @@ const Core = ({ G, playerID, ctx, moves, gameMetadata }) => {
   return (
     <>
       <CardSelector {...props} />
-      {/* <TopSection {...props} /> */}
-      <Board {...props} />
-      {/* <BottomSection {...props} /> */}
-      <Commentator h="120px" />
-      <Console {...props} />
+      <TopSection {...props} />
+      <MiddleSection {...props} />
+      <BottomSection {...props} />
     </>
   );
 };

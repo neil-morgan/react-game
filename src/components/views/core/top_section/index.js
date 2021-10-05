@@ -1,15 +1,16 @@
-import React from "react";
 import { Flex } from "@chakra-ui/react";
-import Profile from "./Profile";
+import Events from "./Events";
 
-const TopSection = ({ G, ctx, playerID, moves }) => {
-  const profileProps = { G, ctx, playerID, moves };
-
-  return (
-    <Flex as="section" w="full" justify={{ base: "center", lg: "flex-start" }}>
-      <Profile {...profileProps} />
-    </Flex>
-  );
-};
+const TopSection = (props) => (
+  <Flex
+    as="section"
+    px={{ base: 2, md: 6 }}
+    py={{ base: 4, md: 6 }}
+    w="full"
+    h="full"
+  >
+    <Events {...props} />
+  </Flex>
+);
 
 export default TopSection;

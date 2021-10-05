@@ -1,19 +1,27 @@
-import { Wrap, Flex, Button as ChakraButton } from "@chakra-ui/react";
+import {
+  Grid,
+  GridItem,
+  Flex,
+  Text,
+  Button as ChakraButton,
+} from "@chakra-ui/react";
 import { MotionBox } from "../../..";
 import { AnimatePresence } from "framer-motion";
-import { actionsTransition } from "../../../../animations";
+import { actionsTransition, textUpdate } from "../../../../animations";
 
-const Button = ({ label, onClick, color = "primary", disabled }) => (
-  <ChakraButton
-    colorScheme={color}
+const Button = ({ label, onClick, disabled, ...rest }) => (
+  <GridItem
+    as={ChakraButton}
     disabled={disabled}
     onClick={onClick}
-    fontSize="1em"
-    w="6em"
-    h="2em"
+    justify="center"
+    fontSize="1.1em"
+    w="full"
+    h="full"
+    {...rest}
   >
     {label}
-  </ChakraButton>
+  </GridItem>
 );
 
 const Actions = ({ G, ctx, playerID, moves }) => {
@@ -33,24 +41,34 @@ const Actions = ({ G, ctx, playerID, moves }) => {
     done: ctx.currentPlayer === G.turnLog.player.id || G.winner.id !== "-1",
   };
 
-  const buttonProps = {
-    income: {
+  const defaultButtons = [
+    {
+      label: "coup",
+      onClick: () => prepAction("coup"),
+      disabled: !isYourTurn || !disabledArgs.canCoup || disabledArgs.done,
+      colorScheme: "red",
+      colSpan: 2,
+    },
+    {
       label: "income",
       onClick: () => income(),
       disabled: !isYourTurn || disabledArgs.mustCoup || disabledArgs.done,
+      colorScheme: "primary",
     },
-    foreignAid: {
+    {
       label: "foreign aid",
       onClick: () => prepAction("foreign aid"),
       disabled: !isYourTurn || disabledArgs.mustCoup || disabledArgs.done,
+      colorScheme: "primary",
     },
 
-    tax: {
+    {
       label: "tax",
       onClick: () => prepAction("tax"),
       disabled: !isYourTurn || disabledArgs.mustCoup || disabledArgs.done,
+      colorScheme: "primary",
     },
-    assassinate: {
+    {
       label: "assassinate",
       onClick: () => prepAction("assassinate"),
       disabled:
@@ -58,100 +76,132 @@ const Actions = ({ G, ctx, playerID, moves }) => {
         !disabledArgs.canAssassinate ||
         disabledArgs.mustCoup ||
         disabledArgs.done,
+      colorScheme: "primary",
     },
-    steal: {
+    {
       label: "steal",
       onClick: () => prepAction("steal"),
       disabled: !isYourTurn || disabledArgs.mustCoup || disabledArgs.done,
+      colorScheme: "primary",
     },
-    exchange: {
+    {
       label: "exchange",
       onClick: () => prepAction("exchange"),
       disabled: !isYourTurn || disabledArgs.mustCoup || disabledArgs.done,
+      colorScheme: "primary",
     },
-    coup: {
-      label: "coup",
-      onClick: () => prepAction("coup"),
-      disabled: !isYourTurn || !disabledArgs.canCoup || disabledArgs.done,
-      colorScheme: "red",
-    },
-    allow: {
-      label: "allow",
-      onClick: () => allow(),
-      color: "green",
-    },
-    block: {
-      label: "block",
-      onClick: () => block(),
-      color: "red",
-    },
-    challenge: {
-      label: "challenge",
-      onClick: () => challenge(),
-      color: "red",
-    },
+  ];
+
+  const allowButton = {
+    label: "allow",
+    onClick: () => allow(),
+    colorScheme: "green",
+    colSpan: 2,
   };
 
-  const DefaultButtons = () => (
-    <>
-      <Button {...buttonProps.coup} />
-      <Button {...buttonProps.income} />
-      <Button {...buttonProps.tax} />
-      <Button {...buttonProps.foreignAid} />
-      <Button {...buttonProps.assassinate} />
-      <Button {...buttonProps.steal} />
-      <Button {...buttonProps.exchange} />
-    </>
-  );
+  const blockButton = {
+    label: "block",
+    onClick: () => block(),
+    colorScheme: "red",
+    colSpan: 2,
+  };
 
-  const BlockButtons = () => (
-    <>
-      <Button {...buttonProps.allow} />
-      <Button {...buttonProps.block} />
-    </>
-  );
+  const challengeButton = {
+    label: "challenge",
+    onClick: () => challenge(),
+    colorScheme: "red",
+    colSpan: 2,
+  };
 
-  const ChallengeButtons = () => (
-    <>
-      <Button {...buttonProps.allow} />
-      <Button {...buttonProps.challenge} />
-    </>
-  );
-
-  const BlockOrChallengeButtons = () => (
-    <>
-      <Button {...buttonProps.allow} />
-      <Button {...buttonProps.block} />
-      <Button {...buttonProps.challenge} />
-    </>
-  );
+  const buttonGridProps = {
+    ...actionsTransition,
+    templateColumns: "repeat(2, 1fr)",
+    templateRows: "repeat(4, 1fr)",
+    position: "relative",
+    gap: "0.4em",
+    w: "full",
+    h: "full",
+    as: Grid,
+  };
 
   const getButtonSet = {
-    block: BlockButtons(),
-    challenge: ChallengeButtons(),
-    blockOrChallenge: BlockOrChallengeButtons(),
-    default: DefaultButtons(),
+    block: [allowButton, blockButton],
+    challenge: [allowButton, challengeButton],
+    blockOrChallenge: [allowButton, blockButton, challengeButton],
+    default: defaultButtons,
   };
 
   const action = ctx.activePlayers[playerID];
-
-  const Buttons = ({ buttonSet }) => (
-    <MotionBox position="relative" w="60em">
-      {getButtonSet[buttonSet]}
-    </MotionBox>
-  );
+  const isk = yourPlayer.coins;
 
   return (
-    <Flex fontSize="calc(14px + (26 - 14) * ((100vw - 300px) / (1600 - 300)))">
+    <Flex flexDirection="column" w="18em">
+      <Flex
+        as="header"
+        h="2em"
+        mb="1em"
+        justify="center"
+        align="center"
+        w="full"
+      >
+        <Text
+          as="span"
+          fontSize="1.2em"
+          color="primary.300"
+          fontFamily="Roboto Mono"
+        >
+          isk
+        </Text>
+        <Flex
+          w={isk >= 10 ? "1.75em" : "1.5em"}
+          h="full"
+          position="relative"
+          textAlign="right"
+        >
+          <AnimatePresence>
+            <MotionBox
+              position="absolute"
+              top="50%"
+              left="50%"
+              w="full"
+              as="span"
+              fontSize="1.6em"
+              fontWeight={isk >= 10 ? "black" : "bold"}
+              color={isk >= 10 ? "red.400" : "white"}
+              key={isk}
+              {...textUpdate}
+            >
+              {isk}
+            </MotionBox>
+          </AnimatePresence>
+        </Flex>
+      </Flex>
+
       <AnimatePresence exitBeforeEnter>
         {action === "block" ? (
-          <Buttons key="block" buttonSet="block" />
+          <MotionBox key="block" {...buttonGridProps}>
+            {getButtonSet["block"].map((props, index) => (
+              <Button key={index} {...props} />
+            ))}
+          </MotionBox>
         ) : action === "challenge" ? (
-          <Buttons key="challenge" buttonSet="challenge" />
+          <MotionBox key="challenge" {...buttonGridProps}>
+            {getButtonSet["challenge"].map((props, index) => (
+              <Button key={index} {...props} />
+            ))}
+          </MotionBox>
         ) : action === "blockOrChallenge" ? (
-          <Buttons key="blockOrChallenge" buttonSet="blockOrChallenge" />
+          <MotionBox key="blockOrChallenge" {...buttonGridProps}>
+            {getButtonSet["blockOrChallenge"].map((props, index) => (
+              <Button key={index} {...props} />
+            ))}
+          </MotionBox>
         ) : (
-          <Buttons key="default" buttonSet="default" />
+          <MotionBox key="default" {...buttonGridProps}>
+            {getButtonSet["default"].map((props, index) => (
+              <Button key={index} {...props} />
+            ))}
+          </MotionBox>
         )}
       </AnimatePresence>
     </Flex>
