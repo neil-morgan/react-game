@@ -1,12 +1,6 @@
 import { Flex, Heading } from "@chakra-ui/react";
 import { AnimatePresence } from "framer-motion";
-import {
-  CardWrapper,
-  DeadCard,
-  IskCounter,
-  LiveCard,
-  PlayerWrapper,
-} from "../../../";
+import { CardWrapper, DeadCard, LiveCard } from "../../..";
 
 const Profile = ({ G, ctx, playerID, moves }) => {
   const player = G.players[playerID];
@@ -74,42 +68,49 @@ const Profile = ({ G, ctx, playerID, moves }) => {
   };
 
   return (
-    <PlayerWrapper player={player}>
-      {player.hand.map((card, index) => (
-        <CardWrapper key={index}>
-          <AnimatePresence exitBeforeEnter initial={false}>
-            {!card.discarded ? (
-              <LiveCard
-                key="live-card"
-                src={card.front}
-                alt={card.character}
-                onClick={() => {
-                  if (
-                    ctx.activePlayers[playerID] &&
-                    ctx.activePlayers[playerID].includes("lose") &&
-                    !card.discarded
-                  ) {
-                    loseCard(playerID, card.id);
-                  } else if (
-                    Object.prototype.hasOwnProperty.call(
-                      G.turnLog.exchange,
-                      "newHand"
-                    ) &&
-                    isYourTurn
-                  ) {
-                    setHand(card.id);
-                  } else if (cardSelectable && !card.discarded) {
-                    revealCard(playerID, card.id);
-                  }
-                }}
-              />
-            ) : (
-              <DeadCard key="dead-card" />
-            )}
-          </AnimatePresence>
-        </CardWrapper>
-      ))}
+    <Flex flexDirection="column" w="18em" pr={2}>
+      <Flex as="header" align="center" justify="center" mb="1em" h="2em">
+        <Heading fontSize="1.2em" color="white">
+          {player.name}
+        </Heading>
+      </Flex>
 
+      <Flex h="full" w="full">
+        {player.hand.map((card, index) => (
+          <CardWrapper key={index}>
+            <AnimatePresence exitBeforeEnter initial={false}>
+              {!card.discarded ? (
+                <LiveCard
+                  key="live-card"
+                  src={card.front}
+                  alt={card.character}
+                  onClick={() => {
+                    if (
+                      ctx.activePlayers[playerID] &&
+                      ctx.activePlayers[playerID].includes("lose") &&
+                      !card.discarded
+                    ) {
+                      loseCard(playerID, card.id);
+                    } else if (
+                      Object.prototype.hasOwnProperty.call(
+                        G.turnLog.exchange,
+                        "newHand"
+                      ) &&
+                      isYourTurn
+                    ) {
+                      setHand(card.id);
+                    } else if (cardSelectable && !card.discarded) {
+                      revealCard(playerID, card.id);
+                    }
+                  }}
+                />
+              ) : (
+                <DeadCard key="dead-card" />
+              )}
+            </AnimatePresence>
+          </CardWrapper>
+        ))}
+      </Flex>
       {player.isOut || gameOver ? (
         <div className="exiled-text">{bottomRow()}</div>
       ) : (
@@ -135,7 +136,7 @@ const Profile = ({ G, ctx, playerID, moves }) => {
           </div>
         </div>
       )}
-    </PlayerWrapper>
+    </Flex>
   );
 };
 

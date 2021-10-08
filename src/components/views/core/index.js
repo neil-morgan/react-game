@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
+import { useMediaQuery, useTheme } from "@chakra-ui/react";
 import { CommentatorContext } from "../../../contexts";
-import { GameBoard } from "../../layout";
+
 import PropTypes from "prop-types";
 import CardSelector from "./card_selector";
 import TopSection from "./top_section";
@@ -11,7 +12,17 @@ const Core = ({ G, playerID, ctx, moves, gameMetadata }) => {
   const [revealDeck, setRevealDeck] = useState(false);
   const { setCommentatorState } = useContext(CommentatorContext);
 
-  const props = { G, ctx, playerID, moves };
+  const [isLandscape] = useMediaQuery("(orientation: landscape)");
+  const [isPortrait] = useMediaQuery("(orientation: portrait)");
+  const [isMobile] = useMediaQuery(`(max-width:${useTheme().breakpoints.lg})`);
+
+  const media = {
+    isLandscape,
+    isPortrait,
+    isMobile,
+  };
+
+  const props = { G, ctx, playerID, moves, media };
 
   useEffect(
     () => playerID === "0" && moves.changeNames(gameMetadata),

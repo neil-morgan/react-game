@@ -1,4 +1,5 @@
-import DrawerDock from "./drawer_dock/DrawerDock";
+import Carousel from "./carousel";
+import DrawerDock from "./drawer_dock";
 import Wrapper from "./wrapper/Wrapper";
 
-export { DrawerDock, Wrapper };
+export { Carousel, DrawerDock, Wrapper };

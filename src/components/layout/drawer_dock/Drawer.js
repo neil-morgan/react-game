@@ -24,7 +24,7 @@ const Drawer = ({ children, heading, icon = "menu", animation }) => {
         variant="ghost"
         onClick={onOpen}
         size={{ base: "xs", lg: "lg" }}
-        variants={animation}
+        // variants={animation}
       >
         <Icon name={icon} boxSize={{ base: 8, lg: 10 }} />
       </MotionBox>

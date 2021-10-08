@@ -1,11 +1,15 @@
 import React from "react";
-import { Flex, Wrap, WrapItem } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
+import { getFluidFontSize } from "../../../../utils";
+import { Carousel } from "../../..";
 import Player from "./Player";
+import Commentator from "../commentator";
 
 // row of players
 const MiddleSection = (props) => {
   const { ctx, playerID } = props;
   const players = [];
+
   for (let index = 0; index < ctx.numPlayers; index++) {
     const i = parseInt(ctx.playOrder[index]);
     if (i !== parseInt(playerID)) {
@@ -28,38 +32,37 @@ const MiddleSection = (props) => {
       );
     }
   }
+
   return (
-    <Wrap
-      as="section"
-      spacing={4}
-      justify="center"
-      flex={1}
-      maxH="285px"
-      my="auto"
-      sx={{
-        ul: {
-          h: "full",
-          my: "auto",
-          alignItems: "center",
-          overflowY: "auto",
-          overflowX: "hidden",
-          py: 4,
-
-          "::-webkit-scrollbar": {
-            width: "16px",
-          },
-
-          "::-webkit-scrollbar-thumb": {
-            border: "6px solid rgba(0, 0, 0, 0)",
-            backgroundClip: "padding-box",
-            borderRadius: "9999px",
-            backgroundColor: "primary.200",
-          },
-        },
-      }}
-    >
-      {players}
-    </Wrap>
+    <>
+      <Flex
+        w="full"
+        {...getFluidFontSize()}
+        as="section"
+        direction="column"
+        justify="center"
+        borderTopWidth={1}
+        borderBottomWidth={1}
+        borderColor="base.700"
+        py={{ base: 3, md: 6 }}
+        mt="auto"
+      >
+        <Carousel gap={{ base: 1, md: 3 }}>
+          {Array.from(Array(7)).map((_, index) => (
+            <Flex
+              key={index}
+              borderWidth={1}
+              borderColor="base.700"
+              rounded={6}
+              flex={1}
+              p={3}
+            >
+              {players}
+            </Flex>
+          ))}
+        </Carousel>
+      </Flex>
+    </>
   );
 };
 

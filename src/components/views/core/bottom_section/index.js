@@ -1,44 +1,22 @@
-import React from "react";
 import { Flex } from "@chakra-ui/react";
-import Chat from "./Chat";
-import Commentator from "../commentator";
+import { getFluidFontSize } from "../../../../utils";
 import Actions from "./Actions";
-import Events from "./Events";
+import Profile from "./Profile";
+import Chat from "./Chat";
 
-const BottomSection = ({ G, ctx, playerID, moves }) => {
-  const actionsProps = {
-    G,
-    ctx,
-    moves,
-    playerID,
-  };
-
-  const chatProps = {
-    G,
-    moves,
-    playerID,
-  };
-
-  const eventsProps = {
-    chat: G.chat,
-  };
-
-  return (
-    <Flex as="section" mt="auto" justify="space-between" h="125px" w="full">
-      <Chat {...chatProps} />
-      <Flex
-        direction="column"
-        align="center"
-        justify="space-between"
-        flex={1}
-        h="full"
-      >
-        <Commentator />
-        <Actions {...actionsProps} />
-      </Flex>
-      <Events {...eventsProps} />
-    </Flex>
-  );
-};
+const BottomSection = (props) => (
+  <Flex
+    as="section"
+    px={{ base: 2, md: 6 }}
+    py={{ base: 4, md: 6 }}
+    bg="base.d400"
+    justify="space-between"
+    {...getFluidFontSize()}
+  >
+    <Profile {...props} />
+    <Chat {...props} />
+    <Actions {...props} />
+  </Flex>
+);
 
 export default BottomSection;

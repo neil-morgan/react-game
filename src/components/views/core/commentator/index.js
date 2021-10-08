@@ -6,7 +6,7 @@ import { capitalize } from "../../../../utils";
 import { MotionBox } from "../../../";
 import { textUpdate } from "../../../../animations";
 
-const Commentator = () => {
+const Commentator = (props) => {
   const { commentatorState } = useContext(CommentatorContext);
   const { G, ctx, moves, playerID } = commentatorState;
   const [msg, setMsg] = useState("");
@@ -303,7 +303,7 @@ const Commentator = () => {
 
   return (
     <>
-      <Flex w="full" textAlign="center" position="relative" h="50px">
+      <Flex w="full" textAlign="center" position="relative" {...props}>
         <AnimatePresence>
           <MotionBox
             position="absolute"

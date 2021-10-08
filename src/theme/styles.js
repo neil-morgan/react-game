@@ -20,16 +20,15 @@ export const styles = {
     },
 
     ".bgio-client": {
-      w: "full",
+      w: { base: "full", md: "calc(100% - 55px)" },
       flexDirection: "column",
-      p: { base: 4, md: 8 },
     },
 
     body: {
       overflow: "hidden",
       fontFamily: "Inter, sans-serif",
       color: "gray.400",
-      bg: "base.d200",
+      bg: "base.d400",
     },
   },
 };

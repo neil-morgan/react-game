@@ -1,37 +1,27 @@
-import React from "react";
-import { Flex, Wrap, Button } from "@chakra-ui/react";
+import {
+  Grid,
+  GridItem,
+  Flex,
+  Text,
+  Button as ChakraButton,
+} from "@chakra-ui/react";
 import { MotionBox } from "../../..";
 import { AnimatePresence } from "framer-motion";
-import { actionsTransition } from "../../../../animations";
+import { actionsTransition, textUpdate } from "../../../../animations";
 
-const getButtons = (action, buttonSet) =>
-  buttonSet[action].map(
-    ({ label, onClick, color = "primary", size = "xs", disabled }, index) => (
-      <Button
-        key={index}
-        onClick={onClick}
-        disabled={disabled}
-        size={size}
-        colorScheme={color}
-        letterSpacing="wide"
-      >
-        {label.toUpperCase()}
-      </Button>
-    )
-  );
-
-const Buttons = ({ action, buttonSet }) => (
-  <MotionBox
-    as={Wrap}
-    position="absolute"
-    w="full"
-    maxW="360px"
-    spacing={3}
+const Button = ({ label, onClick, disabled, ...rest }) => (
+  <GridItem
+    as={ChakraButton}
+    disabled={disabled}
+    onClick={onClick}
     justify="center"
-    {...actionsTransition}
+    fontSize="1.1em"
+    w="full"
+    h="full"
+    {...rest}
   >
-    {getButtons(action, buttonSet)}
-  </MotionBox>
+    {label}
+  </GridItem>
 );
 
 const Actions = ({ G, ctx, playerID, moves }) => {
@@ -44,7 +34,7 @@ const Actions = ({ G, ctx, playerID, moves }) => {
   const block = () => moves.block(playerID);
   const challenge = () => moves.initiateChallenge(playerID);
 
-  const defaultArgs = {
+  const disabledArgs = {
     canCoup: yourPlayer.coins >= 7,
     mustCoup: yourPlayer.coins >= 10,
     canAssassinate: yourPlayer.coins >= 3,
@@ -53,68 +43,88 @@ const Actions = ({ G, ctx, playerID, moves }) => {
 
   const defaultButtons = [
     {
+      label: "coup",
+      onClick: () => prepAction("coup"),
+      disabled: !isYourTurn || !disabledArgs.canCoup || disabledArgs.done,
+      colorScheme: "red",
+      colSpan: 2,
+    },
+    {
       label: "income",
       onClick: () => income(),
-      disabled: !isYourTurn || defaultArgs.mustCoup || defaultArgs.done,
+      disabled: !isYourTurn || disabledArgs.mustCoup || disabledArgs.done,
+      colorScheme: "primary",
     },
     {
       label: "foreign aid",
       onClick: () => prepAction("foreign aid"),
-      disabled: !isYourTurn || defaultArgs.mustCoup || defaultArgs.done,
+      disabled: !isYourTurn || disabledArgs.mustCoup || disabledArgs.done,
+      colorScheme: "primary",
     },
-    {
-      label: "coup",
-      onClick: () => prepAction("coup"),
-      disabled: !isYourTurn || !defaultArgs.canCoup || defaultArgs.done,
-    },
+
     {
       label: "tax",
       onClick: () => prepAction("tax"),
-      disabled: !isYourTurn || defaultArgs.mustCoup || defaultArgs.done,
+      disabled: !isYourTurn || disabledArgs.mustCoup || disabledArgs.done,
+      colorScheme: "primary",
     },
     {
       label: "assassinate",
       onClick: () => prepAction("assassinate"),
       disabled:
         !isYourTurn ||
-        !defaultArgs.canAssassinate ||
-        defaultArgs.mustCoup ||
-        defaultArgs.done,
+        !disabledArgs.canAssassinate ||
+        disabledArgs.mustCoup ||
+        disabledArgs.done,
+      colorScheme: "primary",
     },
     {
       label: "steal",
       onClick: () => prepAction("steal"),
-      disabled: !isYourTurn || defaultArgs.mustCoup || defaultArgs.done,
+      disabled: !isYourTurn || disabledArgs.mustCoup || disabledArgs.done,
+      colorScheme: "primary",
     },
     {
       label: "exchange",
       onClick: () => prepAction("exchange"),
-      disabled: !isYourTurn || defaultArgs.mustCoup || defaultArgs.done,
+      disabled: !isYourTurn || disabledArgs.mustCoup || disabledArgs.done,
+      colorScheme: "primary",
     },
   ];
 
   const allowButton = {
     label: "allow",
     onClick: () => allow(),
-    color: "green",
-    size: "md",
+    colorScheme: "green",
+    colSpan: 2,
   };
 
   const blockButton = {
     label: "block",
     onClick: () => block(),
-    color: "red",
-    size: "md",
+    colorScheme: "red",
+    colSpan: 2,
   };
 
   const challengeButton = {
     label: "challenge",
     onClick: () => challenge(),
-    color: "red",
-    size: "md",
+    colorScheme: "red",
+    colSpan: 2,
   };
 
-  const buttonSet = {
+  const buttonGridProps = {
+    ...actionsTransition,
+    templateColumns: "repeat(2, 1fr)",
+    templateRows: "repeat(4, 1fr)",
+    position: "relative",
+    gap: "0.4em",
+    w: "full",
+    h: "full",
+    as: Grid,
+  };
+
+  const getButtonSet = {
     block: [allowButton, blockButton],
     challenge: [allowButton, challengeButton],
     blockOrChallenge: [allowButton, blockButton, challengeButton],
@@ -122,22 +132,76 @@ const Actions = ({ G, ctx, playerID, moves }) => {
   };
 
   const action = ctx.activePlayers[playerID];
+  const isk = yourPlayer.coins;
 
   return (
-    <Flex position="relative" w="full" flex={1} justify="center" align="center">
+    <Flex flexDirection="column" w="18em">
+      <Flex
+        as="header"
+        h="2em"
+        mb="1em"
+        justify="center"
+        align="center"
+        w="full"
+      >
+        <Text
+          as="span"
+          fontSize="1.2em"
+          color="primary.300"
+          fontFamily="Roboto Mono"
+        >
+          isk
+        </Text>
+        <Flex
+          w={isk >= 10 ? "1.75em" : "1.5em"}
+          h="full"
+          position="relative"
+          textAlign="right"
+        >
+          <AnimatePresence>
+            <MotionBox
+              position="absolute"
+              top="50%"
+              left="50%"
+              w="full"
+              as="span"
+              fontSize="1.6em"
+              fontWeight={isk >= 10 ? "black" : "bold"}
+              color={isk >= 10 ? "red.400" : "white"}
+              key={isk}
+              {...textUpdate}
+            >
+              {isk}
+            </MotionBox>
+          </AnimatePresence>
+        </Flex>
+      </Flex>
+
       <AnimatePresence exitBeforeEnter>
         {action === "block" ? (
-          <Buttons key="block" action="block" buttonSet={buttonSet} />
+          <MotionBox key="block" {...buttonGridProps}>
+            {getButtonSet["block"].map((props, index) => (
+              <Button key={index} {...props} />
+            ))}
+          </MotionBox>
         ) : action === "challenge" ? (
-          <Buttons key="challenge" action="challenge" buttonSet={buttonSet} />
+          <MotionBox key="challenge" {...buttonGridProps}>
+            {getButtonSet["challenge"].map((props, index) => (
+              <Button key={index} {...props} />
+            ))}
+          </MotionBox>
         ) : action === "blockOrChallenge" ? (
-          <Buttons
-            key="blockOrChallenge"
-            action="blockOrChallenge"
-            buttonSet={buttonSet}
-          />
+          <MotionBox key="blockOrChallenge" {...buttonGridProps}>
+            {getButtonSet["blockOrChallenge"].map((props, index) => (
+              <Button key={index} {...props} />
+            ))}
+          </MotionBox>
         ) : (
-          <Buttons key="default" action="default" buttonSet={buttonSet} />
+          <MotionBox key="default" {...buttonGridProps}>
+            {getButtonSet["default"].map((props, index) => (
+              <Button key={index} {...props} />
+            ))}
+          </MotionBox>
         )}
       </AnimatePresence>
     </Flex>

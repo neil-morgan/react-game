@@ -1,3 +1,5 @@
+import useBoundingRect from "./useBoundingRect";
 import useRipple from "./useRipple";
+import useWindowDimensions from "./useWindowDimensions";
 
-export { useRipple };
+export { useBoundingRect, useRipple, useWindowDimensions };
