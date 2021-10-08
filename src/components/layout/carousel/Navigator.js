@@ -10,10 +10,9 @@ const Navigator = ({
   constraint,
   isDisabled,
   positions,
-  gap,
 }) =>
   !isDisabled && (
-    <Flex w="full" justify="center" mt="30px">
+    <Flex w="full" justify="center" mt={{ base: 3, md: 6 }}>
       <Button
         disabled={activeItem === positions.length - positions.length}
         onClick={handleDecrementClick}

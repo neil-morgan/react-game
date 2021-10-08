@@ -68,7 +68,7 @@ const Profile = ({ G, ctx, playerID, moves }) => {
   };
 
   return (
-    <Flex flexDirection="column" w="18em">
+    <Flex flexDirection="column" w="18em" pr={2}>
       <Flex as="header" align="center" justify="center" mb="1em" h="2em">
         <Heading fontSize="1.2em" color="white">
           {player.name}

@@ -1,11 +1,5 @@
 import { useEffect, useCallback } from "react";
-import {
-  useMediaQuery,
-  useBreakpointValue,
-  useTheme,
-  Flex,
-  Box,
-} from "@chakra-ui/react";
+import { useBreakpointValue, Flex, Box } from "@chakra-ui/react";
 import { useBoundingRect } from "../../../hooks";
 import Navigator from "./Navigator";
 
@@ -24,50 +18,16 @@ const Slider = ({
   children,
   gap,
 }) => {
-  const [sliderRef, { width }] = useBoundingRect();
-  const { breakpoints } = useTheme();
+  const [sliderRef, { width }] = useBoundingRect(0);
+
   const bp = useBreakpointValue({
     base: "base",
+    xs: "xs",
     sm: "sm",
     md: "md",
     lg: "lg",
     xl: "xl",
-    xxl: "xxl",
   });
-
-  console.log(bp);
-  // const [
-  //   isBetweenBaseAndSm,
-  //   isBetweenSmAndMd,
-  //   isBetweenMdAndLg,
-  //   isBetweenLgAndXl,
-  //   isBetweenXlAndXxl,
-  //   isGreaterThanXxl,
-  // ] = useMediaQuery([
-  //   `(min-width: ${breakpoints.base}) and (max-width: ${breakpoints.sm})`,
-  //   `(min-width: ${breakpoints.sm}) and (max-width: ${breakpoints.md})`,
-  //   `(min-width: ${breakpoints.md}) and (max-width: ${breakpoints.lg})`,
-  //   `(min-width: ${breakpoints.lg}) and (max-width: ${breakpoints.xl})`,
-  //   `(min-width: ${breakpoints.xl}) and (max-width: ${breakpoints.xxl})`,
-  //   `(min-width: ${breakpoints.xxl})`,
-  // ]);
-
-  // const [isBetweenBaseAndSm] = useMediaQuery(
-  //   `(min-width: ${breakpoints.base}) and (max-width: ${breakpoints.sm})`
-  // );
-  // const [isBetweenSmAndMd] = useMediaQuery(
-  //   `(min-width: ${breakpoints.sm}) and (max-width: ${breakpoints.md})`
-  // );
-  // const [isBetweenMdAndLg] = useMediaQuery(
-  //   `(min-width: ${breakpoints.md}) and (max-width: ${breakpoints.lg})`
-  // );
-  // const [isBetweenLgAndXl] = useMediaQuery(
-  //   `(min-width: ${breakpoints.lg}) and (max-width: ${breakpoints.xl})`
-  // );
-  // const [isBetweenXlAndXxl] = useMediaQuery(
-  //   `(min-width: ${breakpoints.xl}) and (max-width: ${breakpoints.xxl})`
-  // );
-  // const [isGreaterThanXxl] = useMediaQuery(`(min-width: ${breakpoints.xxl})`);
 
   const handleFocus = () => setTrackIsActive(true);
 
@@ -149,25 +109,7 @@ const Slider = ({
   ]);
 
   const handleXl = useCallback(() => {
-    setItemWidth(Math.round(width) / 6);
-    setIsDisabled(positions.length <= 6);
-    setMultiplier(0.45);
-    setConstraint(6);
-  }, [
-    setIsDisabled,
-    setConstraint,
-    setMultiplier,
-    setItemWidth,
-    positions,
-    width,
-  ]);
-
-  const handleXxl = useCallback(() => {
-    setItemWidth(
-      positions.length <= 4
-        ? Math.round(width) / 5
-        : Math.round(width) / positions.length
-    );
+    setItemWidth(Math.round(width) / positions.length);
     setIsDisabled(true);
     setMultiplier(0.35);
     setConstraint(null);
@@ -183,49 +125,17 @@ const Slider = ({
   ]);
 
   useEffect(() => {
-    switch (bp) {
-      case "base":
-        handleBase();
-        break;
-      case "sm":
-        handleSm();
-        break;
-      case "md":
-        handleMd();
-        break;
-      case "lg":
-        handleLg();
-        break;
-      case "xl":
-        handleXl();
-        break;
-      case "xxl":
-        handleXl();
-        break;
-    }
-  }, [bp, handleBase, handleSm, handleMd, handleLg, handleXl, handleXxl]);
+    const mapBp = {
+      base: () => handleBase(),
+      xs: () => handleSm(),
+      sm: () => handleSm(),
+      md: () => handleMd(),
+      lg: () => handleLg(),
+      xl: () => handleXl(),
+    };
 
-  // useEffect(() => {
-  //   isBetweenBaseAndSm && handleBase();
-  //   isBetweenSmAndMd && handleSm();
-  //   isBetweenMdAndLg && handleMd();
-  //   isBetweenLgAndXl && handleLg();
-  //   isBetweenXlAndXxl && handleXl();
-  //   isGreaterThanXxl && handleXxl();
-  // }, [
-  //   isBetweenBaseAndSm,
-  //   isBetweenSmAndMd,
-  //   isBetweenMdAndLg,
-  //   isBetweenLgAndXl,
-  //   isBetweenXlAndXxl,
-  //   isGreaterThanXxl,
-  //   handleBase,
-  //   handleSm,
-  //   handleMd,
-  //   handleLg,
-  //   handleXl,
-  //   handleXxl,
-  // ]);
+    bp && mapBp[bp]();
+  }, [bp, handleBase, handleSm, handleMd, handleLg, handleXl]);
 
   const navigatorProps = {
     handleDecrementClick,
@@ -241,7 +151,7 @@ const Slider = ({
   };
 
   return (
-    <Flex direction="column" px={gap}>
+    <Flex direction="column" px={gap} maxW="1920px">
       <Box
         {...(!isDisabled && {
           _active: { cursor: "grabbing" },

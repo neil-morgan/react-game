@@ -1,5 +1,7 @@
 import { Flex } from "@chakra-ui/react";
 import Events from "./Events";
+import Commentator from "../commentator";
+import { getFluidFontSize } from "../../../../utils";
 
 const TopSection = (props) => (
   <Flex
@@ -7,8 +9,10 @@ const TopSection = (props) => (
     px={{ base: 2, md: 6 }}
     py={{ base: 4, md: 6 }}
     w="full"
-    h="full"
+    h="20em"
+    {...getFluidFontSize()}
   >
+    <Commentator />
     <Events {...props} />
   </Flex>
 );

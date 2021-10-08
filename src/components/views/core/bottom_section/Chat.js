@@ -37,6 +37,7 @@ const Chat = ({ G, playerID, moves }) => {
       flex={1}
       maxW="500px"
       display={{ base: "none", sm: "flex" }}
+      pl={2}
     >
       <Flex
         direction="column"

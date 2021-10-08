@@ -41,6 +41,10 @@ const MiddleSection = (props) => {
         as="section"
         direction="column"
         justify="center"
+        borderTopWidth={1}
+        borderBottomWidth={1}
+        borderColor="base.700"
+        py={{ base: 3, md: 6 }}
         mt="auto"
       >
         <Carousel gap={{ base: 1, md: 3 }}>
@@ -58,7 +62,6 @@ const MiddleSection = (props) => {
           ))}
         </Carousel>
       </Flex>
-      <Commentator minH={{ base: "60px", md: "100px" }} />
     </>
   );
 };

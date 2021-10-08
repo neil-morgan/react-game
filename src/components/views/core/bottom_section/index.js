@@ -10,8 +10,6 @@ const BottomSection = (props) => (
     px={{ base: 2, md: 6 }}
     py={{ base: 4, md: 6 }}
     bg="base.d400"
-    borderTopWidth={1}
-    borderColor="base.700"
     justify="space-between"
     {...getFluidFontSize()}
   >
