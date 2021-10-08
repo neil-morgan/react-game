@@ -4,8 +4,13 @@ import Commentator from "../commentator";
 
 const TopSection = (props) => (
   <Flex as="section" direction="row" w="full" flex={1}>
-    <Flex flex={1} px={{ base: 2, md: 6 }} py={{ base: 4, md: 6 }}>
-      <Heading size="xs" mb={3}>
+    <Flex
+      position="relative"
+      flex={1}
+      px={{ base: 2, md: 6 }}
+      py={{ base: 4, md: 6 }}
+    >
+      <Heading position="absolute" top={6} left={6} size="xs">
         Graveyard
       </Heading>
     </Flex>
@@ -21,12 +26,13 @@ const TopSection = (props) => (
       <Commentator h={8} />
     </Flex>
     <Flex
+      position="relative"
       flex={1}
       direction="column"
       px={{ base: 2, md: 6 }}
       py={{ base: 4, md: 6 }}
     >
-      <Heading size="xs" mb={3} textAlign="right">
+      <Heading position="absolute" top={6} right={6} size="xs">
         Turn log
       </Heading>
       <Events {...props} />
