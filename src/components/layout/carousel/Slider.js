@@ -162,6 +162,26 @@ const Slider = ({
         ref={sliderRef}
         w="full"
         h="full"
+        _before={{
+          bgGradient: "linear(to-r, base.d400, transparent)",
+          position: "absolute",
+          pr: { base: 1, md: 3 },
+          content: "''",
+          zIndex: 1,
+          h: "100%",
+          left: 0,
+          top: 0,
+        }}
+        _after={{
+          bgGradient: "linear(to-l, base.d400, transparent)",
+          position: "absolute",
+          pl: { base: 1, md: 3 },
+          content: "''",
+          zIndex: 1,
+          h: "100%",
+          right: 0,
+          top: 0,
+        }}
       >
         {children}
       </Box>

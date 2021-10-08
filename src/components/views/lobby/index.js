@@ -9,9 +9,8 @@ import JoinGame from "./JoinGame";
 import Option from "./Option";
 import OptionButton from "./OptionButton";
 
-const Lobby = (props) => {
-  const { history } = props;
-  const maxNameLength = 8;
+const Lobby = ({ history }) => {
+  const maxNameLength = 7;
   const roomIDLength = 6;
 
   const [option, onCycle] = useCycle(true, false);

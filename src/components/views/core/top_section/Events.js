@@ -13,35 +13,34 @@ const Events = ({ G: { chat } }) => {
   }, [chat]);
 
   return (
-    <Flex
-      position="relative"
-      w="full"
-      h="full"
-      maxW={{ base: "full", xs: "300px" }}
-      ml="auto"
-    >
+    <Flex position="relative" h="full" flex={1}>
       <Flex
+        direction="column"
         position="absolute"
-        h="full"
+        top={0}
+        left={0}
         w="full"
-        overflowY="scroll"
-        fontFamily="Roboto Mono"
-        fontSize="xs"
-        ml="auto"
-        ref={logRef}
-        sx={{
-          "::-webkit-scrollbar": {
-            width: "3px",
-          },
-          "::-webkit-scrollbar-thumb": {
-            backgroundColor: "primary.200",
-            borderRadius: "2px",
-            border: "0px solid transparent",
-            backgroundClip: "content-box",
-          },
-        }}
+        h="full"
       >
-        <Flex direction="column">
+        <Flex
+          direction="column"
+          overflowY="scroll"
+          ref={logRef}
+          mt="auto"
+          fontFamily="Roboto Mono"
+          fontSize={{ base: "xs", md: "sm" }}
+          sx={{
+            "::-webkit-scrollbar": {
+              width: "3px",
+            },
+            "::-webkit-scrollbar-thumb": {
+              backgroundColor: "primary.200",
+              borderRadius: "2px",
+              border: "0px solid transparent",
+              backgroundClip: "content-box",
+            },
+          }}
+        >
           {chat.map((msg) => {
             if (msg.id === "-1") {
               let msgParts = msg.content.split("\n");

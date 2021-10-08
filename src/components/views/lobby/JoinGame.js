@@ -30,7 +30,6 @@ const JoinGame = ({
           autoComplete="off"
           onKeyDown={(e) => handleKeyDown(e)}
           onChange={(e) => setRoom(e.target.value)}
-          className="input-field"
         />
       </Flex>
 
@@ -48,7 +47,6 @@ const JoinGame = ({
           onKeyDown={(e) => handleKeyDown(e, jName)}
           onChange={(e) => setJName(e.target.value)}
           onPaste={(e) => e.preventDefault()}
-          className="input-field"
         />
 
         <Text size="xs" mt={1} ml="auto" color={jNameCount === 0 && "red.400"}>

@@ -303,13 +303,7 @@ const Commentator = (props) => {
 
   return (
     <>
-      <Flex
-        as="section"
-        w="full"
-        textAlign="center"
-        position="relative"
-        {...props}
-      >
+      <Flex w="full" textAlign="center" position="relative" {...props}>
         <AnimatePresence>
           <MotionBox
             position="absolute"
