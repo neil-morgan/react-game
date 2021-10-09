@@ -4,6 +4,7 @@ import getFluidFontSize from "./getFluidFontSize";
 import isObjectEmpty from "./isObjectEmpty";
 import percentage from "./percentage";
 import throttle from "./throttle";
+import useTransparentizedColor from "./useTransparentizedColor";
 
 export {
   capitalize,
@@ -12,4 +13,5 @@ export {
   isObjectEmpty,
   percentage,
   throttle,
+  useTransparentizedColor,
 };

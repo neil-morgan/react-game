@@ -28,7 +28,7 @@ const Events = ({ G: { chat } }) => {
           ref={logRef}
           mt="auto"
           fontFamily="Roboto Mono"
-          fontSize={{ base: "xs", md: "sm" }}
+          fontSize="xs"
           sx={{
             "::-webkit-scrollbar": {
               width: "3px",

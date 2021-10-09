@@ -1,8 +1,10 @@
 import React, { useRef } from "react";
+import { useTransparentizedColor } from "../../../utils";
 import {
   IconButton,
   Heading,
   useDisclosure,
+  useToken,
   Drawer as ChakraDrawer,
   DrawerBody,
   DrawerHeader,
@@ -31,12 +33,30 @@ const Drawer = ({ children, heading, icon = "menu", animation }) => {
 
       <ChakraDrawer
         isOpen={isOpen}
-        placement="right"
+        placement="top"
         onClose={onClose}
         finalFocusRef={openRef}
       >
-        <DrawerOverlay />
-        <DrawerContent bg="base.d100">
+        <DrawerContent
+          w="calc(100% - 56px)"
+          maxH="400px"
+          bg={useTransparentizedColor(useToken("colors", "base.d400"), 0.95)}
+          borderBottomWidth={1}
+          borderColor="base.700"
+          boxShadow="none"
+          _after={{
+            content: "''",
+            position: "absolute",
+            bottom: "-25px",
+            left: 0,
+            height: "25px",
+            bgGradient: `linear(to-b, ${useTransparentizedColor(
+              useToken("colors", "base.d700"),
+              0.9
+            )}, transparent)`,
+            w: "full",
+          }}
+        >
           <DrawerHeader
             position="relative"
             display="flex"
@@ -61,7 +81,22 @@ const Drawer = ({ children, heading, icon = "menu", animation }) => {
             </IconButton>
           </DrawerHeader>
 
-          <DrawerBody p={6}>{children}</DrawerBody>
+          <DrawerBody
+            p={6}
+            sx={{
+              "::-webkit-scrollbar": {
+                width: "28px",
+              },
+              "::-webkit-scrollbar-thumb": {
+                backgroundColor: "primary.200",
+                borderRadius: "16px",
+                border: "13px solid transparent",
+                backgroundClip: "content-box",
+              },
+            }}
+          >
+            {children}
+          </DrawerBody>
         </DrawerContent>
       </ChakraDrawer>
     </>
